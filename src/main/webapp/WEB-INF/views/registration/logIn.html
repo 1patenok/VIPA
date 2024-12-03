@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/reset.css">
+    <link rel="stylesheet" href="style/style.css">
+    <title>Log in Account</title>
+    <style>
+        * {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+:focus, :active {
+  outline: none;
+}
+
+a:focus, a:active {
+  outline: none;
+}
+
+nav, footer, header, aside {
+  display: block;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  font-size: 100%;
+  line-height: 1;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+input, button, textarea {
+  font-family: inherit;
+}
+
+input::-ms-clear {
+  display: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+button::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+
+a, a:visited {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+ul li {
+  list-style: none;
+}
+
+img {
+  vertical-align: top;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+
+
+
+
+
+        @import url("https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans&display=swap");
+:root {
+  --font-family: "Space Mono", sans-serif;
+  --second-family: "Work Sans", sans-serif;
+}
+
+.body {
+  background-color: #2b2b2b;
+  font-family: var(--second-family);
+  color: #fff;
+  height: 100%;
+}
+
+.wrapper {
+  max-width: 1050px;
+  margin: 0 auto;
+}
+
+.header {
+  background-color: #2b2b2b;
+  opacity: 0.8;
+  width: 100%;
+  display: flex;
+  height: 80px;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 16px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 2;
+}
+
+.header__logo {
+  margin: 20px;
+}
+
+.logo {
+  font-family: var(--font-family);
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100px;
+  transition: 0.3s;
+}
+
+.logo:hover {
+  color: #9c9c9c;
+}
+
+.header__navigation {
+  display: flex;
+  align-items: center;
+}
+.header__navigation .header__navigation-item {
+  padding: 12px 20px;
+  margin: 5px;
+  transition: 0.3s;
+}
+
+.header__navigation-item:hover:not(:last-child) {
+  color: #ccc;
+}
+
+.header__navigation-item {
+  position: relative;
+  display: inline-block;
+}
+
+.header__profile {
+  margin: 0 10px 0 0;
+}
+
+.header__profile-title {
+  cursor: pointer;
+}
+
+.registration__button {
+  position: relative;
+  display: inline-block;
+  transition: 0.3s;
+}
+
+.registration__button:hover {
+  border-radius: 20px 20px 0 0;
+}
+.registration__button:hover .header__links {
+  display: block;
+  opacity: 1;
+}
+
+.header__links {
+  display: none;
+  opacity: 0;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #3b3b3b;
+  min-width: 110px;
+  z-index: 1;
+  transition: opacity 1s;
+}
+
+.link {
+  display: block;
+  color: #fff;
+  padding: 12px 16px;
+  transition: 0.3s;
+}
+
+.link:hover {
+  color: #9c9c9c;
+}
+
+.registration {
+  display: flex;
+  font-weight: 600;
+  padding: 20px 30px;
+  background-color: #a259ff;
+  border-radius: 20px;
+  transition: 0.3s;
+}
+.registration img {
+  margin: -10px 5px;
+}
+
+.registration:hover {
+  background-color: #832ff1;
+}
+
+.text {
+  padding: 5px;
+  font-weight: 400;
+  font-size: 22px;
+}
+
+.title {
+  padding: 5px;
+  font-weight: 600;
+  font-size: 38px;
+}
+
+.log-in {
+  min-height: 100%;
+  margin: 100px auto 0 auto;
+  text-align: center;
+  width: 460px;
+}
+
+.log-in__title {
+  padding: 5px;
+  margin: 0 0 20px 0;
+}
+
+.log-in__text {
+  padding: 5px;
+  margin: 0 0 40px 0;
+}
+
+.log-in__form-form {
+  margin: 0 auto;
+}
+
+.form__input {
+  font-weight: 400;
+  font-size: 16px;
+  width: 100%;
+  height: 50px;
+  border-radius: 20px;
+  padding: 0 20px 0 20px;
+  margin: 0 0 10px 0;
+}
+
+.form__button {
+  background-color: #a259ff;
+  width: 330px;
+  height: 50px;
+  border-radius: 20px;
+  padding: 0 20px 0 20px;
+  margin: 10px 0 15px 0;
+  font-weight: 400;
+  font-size: 22px;
+  color: #fff;
+  transition: 0.3s;
+}
+
+.form__button:hover {
+  background-color: #832ff1;
+}
+
+.footer {
+  margin: -100px 0 0 0;
+  background-color: #3b3b3b;
+  padding: 0 0 10px 0;
+}
+
+.footer__parts {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.footer__part {
+  max-width: 240px;
+}
+
+.footer__title {
+  font-family: var(--font-family);
+  font-size: 24px;
+  margin: 0 0 30px 0;
+}
+
+.footer__text {
+  margin: 0 0 20px 0;
+}
+
+.social {
+  margin: 25px 0 0 0;
+  display: flex;
+}
+.social a {
+  margin: 0 10px 0 0;
+}
+
+.footer__registration {
+  width: 55%;
+}
+
+.part2 p {
+  margin: 0 0 10px 0;
+}
+
+.part3 {
+  max-width: 350px;
+}
+    </style>
+</head>
+
+<body class="body">
+    <header class="header">
+        <a th:href="@{registration/homepage}" class="header__logo logo">
+            <nav>VIPA</nav>
+        </a>
+        <div class="header__navigation">
+            <a href="#" class="header__navigation-item">Marketplace</a>
+            <a href="#" class="header__navigation-item">Chating</a>
+            <a href="#" class="header__navigation-item">Cart</a>
+            <div class="header__profile">
+                <div class="registration__button registration">
+                    <p class="header__profile-title">Profile</p>
+                    <div class="header__links">
+                        <a href="#" class="link">Profile</a>
+                        <a th:href="@{/clients/logIn}" class="link">Log In</a>
+                        <a th:href="@{/clients/new}" class="link">Sing Up</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="log-in wrapper">
+        <div class="log-in__title title">
+            <p>Log in to your account</p>
+        </div>
+        <div class="log-in__text text">
+            <p>Welcome! Enter Your Details And Start Trade!</p>
+        </div>
+        <div class="log-in__form">
+            <form th:method="POST" th:action="@{/clients/logIn}" th:object="${signIn}"
+                  class="log-in__form-form form__input">
+                <input th:field="*{email}" id="email" type="email" placeholder="Your email" class="form__email form__input">
+                <input th:field="*{password}" id="password" type="text" placeholder="Password" class="form__password form__input">
+                <button type="submit" class="form__button">
+                    Log In
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer__parts wrapper">
+            <div class="footer__part part1">
+                <a th:href="@{registration/homepage}" class="footer__title logo">
+                    <img src="img/icon/nav_icon/Storefront.svg" alt="logo">
+                    <nav>VIPA</nav>
+                </a>
+                <p class="footer__text">
+                <nav>NFT marketplace UI created with Anima for Figma.</nav>
+                <nav>Join our community</nav>
+                <div class="social">
+                </div>
+                </p>
+            </div>
+            <div class="footer__part part2">
+                <div class="footer__title">
+                    <nav>Explore</nav>
+                </div>
+                <p class="footer__text">
+                <p><a href="#">Marketplace</a></p>
+                <p><a href="#">Chating</a></p>
+                <p><a href="#">Cart</a></p>
+                </p>
+            </div>
+            <div class="footer__part part3">
+                <div class="footer__title">
+                    <p>Join our weekly digest</p>
+                </div>
+                <p class="footer__text">
+                    Get exclusive promotions & updates straight to your inbox.
+                </p>
+                <a href="create_account.html" class="footer__registration registration">
+                    <p>Get Started</p>
+                </a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:method="PATCH" th:action="@{/clients}" th:object="${client}">
+    <label for="name">
+        Enter name:
+    </label>
+    <!--Запись со звездочкой "*{название_поля}" применяетя для обращения к полю объекта и присвоения ему значения из формы-->
+    <input type="text"  th:field="*{name}" id="name"/>
+    <!--Содержимое данного тега будет отображено, только при выполнении условия. -->
+    <!--Атрибут th:if можно применять на любом теге, отображаюем текст. -->
+    <!--Данный синтаксис ${#fields...} дает доступ ко всем полям объекта-->
+    <br/>
+    <label for="surname">
+        Enter surname:
+    </label>
+    <input type="text" th:field="*{surname}" id="surname"/>
+    <br/>
+    <!--    <label for="birthdate">-->
+    <!--        Enter birthdate:-->
+    <!--    </label>-->
+    <!--    <input type="date" th:field="*{birthDate}" id="birthdate"/>-->
+    <!--    <br/>-->
+    <label for="phone_number">
+        Enter phone_number:
+    </label>
+    <input type="text" th:field="*{phoneNumber}" id="phone_number"/>
+
+    <br/>
+
+    <label for="email">
+        Enter email:
+    </label>
+    <input type="text" th:field="*{email}" id="email"/>
+
+    <br/>
+
+    <label for="password">
+        Enter password:
+    </label>
+    <input type="text" th:field="*{password}" id="password"/>
+
+
+    <input type="submit" value="Update!"/>
+</form>
+</body>
+</html>

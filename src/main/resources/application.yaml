@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: vipa
+  datasource:
+    url: jdbc:postgresql://localhost:5432/vipa_db
+    username: postgres
+    password: admin
+  flyway:
+    baseline-on-migrate: true
+
