@@ -47,7 +47,7 @@ public class Client implements UserDetails {
 
     @Override
     public String getPassword() {
-        return null;
+        return password;
     }
 
     @Override
