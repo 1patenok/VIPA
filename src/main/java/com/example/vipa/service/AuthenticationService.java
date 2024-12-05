@@ -1,35 +1,58 @@
 package com.example.vipa.service;
 
+import com.example.vipa.dto.ClientDetailsDto;
+import com.example.vipa.dto.SignInDto;
+import com.example.vipa.mapper.ClientMapper;
 import com.example.vipa.model.Client;
 import com.example.vipa.repository.ClientRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
-import java.util.Optional;
+@Slf4j // для логирования
+@Service // = Component (чтобы автоматически создать объект класса AuthenticationService и поместить его в контекст приложения Spring)
+@RequiredArgsConstructor // для автоматической генерации конструктора со всеми финальными полями
+public class AuthenticationService {
 
-@Service
-@RequiredArgsConstructor
-public class AuthenticationService implements UserDetailsService {
-    private final ClientRepository clientRepository;
+    private final ClientMapper clientMapper; // маппер для преобразования из ClientDetailsDto в Client
+    private final BCryptPasswordEncoder passwordEncoder; // кодировщик паролей
+    private final ClientRepository clientRepository; // репозиторий для взаимодействия с БД
 
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return clientRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Пользователь с таким адресом не найден"));
-    }
-
-    public Client signIn(String email, String password) {
-        Client client = clientRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Пользователь с таким адресом не найден"));
-        if (password.equals(client.getPassword()))
+    /**
+     * Метод, выполняющий вход в аккаунт зарегистрированного пользователя.
+     * @param signInDto - dto, в котором хранятся учетные данные пользователя
+     * @return - возвращаем пользователя, если учетные данные указаны верно, в противном
+     * случае выбрасываем исключение RuntimeException.
+     */
+    public Client signIn(SignInDto signInDto) {
+        log.info("signInDto: {}", signInDto); // выводим в логи данные, переданные в метод (просто чтобы посмотреть)
+        Client client = clientRepository.findByEmail(signInDto.getEmail())
+                .orElseThrow(() -> new RuntimeException("Пользователь " + signInDto.getEmail() + " не найден."));
+        if (passwordEncoder.matches(signInDto.getPassword(), client.getPassword())) {
+            log.info("Проверка пароля пройдена.");
             return client;
-        else {
-            throw new RuntimeException("Неверный пароль");
+        } else {
+            log.info("Проверка пароля не пройдена.");
+            throw new RuntimeException("Вы ввели неверный пароль.");
         }
     }
 
+    /**
+     * Метод, выполняющий регистрацию нового пользователя.
+     * @param clientDetailsDto - dto, в котором хранятся все необходимые для регистрации пользователя данные
+     * @return - возвращаем зарегистрированного пользователя.
+     */
+    public Client signUp(ClientDetailsDto clientDetailsDto) {
+        log.info("newClient: {}", clientDetailsDto); // выводим в логи данные, переданные в метод (просто чтобы посмотреть)
+        if (!clientDetailsDto.getPassword().equals(clientDetailsDto.getPasswordConfirmation())) {
+            throw new RuntimeException("Пароли не совпадают.");
+        }
+        if (clientRepository.existsByEmail(clientDetailsDto.getEmail())) {
+            throw new RuntimeException("Пользователь с указанным email уже зарегистрирован.");
+        }
+        Client clientToSave = clientMapper.convertToClient(clientDetailsDto); // преобразуем NewClientDto в Client
+        clientToSave.setPassword(passwordEncoder.encode(clientToSave.getPassword())); // кодируем пароль и записываем в сохраняемого клиента
+        return clientRepository.save(clientToSave);
+    }
 }

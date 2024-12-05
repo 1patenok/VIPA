@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style/reset.css">
-    <link rel="stylesheet" href="style/style.css">
-    <title>Log in Account</title>
+    <link th:href="@{styles/style.css}" rel="stylesheet">
+<!--    <link rel="stylesheet" href="">-->
+    <title>Create Account</title>
     <style>
         * {
   padding: 0;
@@ -81,7 +81,6 @@ h1, h2, h3, h4, h5, h6 {
 a {
   color: inherit;
 }
-
 
 
 
@@ -232,24 +231,24 @@ a {
   font-size: 38px;
 }
 
-.log-in {
+.create {
   min-height: 100%;
   margin: 100px auto 0 auto;
   text-align: center;
   width: 460px;
 }
 
-.log-in__title {
+.create__title {
   padding: 5px;
   margin: 0 0 20px 0;
 }
 
-.log-in__text {
+.create__text {
   padding: 5px;
   margin: 0 0 40px 0;
 }
 
-.log-in__form-form {
+.create__form-form {
   margin: 0 auto;
 }
 
@@ -330,7 +329,7 @@ a {
 
 <body class="body">
     <header class="header">
-        <a th:href="@{registration/homepage}" class="header__logo logo">
+        <a class="header__logo logo" th:href="@{registration/homepage}">
             <nav>VIPA</nav>
         </a>
         <div class="header__navigation">
@@ -343,27 +342,32 @@ a {
                     <div class="header__links">
                         <a href="#" class="link">Profile</a>
                         <a th:href="@{/clients/logIn}" class="link">Log In</a>
-                        <a th:href="@{/clients/new}" class="link">Sing Up</a>
+                        <a th:href="@{/clients/new}" class="link">Sign Up</a>
                     </div>
                 </div>
             </div>
         </div>
     </header>
 
-    <div class="log-in wrapper">
-        <div class="log-in__title title">
-            <p>Log in to your account</p>
+    <div class="create wrapper">
+        <div class="create__title title">
+            <p>Create account</p>
         </div>
-        <div class="log-in__text text">
+        <div class="create__text text">
             <p>Welcome! Enter Your Details And Start Trade!</p>
         </div>
-        <div class="log-in__form">
-            <form th:method="POST" th:action="@{/clients/logIn}" th:object="${signIn}"
-                  class="log-in__form-form form__input">
+        <div class="create__form">
+            <form th:method="POST" th:action="@{/auth/sign-up}" th:object="${clientDetailsDto}"
+                  class="create__form-form form__input">
+                <input th:field="*{name}" id="name" type="text" placeholder="Your name" class="form__name form__input">
+                <input th:field="*{surname}" id="surname" type="text" placeholder="Your surname" class="form__surname form__input">
+                <input id="birthDate" type="date" class="form__birthdate form__input">
+                <input th:field="*{phoneNumber}" id="phone_number" type="tel" placeholder="+7 (XXX) XXX-XX-XX" class="form__number form__input">
                 <input th:field="*{email}" id="email" type="email" placeholder="Your email" class="form__email form__input">
                 <input th:field="*{password}" id="password" type="text" placeholder="Password" class="form__password form__input">
+<!--                <input th:field="*{password}" id="password_confirm" type="text" placeholder="Password" class="form__password form__input">-->
                 <button type="submit" class="form__button">
-                    Log In
+                    Create account
                 </button>
             </form>
         </div>
@@ -373,7 +377,6 @@ a {
         <div class="footer__parts wrapper">
             <div class="footer__part part1">
                 <a th:href="@{registration/homepage}" class="footer__title logo">
-                    <img src="img/icon/nav_icon/Storefront.svg" alt="logo">
                     <nav>VIPA</nav>
                 </a>
                 <p class="footer__text">
@@ -400,7 +403,7 @@ a {
                 <p class="footer__text">
                     Get exclusive promotions & updates straight to your inbox.
                 </p>
-                <a href="create_account.html" class="footer__registration registration">
+                <a href="sign-up-page.html" class="footer__registration registration">
                     <p>Get Started</p>
                 </a>
             </div>

@@ -10,5 +10,6 @@ import java.util.Optional;
 @Repository // @Component
 public interface ClientRepository extends CrudRepository<Client, Integer> {
     Optional<Client> findByEmail(String email);
+    boolean existsByEmail(String email);
 
 }
