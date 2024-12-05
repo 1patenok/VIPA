@@ -1,15 +1,18 @@
 package com.example.vipa.controller;
 
+import com.example.vipa.dto.NewClientDto;
 import com.example.vipa.dto.SignInDto;
 import com.example.vipa.model.Client;
 import com.example.vipa.service.ClientService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @Controller
-@RequestMapping("/clients")
+@RequestMapping("/clients")// http://localhost:8080/clients/1
 @RequiredArgsConstructor
 public class ClientController {
     private final ClientService clientService;
@@ -58,10 +61,9 @@ public class ClientController {
     public String signIn(Model model, SignInDto signInDto) {
         System.out.println(signInDto.getEmail() + "");
         System.out.println(signInDto.getPassword() + "");
-        Client result = clientService.signIn(signInDto.getEmail(), signInDto.getPassword());
+        Client result = clientService.signIn(signInDto);
         model.addAttribute("client", result);
         return "redirect:/clients/registration/homepage";
-
     }
 
     @GetMapping("/registration/homepage")
@@ -71,8 +73,8 @@ public class ClientController {
     }
 
     @PostMapping("/signUp")
-    public String addClient(@ModelAttribute("client") Client client) {
-        System.out.println("Получили из формы: " + client);
+    public String addClient(@ModelAttribute("client") NewClientDto client) {
+        log.info("Получили из формы: {}", client);
         clientService.createNewClient(client);
         System.out.println("Пользователь успешно зарегистрирован.");
         return "redirect:/clients/registration/homepage";

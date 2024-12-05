@@ -7,11 +7,12 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class ClientDto {
+public class NewClientDto {
     private String name;
     private String surname;
     private Date bigthDate;
     private String phoneNumber;
     private String email;
     private String password;
+    private String passwordConfirmation;
 }

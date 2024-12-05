@@ -2,16 +2,14 @@ package com.example.vipa.model;
 
 
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Getter
 @Setter
@@ -39,6 +37,15 @@ public class Client implements UserDetails {
 
     @Column(name = "password")
     private String password;
+
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    private List<Post> posts;
+
+    @ManyToMany
+    @JoinTable(name = "favorite_post",
+    joinColumns = @JoinColumn(name = "client_id"),
+    inverseJoinColumns = @JoinColumn(name = "post_id"))
+    private List<Post> favoritePosts;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -86,5 +93,17 @@ public class Client implements UserDetails {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Client client)) return false;
+        return clientId == client.clientId && Objects.equals(name, client.name) && Objects.equals(surname, client.surname) && Objects.equals(birthDate, client.birthDate) && Objects.equals(phoneNumber, client.phoneNumber) && Objects.equals(email, client.email) && Objects.equals(password, client.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(clientId, name, surname, birthDate, phoneNumber, email, password);
     }
 }

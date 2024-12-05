@@ -1,5 +1,9 @@
 package com.example.vipa;
 
+import com.example.vipa.model.Client;
+import com.example.vipa.repository.ClientRepository;
+import com.example.vipa.service.ClientService;
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -16,5 +20,11 @@ public class VipaApplication {
 	HiddenHttpMethodFilter hiddenHttpMethodFilter() {
 		return new HiddenHttpMethodFilter();
 	}
+
+	@Bean
+	ModelMapper modelMapper() {
+		return new ModelMapper();
+	}
+
 
 }

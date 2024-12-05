@@ -1,21 +1,22 @@
 package com.example.vipa.service;
 
+import com.example.vipa.dto.NewClientDto;
+import com.example.vipa.dto.SignInDto;
+import com.example.vipa.mapper.ClientMapper;
 import com.example.vipa.model.Client;
 import com.example.vipa.repository.ClientRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Slf4j
-@Service
+@Service // Component
 @RequiredArgsConstructor
 public class ClientService {
+    private final ClientMapper clientMapper;
     private final ClientRepository clientRepository;
-
+    private final BCryptPasswordEncoder passwordEncoder;
 
     public Client getClient(int clientId) {
         return clientRepository.findById(clientId)
@@ -26,12 +27,16 @@ public class ClientService {
         return clientRepository.findAll();
     }
 
-    public Client createNewClient(Client newClient) {
-        log.info("newClient: {}", newClient);
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String hashedPassword = passwordEncoder.encode(newClient.getPassword());
-        newClient.setPassword(hashedPassword);
-        return clientRepository.save(newClient);
+    public Client createNewClient(NewClientDto newClientDto) {
+        log.info("newClient: {}", newClientDto);
+        if (!newClientDto.getPassword().equals(newClientDto.getPasswordConfirmation())) {
+            throw new RuntimeException("Пароли не совпадают.");
+        }
+        clientRepository.findByEmail(newClientDto.getEmail())
+                .ifPresent(client -> new RuntimeException("Пользователь с email " + client.getEmail() + " уже зарегистрирован."));
+        String hashedPassword = passwordEncoder.encode(newClientDto.getPassword());
+        newClientDto.setPassword(hashedPassword);
+        return clientRepository.save(clientMapper.convertToClient(newClientDto));
     }
 
 //    public Client updateClientInfo(int clientId, Client updatedClient) {
@@ -43,18 +48,14 @@ public class ClientService {
         clientRepository.deleteById(id);
     }
 
-    public Client signIn(String email, String password) {
-        Client client = clientRepository.findByEmail(email)
+    public Client signIn(SignInDto signInDto) {
+        Client client = clientRepository.findByEmail(signInDto.getEmail())
                 .orElseThrow(() -> new RuntimeException("Пользователь с таким адресом не найден"));
-        System.out.println(client.getEmail());
-        System.out.println(client.getPassword());
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String hashedPassword = passwordEncoder.encode(password);
-        System.out.println(password);
+        log.info("signInDto: {}", signInDto);
+        String hashedPassword = passwordEncoder.encode(signInDto.getEmail());
+        System.out.println(hashedPassword);
 
-
-
-        if (passwordEncoder.matches(password, hashedPassword))
+        if (passwordEncoder.matches(client.getPassword(), hashedPassword))
             return client;
         else {
             throw new RuntimeException("Неверный пароль");
