@@ -4,6 +4,7 @@ package com.example.vipa.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import java.util.Date;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.Objects;
 @Setter
 @Entity
 @Table(name = "client")
+@Accessors(chain = true)
 public class Client {
     @Id
     @Column(name = "client_id")
