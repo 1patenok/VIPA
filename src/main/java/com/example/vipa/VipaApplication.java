@@ -16,15 +16,4 @@ public class VipaApplication {
 		SpringApplication.run(VipaApplication.class, args);
 	}
 
-	@Bean
-	HiddenHttpMethodFilter hiddenHttpMethodFilter() {
-		return new HiddenHttpMethodFilter();
-	}
-
-	@Bean
-	ModelMapper modelMapper() {
-		return new ModelMapper();
-	}
-
-
 }
