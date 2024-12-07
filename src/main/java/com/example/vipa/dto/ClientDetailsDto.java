@@ -12,6 +12,7 @@ import java.util.Date;
 @ToString
 @Accessors(chain = true)
 public class ClientDetailsDto {
+    private int clientId;
     private String name;
     private String surname;
     private Date birthDate;
