@@ -48,8 +48,6 @@ public class AuthenticationControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @Test
     void getSignInPage_returnsStatusOkAndSignInPageView() throws Exception {

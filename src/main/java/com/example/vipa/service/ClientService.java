@@ -28,6 +28,25 @@ public class ClientService {
     }
 
     /**
+     * Метод для получения пользователя по его id.
+     * @param clientId - id пользователя
+     * @return - возвращаем объект класса Client
+     */
+    public Client getClientEntity(int clientId) {
+        log.info("inside getClient(), clientId: {}", clientId);
+        return clientRepository.findById(clientId)
+                .orElseThrow(() -> new RuntimeException("Пользователь с указанным id не найден."));
+    }
+
+    /**
+     * Метод для сохранения клиента.
+     * @param updatedClient - клиент, которого нужно обновить
+     */
+    public void updateClient(Client updatedClient) {
+        clientRepository.save(updatedClient);
+    }
+
+    /**
      * Метод для обновления данных пользователя.
      * @param clientId - id пользователя, данные которого нужно обновить
      * @param clientDetailsDto - обновленные данные пользователя
