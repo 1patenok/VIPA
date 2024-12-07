@@ -357,7 +357,7 @@ a {
             <p>Welcome! Enter Your Details And Start Trade!</p>
         </div>
         <div class="create__form">
-            <form th:method="POST" th:action="@{/clients/signUp}" th:object="${client}"
+            <form th:method="POST" th:action="@{/auth/sign-up}" th:object="${clientDetailsDto}"
                   class="create__form-form form__input">
                 <input th:field="*{name}" id="name" type="text" placeholder="Your name" class="form__name form__input">
                 <input th:field="*{surname}" id="surname" type="text" placeholder="Your surname" class="form__surname form__input">
@@ -403,7 +403,7 @@ a {
                 <p class="footer__text">
                     Get exclusive promotions & updates straight to your inbox.
                 </p>
-                <a href="create_account.html" class="footer__registration registration">
+                <a href="sign-up-page.html" class="footer__registration registration">
                     <p>Get Started</p>
                 </a>
             </div>

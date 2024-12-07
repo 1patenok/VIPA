@@ -2,13 +2,15 @@ package com.example.vipa.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
 @Getter
 @Setter
-public class NewClientDto {
+@ToString
+public class ClientDetailsDto {
     private String name;
     private String surname;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -16,5 +18,5 @@ public class NewClientDto {
     private String phoneNumber;
     private String email;
     private String password;
-
+    private String passwordConfirmation;
 }

@@ -358,12 +358,12 @@ a {
             <p>Welcome! Enter Your Details And Start Trade!</p>
         </div>
         <div class="log-in__form">
-            <form th:method="POST" th:action="@{/clients/logIn}" th:object="${signIn}"
+            <form th:method="POST" th:action="@{/auth/sign-in}" th:object="${signInDto}"
                   class="log-in__form-form form__input">
                 <input th:field="*{email}" id="email" type="email" placeholder="Your email" class="form__email form__input">
                 <input th:field="*{password}" id="password" type="text" placeholder="Password" class="form__password form__input">
                 <button type="submit" class="form__button">
-                    Log In
+                    Sign In
                 </button>
             </form>
         </div>
@@ -400,7 +400,7 @@ a {
                 <p class="footer__text">
                     Get exclusive promotions & updates straight to your inbox.
                 </p>
-                <a href="create_account.html" class="footer__registration registration">
+                <a href="sign-up-page.html" class="footer__registration registration">
                     <p>Get Started</p>
                 </a>
             </div>
