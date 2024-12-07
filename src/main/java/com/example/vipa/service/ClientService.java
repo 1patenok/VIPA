@@ -10,6 +10,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Date;
+
 @Slf4j
 @Service // Component
 @RequiredArgsConstructor
@@ -17,6 +23,8 @@ public class ClientService {
     private final ClientMapper clientMapper;
     private final ClientRepository clientRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+
+    private static final SimpleDateFormat OUTPUT_FORMATTER = new SimpleDateFormat("yyyy/MM/dd");
 
     public Client getClient(int clientId) {
         return clientRepository.findById(clientId)
@@ -28,14 +36,18 @@ public class ClientService {
     }
 
     public Client createNewClient(NewClientDto newClientDto) {
-        log.info("newClient: {}", newClientDto);
-        if (!newClientDto.getPassword().equals(newClientDto.getPasswordConfirmation())) {
-            throw new RuntimeException("Пароли не совпадают.");
-        }
+//        log.info("newClient: {}", newClientDto);
+//        if (!newClientDto.getPassword().equals(newClientDto.getPasswordConfirmation())) {
+//            throw new RuntimeException("Пароли не совпадают.");
+//        }
         clientRepository.findByEmail(newClientDto.getEmail())
                 .ifPresent(client -> new RuntimeException("Пользователь с email " + client.getEmail() + " уже зарегистрирован."));
         String hashedPassword = passwordEncoder.encode(newClientDto.getPassword());
         newClientDto.setPassword(hashedPassword);
+
+
+
+
         return clientRepository.save(clientMapper.convertToClient(newClientDto));
     }
 
@@ -52,7 +64,7 @@ public class ClientService {
         Client client = clientRepository.findByEmail(signInDto.getEmail())
                 .orElseThrow(() -> new RuntimeException("Пользователь с таким адресом не найден"));
         log.info("signInDto: {}", signInDto);
-        String hashedPassword = passwordEncoder.encode(signInDto.getEmail());
+        String hashedPassword = passwordEncoder.encode(signInDto.getPassword());
         System.out.println(hashedPassword);
 
         if (passwordEncoder.matches(client.getPassword(), hashedPassword))

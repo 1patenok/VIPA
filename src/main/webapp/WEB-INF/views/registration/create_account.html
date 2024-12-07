@@ -361,7 +361,7 @@ a {
                   class="create__form-form form__input">
                 <input th:field="*{name}" id="name" type="text" placeholder="Your name" class="form__name form__input">
                 <input th:field="*{surname}" id="surname" type="text" placeholder="Your surname" class="form__surname form__input">
-                <input id="birthDate" type="date" class="form__birthdate form__input">
+                <input th:field="*{birthDate}" id="birthDate" type="date" class="form__birthdate form__input">
                 <input th:field="*{phoneNumber}" id="phone_number" type="tel" placeholder="+7 (XXX) XXX-XX-XX" class="form__number form__input">
                 <input th:field="*{email}" id="email" type="email" placeholder="Your email" class="form__email form__input">
                 <input th:field="*{password}" id="password" type="text" placeholder="Password" class="form__password form__input">

@@ -63,11 +63,11 @@ public class ClientController {
         System.out.println(signInDto.getPassword() + "");
         Client result = clientService.signIn(signInDto);
         model.addAttribute("client", result);
-        return "redirect:/clients/registration/homepage";
+        return "redirect:/head/homepage";
     }
 
     @GetMapping("/registration/homepage")
-    public String showHomePage() {
+    public String showRegistrationHomePage() {
         System.out.println("inside showHomePage()");
         return "registration/homepage";
     }
@@ -77,8 +77,12 @@ public class ClientController {
         log.info("Получили из формы: {}", client);
         clientService.createNewClient(client);
         System.out.println("Пользователь успешно зарегистрирован.");
-        return "redirect:/clients/registration/homepage";
+        return "redirect:/head/homepage";
     }
+
+
+
+
 
 //    @PatchMapping("/{clientId}")
 //    public Client updateClient(@PathVariable("clientId") int clientId,
@@ -90,5 +94,4 @@ public class ClientController {
 //    public void deleteClient(@PathVariable("clientId") int clientId){
 //        clientService.deleteClient(clientId);
 //    }
-
 }

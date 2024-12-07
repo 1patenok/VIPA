@@ -1,17 +1,13 @@
 package com.example.vipa.security;
 
 import com.example.vipa.service.AuthenticationService;
-import com.example.vipa.service.ClientService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.HttpStatusEntryPoint;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 
@@ -42,33 +38,24 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
-                .cors(cors -> cors.disable());
-//                .authorizeHttpRequests(
-//                        authorize -> authorize
-//                                .requestMatchers(
-//                                        "/cart/**", "/reviews/newReview"
-//                                ).hasRole("USER")
-//                                .requestMatchers(
-//                                        "/categories/newCategory", "/categories/updateCategory", "/categories/{categoryId}/deleteCategory",
-//                                        "/items/newItem", "/items/updateItem", "/items/{itemId}/deleteItem",
-//                                        "/features/**", "/reviews/{reviewId}/deleteReview"
-//                                ).hasRole("ADMIN")
-//                                .requestMatchers(
-//                                        "/profile/**"
-//                                ).hasAnyRole("USER", "ADMIN")
-//                                .requestMatchers(
-//                                        "/auth/signUp",
-//                                        "/clients/{clientId}",
-//                                        "/clients",
-//                                        "/clients/new"
-//                                ).permitAll())
-//                .sessionManagement(
-//                        sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                )
-//                .exceptionHandling(
-//                        exceptionHandling -> exceptionHandling.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
-//                );
-
+                .cors(cors -> cors.disable())
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(
+                                "/logout",
+                                "/clients/registration/homepage",
+                                "/clients/registration/create_account",
+                                "/clients/logIn",
+                                "/clients/new",
+                                "/clients/new"
+                        ).permitAll() // Разрешённые маршруты
+                        .anyRequest().authenticated() // Остальные требуют авторизации
+                )
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/clients/registration/homepage")
+                        .invalidateHttpSession(true)
+                        .clearAuthentication(true)
+                );
         return http.build();
     }
 }

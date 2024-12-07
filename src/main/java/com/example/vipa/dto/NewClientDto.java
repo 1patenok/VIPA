@@ -2,6 +2,7 @@ package com.example.vipa.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -10,9 +11,10 @@ import java.util.Date;
 public class NewClientDto {
     private String name;
     private String surname;
-    private Date bigthDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date birthDate;
     private String phoneNumber;
     private String email;
     private String password;
-    private String passwordConfirmation;
+
 }

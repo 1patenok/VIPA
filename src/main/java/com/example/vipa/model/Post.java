@@ -35,13 +35,14 @@ public class Post {
     @JoinColumn(name = "client_id", referencedColumnName = "client_id")
     private Client client;
 
-    @ManyToMany
-    @JoinTable(name = "favorite_post",
-            joinColumns = @JoinColumn(name = "post_id"),
-            inverseJoinColumns = @JoinColumn(name = "client_id"))
-    private List<Client> favoritePosts;
+//    @ManyToMany
+//    @JoinTable(name = "favorite_post",
+//            joinColumns = @JoinColumn(name = "post_id"),
+//            inverseJoinColumns = @JoinColumn(name = "client_id"))
+//    private List<Client> favoritePosts;
 
-    // Указать связь с таблицей category
+    @ManyToOne
+    @JoinColumn(name = "category_id", referencedColumnName = "category_id")
     private Category category;
 
 }

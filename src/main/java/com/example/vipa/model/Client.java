@@ -2,11 +2,9 @@ package com.example.vipa.model;
 
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.*;
@@ -18,6 +16,7 @@ import java.util.*;
 public class Client implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "client_id")
     private int clientId;
 
     @Column(name = "name")
@@ -39,13 +38,13 @@ public class Client implements UserDetails {
     private String password;
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
-    private List<Post> posts;
+    private List<Post> post;
 
-    @ManyToMany
-    @JoinTable(name = "favorite_post",
-    joinColumns = @JoinColumn(name = "client_id"),
-    inverseJoinColumns = @JoinColumn(name = "post_id"))
-    private List<Post> favoritePosts;
+//    @ManyToMany
+//    @JoinTable(name = "favorite_post",
+//            joinColumns = @JoinColumn(name = "client_id"),
+//            inverseJoinColumns = @JoinColumn(name = "post_id"))
+//    private List<Post> favoritePosts;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -61,6 +60,7 @@ public class Client implements UserDetails {
     public String getUsername() {
         return email;
     }
+
 
     @Override
     public boolean isAccountNonExpired() {
