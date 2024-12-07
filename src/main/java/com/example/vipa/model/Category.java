@@ -3,6 +3,7 @@ package com.example.vipa.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import java.util.List;
 
@@ -10,18 +11,19 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "category")
+@Accessors(chain = true)
 public class Category {
     @Id
     @Column(name = "category_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int categoryId;
 
-    @Column(name = "name_category")
-    private String nameCategory;
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "image")
     private String image;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    private List<Post> post;
+    @OneToMany(mappedBy = "category")
+    private List<Post> posts;
 }

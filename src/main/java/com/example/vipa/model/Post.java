@@ -3,6 +3,7 @@ package com.example.vipa.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "post")
+@Accessors(chain = true)
 public class Post {
     @Id
     @Column(name = "post_id")
@@ -31,18 +33,20 @@ public class Post {
     @Column(name = "address")
     private String address;
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<PostImage> images;
+
     @ManyToOne
     @JoinColumn(name = "client_id", referencedColumnName = "client_id")
     private Client client;
 
-//    @ManyToMany
-//    @JoinTable(name = "favorite_post",
-//            joinColumns = @JoinColumn(name = "post_id"),
-//            inverseJoinColumns = @JoinColumn(name = "client_id"))
-//    private List<Client> favoritePosts;
+    @ManyToMany(mappedBy = "favoritePosts")
+    private List<Client> clientsWithPostInFavorites; // данное поле представляет клиентов, которые добавили данное объявление в избранное
+
+    @ManyToMany(mappedBy = "postsInCart")
+    private List<Client> clientsWithPostInCart; // данное поле представляет клиентов, которые добавили данное объявление в корзину
 
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "category_id")
     private Category category;
-
 }
