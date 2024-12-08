@@ -32,7 +32,7 @@ public class FavoritesController {
     @ResponseBody
     @PostMapping(value = "/{postId}", produces = {"application/json; charset=UTF-8"})
     public ResponseEntity<?> addPostToFavorites(@PathVariable("clientId") int clientId,
-                                             @PathVariable("postId") int postId) {
+                                                @PathVariable("postId") int postId) {
         log.info("Принят запрос на добавление объявления в избранное. clientId: {}, postId: {}", clientId, postId);
         favoritesService.addPostToFavorites(clientId, postId);
         return ResponseEntity.ok("Объявление успешно добавлено в избранное.");
@@ -41,7 +41,7 @@ public class FavoritesController {
     @ResponseBody
     @DeleteMapping(value = "/{postId}", produces = {"application/json; charset=UTF-8"})
     public ResponseEntity<?> deletePostFromFavorites(@PathVariable("clientId") int clientId,
-                                          @PathVariable("postId") int postId) {
+                                                     @PathVariable("postId") int postId) {
         log.info("Принят запрос на удаление объявления из избранного. clientId: {}, postId: {}", clientId, postId);
         favoritesService.deletePostFromFavorites(clientId, postId);
         return ResponseEntity.ok("Объявление успешно удалено из избранного.");

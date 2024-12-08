@@ -1,4 +1,4 @@
-package com.example.vipa.mapper;
+package com.example.vipa.mapping;
 
 import com.example.vipa.dto.ClientDetailsDto;
 import com.example.vipa.model.Client;

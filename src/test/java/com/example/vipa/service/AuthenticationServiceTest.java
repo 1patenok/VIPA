@@ -2,10 +2,9 @@ package com.example.vipa.service;
 
 import com.example.vipa.dto.ClientDetailsDto;
 import com.example.vipa.dto.SignInDto;
-import com.example.vipa.mapper.ClientMapper;
+import com.example.vipa.mapping.ClientMapper;
 import com.example.vipa.model.Client;
 import com.example.vipa.repository.ClientRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;

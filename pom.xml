@@ -14,11 +14,14 @@
 	<name>vipa</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
+
 	<properties>
 		<java.version>20</java.version>
 		<modelmapper.version>3.2.1</modelmapper.version>
 		<spring-security-crypto.version>6.4.1</spring-security-crypto.version>
+		<mapstruct.version>1.5.5.Final</mapstruct.version>
 	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.security</groupId>

@@ -2,7 +2,7 @@ package com.example.vipa.service;
 
 import com.example.vipa.dto.PostDetailsDto;
 import com.example.vipa.dto.PostPreviewDto;
-import com.example.vipa.mapper.PostMapper;
+import com.example.vipa.mapping.PostMapper;
 import com.example.vipa.model.Post;
 import com.example.vipa.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,18 +31,15 @@ public class PostService {
     }
 
     public List<PostPreviewDto> getPostPage(Pageable pageable, String postTitlePattern) {
-        return postRepository.findAllByTitleLike(postTitlePattern, pageable).stream()
+        return postRepository.findAllByTitleLike("%" + postTitlePattern + "%", pageable).stream()
                 .map(postMapper::convertToPostPreviewDto)
                 .toList();
     }
 
     public PostDetailsDto createPost(PostDetailsDto postDetailsDto) {
         Post postToSave = postMapper.convertToPost(postDetailsDto);
+        log.info("postToSave: {}", postToSave);
         return postMapper.convertToPostDetailsDto(postRepository.save(postToSave));
-    }
-
-    public void updatePost(Post updatedPost) {
-        postRepository.save(updatedPost);
     }
 
     public PostDetailsDto updatePost(int postId, PostDetailsDto postDetailsDto) {

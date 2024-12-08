@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -34,6 +35,7 @@ public class PostController {
         log.info("inside getPostCatalogPage(), параметры пэйджинга: {}, postTitlePattern: {}",
                 pageable, postTitlePattern);
         List<PostPreviewDto> posts = postService.getPostPage(pageable, postTitlePattern);
+        log.info("posts: {}", posts);
         model.addAttribute("posts", posts);
         return "/post/post-catalog-page";
     }

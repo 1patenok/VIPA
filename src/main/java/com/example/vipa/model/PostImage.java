@@ -3,11 +3,13 @@ package com.example.vipa.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "post_image")
+@Accessors(chain = true)
 public class PostImage {
     @Id
     @Column(name = "post_image_id")
