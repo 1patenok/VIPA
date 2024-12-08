@@ -2,9 +2,9 @@ spring:
   application:
     name: vipa
   datasource:
-    url: jdbc:postgresql://localhost:5432/vipa_db
+    url: jdbc:postgresql://localhost:5432/vipa-db
     username: postgres
-    password: admin
+    password: My_passw0rd
   flyway:
     baseline-on-migrate: true
   jpa:

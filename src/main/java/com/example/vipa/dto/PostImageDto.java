@@ -1,5 +1,6 @@
 package com.example.vipa.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -9,5 +10,6 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class PostImageDto {
     private int postImageId;
+
     private String url;
 }

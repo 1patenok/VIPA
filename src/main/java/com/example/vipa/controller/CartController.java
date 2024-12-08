@@ -22,9 +22,9 @@ public class CartController {
     @GetMapping
     public String getCartPage(Model model, @PathVariable("clientId") int clientId) {
         log.info("Принят запрос на получение списка товаров в корзине. clientId: {}", clientId);
-        List<PostPreviewDto> favorites = cartService.getProductsInCart(clientId);
-        log.info("favorites: {}", favorites);
-        model.addAttribute("favorites", favorites);
+        List<PostPreviewDto> postsInCart = cartService.getProductsInCart(clientId);
+        log.info("cart: {}", postsInCart);
+        model.addAttribute("postsInCart", postsInCart);
         return "/post/cart-page";
     }
 
