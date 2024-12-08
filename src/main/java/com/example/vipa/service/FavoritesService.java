@@ -1,10 +1,9 @@
 package com.example.vipa.service;
 
 import com.example.vipa.dto.PostPreviewDto;
-import com.example.vipa.mapper.PostMapper;
+import com.example.vipa.mapping.PostMapper;
 import com.example.vipa.model.Client;
 import com.example.vipa.model.Post;
-import com.example.vipa.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

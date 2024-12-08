@@ -8,10 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/head")
 public class HeadController {
 
-
-
-
-
     // Кнопка уведомлений
     @GetMapping("/notifications")
     public String showNotifications() {

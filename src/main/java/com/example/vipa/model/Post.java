@@ -33,12 +33,12 @@ public class Post {
     @Column(name = "address")
     private String address;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    private List<PostImage> images;
-
     @ManyToOne
     @JoinColumn(name = "client_id", referencedColumnName = "client_id")
-    private Client client;
+    private Client author;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<PostImage> images;
 
     @ManyToMany(mappedBy = "favoritePosts")
     private List<Client> clientsWithPostInFavorites; // данное поле представляет клиентов, которые добавили данное объявление в избранное
@@ -49,4 +49,19 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "category_id")
     private Category category;
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "category=" + category +
+                ", client=" + author +
+                ", images=" + images +
+                ", address='" + address + '\'' +
+                ", description='" + description + '\'' +
+                ", status='" + status + '\'' +
+                ", price=" + price +
+                ", title='" + title + '\'' +
+                ", postId=" + postId +
+                '}';
+    }
 }
