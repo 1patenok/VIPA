@@ -1,6 +1,7 @@
 package com.example.vipa.service;
 
 import com.example.vipa.dto.ClientDetailsDto;
+import com.example.vipa.exception.NotFoundException;
 import com.example.vipa.mapping.ClientMapper;
 import com.example.vipa.model.Client;
 import com.example.vipa.repository.ClientRepository;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor // для автоматической генерации конструктора со всеми финальными полями
 public class ClientService {
 
+    private static final String CLIENT_NOT_FOUND_MESSAGE = "Пользователь с указанным id не найден.";
+
     private final ClientMapper clientMapper; // для преобразования из ClientDetailsDto в Client и наоборот
     private final ClientRepository clientRepository;
 
@@ -24,7 +27,7 @@ public class ClientService {
     public ClientDetailsDto getClient(int clientId) {
         log.info("inside getClient(), clientId: {}", clientId);
         return clientRepository.findById(clientId).map(clientMapper::convertToClientDetailsDto)
-                .orElseThrow(() -> new RuntimeException("Пользователь с указанным id не найден."));
+                .orElseThrow(() -> new NotFoundException(CLIENT_NOT_FOUND_MESSAGE));
     }
 
     /**
@@ -35,7 +38,7 @@ public class ClientService {
     public Client getClientEntity(int clientId) {
         log.info("inside getClient(), clientId: {}", clientId);
         return clientRepository.findById(clientId)
-                .orElseThrow(() -> new RuntimeException("Пользователь с указанным id не найден."));
+                .orElseThrow(() -> new NotFoundException(CLIENT_NOT_FOUND_MESSAGE));
     }
 
     /**
@@ -55,7 +58,7 @@ public class ClientService {
     public ClientDetailsDto updateClient(int clientId, ClientDetailsDto clientDetailsDto) {
         log.info("inside updateClient(), clientId: {}, clientDetailsDto: {}", clientId, clientDetailsDto);
         if (!clientRepository.existsById(clientId)) {
-            throw new RuntimeException("Пользователь с id=" + clientId + " не найден.");
+            throw new NotFoundException(CLIENT_NOT_FOUND_MESSAGE);
         }
         Client updatedClient = clientMapper.convertToClient(clientDetailsDto);
         /* Чтобы понять, какого именно клиента нужно обновить, нужно присвоить clientId.

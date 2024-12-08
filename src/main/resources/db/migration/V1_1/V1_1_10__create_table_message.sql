@@ -3,12 +3,7 @@ CREATE TABLE message (
     sender_id INT NOT NULL,
     recipient_id INT NOT NULL,
     text VARCHAR(255) NOT NULL,
-    send_time TIMESTAMP NOT NULL,
-    send_date DATE NOT NULL DEFAULT CURRENT_DATE,
-    FOREIGN KEY (sender_id) REFERENCES client(client_id)
-    ON UPDATE CASCADE
-    ON DELETE CASCADE,
+    send_timestamp TIMESTAMP NOT NULL, -- тип timestamp представляет и дату, и время
+    FOREIGN KEY (sender_id) REFERENCES client(client_id),
     FOREIGN KEY (recipient_id) REFERENCES client(client_id)
-    ON UPDATE CASCADE
-    ON DELETE CASCADE
 );
