@@ -11,7 +11,7 @@ import lombok.Setter;
 public class PaymentAccount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int paymentAccountId;
+    private int id;
 
     @Column(name = "card_number")
     private String cardNumber;

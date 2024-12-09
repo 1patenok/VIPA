@@ -22,7 +22,7 @@ public class ClientDetailsDto {
     private static final String EMAIL_IS_NOT_VALID_MESSAGE = "Вы ввели невалидный email.";
     private static final String PHONE_NUMBER_IS_NOT_VALID_MESSAGE = "Вы ввели невалидный номер телефона.";
 
-    private int clientId;
+    private int id;
 
     @NotBlank(message = FIELD_IS_MANDATORY_MESSAGE)
     private String name;

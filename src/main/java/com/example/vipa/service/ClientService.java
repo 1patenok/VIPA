@@ -42,8 +42,8 @@ public class ClientService {
     }
 
     /**
-     * Метод для сохранения клиента.
-     * @param updatedClient - клиент, которого нужно обновить
+     * Метод для сохранения пользователя.
+     * @param updatedClient - пользователь, которого нужно обновить
      */
     public void updateClient(Client updatedClient) {
         clientRepository.save(updatedClient);
@@ -63,7 +63,7 @@ public class ClientService {
         Client updatedClient = clientMapper.convertToClient(clientDetailsDto);
         /* Чтобы понять, какого именно клиента нужно обновить, нужно присвоить clientId.
            Если не сделать это, то вместо обновления существующего клиента будет создан новый клиент.*/
-        updatedClient.setClientId(clientId);
+        updatedClient.setId(clientId);
         return clientMapper.convertToClientDetailsDto(clientRepository.save(updatedClient));
     }
 
