@@ -18,7 +18,7 @@ public class PostDetailsDto {
     private static final String FIELD_IS_MANDATORY_MESSAGE = "Это поле является обязательным для заполнения.";
     private static final String PRICE_CANNOT_BE_NEGATIVE_MESSAGE = "Цена не может быть отрицательной.";
 
-    private int postId;
+    private int id;
 
     @NotBlank(message = FIELD_IS_MANDATORY_MESSAGE)
     private String title;

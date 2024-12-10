@@ -7,6 +7,7 @@ import com.example.vipa.model.Post;
 import com.example.vipa.model.PostImage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.Condition;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -23,13 +24,17 @@ public class PostMapper {
         this.modelMapper = modelMapper;
         Converter<List<PostImage>, PostImageDto> imageListToImageDtoConverter =
                 src -> modelMapper.map(src.getSource().get(0), PostImageDto.class);
+        Condition<List<PostImage>, PostImageDto> imageListToImageDtoCondition =
+                src -> src.getSource().isEmpty();
         Converter<List<PostImage>, List<PostImageDto>> imageListToImageDtoListConverter =
                 src -> src.getSource().stream()
                         .map(image -> modelMapper.map(image, PostImageDto.class))
                         .toList();
         modelMapper.createTypeMap(Post.class, PostPreviewDto.class)
                 .addMappings(mapper -> mapper.using(imageListToImageDtoConverter)
-                        .map(Post::getImages, PostPreviewDto::setCoverImage));
+                        .map(Post::getImages, PostPreviewDto::setCoverImage))
+                .addMappings(mapper -> mapper.when(imageListToImageDtoCondition)
+                        .skip(Post::getImages, PostPreviewDto::setCoverImage));
         modelMapper.createTypeMap(Post.class, PostDetailsDto.class)
                 .addMappings(mapper -> mapper.using(imageListToImageDtoListConverter)
                         .map(Post::getImages, PostDetailsDto::setImages));

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Post Catalog Page</title>
+</head>
+<body>
+<div th:each="post : ${posts}">
+  <div>----------------------------------------------</div>
+  <div th:text="${'ID: ' + post.getId()}">id</div>
+  <div th:text="${'Название: ' + post.getTitle()}">title</div>
+  <div th:text="${'Цена: ' + post.getPrice()}">price</div>
+  <div th:text="${'Адрес: ' + post.getAddress()}">address</div>
+  <div th:text="${'Обложка: ' + post.getCoverImage()}">cover image</div>
+  <a th:href="@{/posts/{id}(id=${post.getId()})}">ПОДРОБНАЯ ИНФОРМАЦИЯ</a>
+  <div>----------------------------------------------</div>
+</div>
+</body>
+</html>

@@ -16,7 +16,7 @@ public class Post {
     @Id
     @Column(name = "post_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int postId;
+    private int id;
 
     @Column(name = "title")
     private String title;
@@ -34,6 +34,10 @@ public class Post {
     private String address;
 
     @ManyToOne
+    @JoinColumn(name = "category_id", referencedColumnName = "category_id")
+    private Category category;
+
+    @ManyToOne
     @JoinColumn(name = "client_id", referencedColumnName = "client_id")
     private Client author;
 
@@ -46,9 +50,8 @@ public class Post {
     @ManyToMany(mappedBy = "postsInCart")
     private List<Client> clientsWithPostInCart; // данное поле представляет клиентов, которые добавили данное объявление в корзину
 
-    @ManyToOne
-    @JoinColumn(name = "category_id", referencedColumnName = "category_id")
-    private Category category;
+    @ManyToMany(mappedBy = "postsInOrder")
+    private List<Order> ordersWithPost;
 
     @Override
     public String toString() {
@@ -61,7 +64,7 @@ public class Post {
                 ", status='" + status + '\'' +
                 ", price=" + price +
                 ", title='" + title + '\'' +
-                ", postId=" + postId +
+                ", postId=" + id +
                 '}';
     }
 }

@@ -18,7 +18,7 @@ public class Client {
     @Id
     @Column(name = "client_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int clientId;
+    private int id;
 
     @Column(name = "name")
     private String name;
@@ -38,8 +38,11 @@ public class Client {
     @Column(name = "password")
     private String password;
 
-    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "author")
     private List<Post> posts;
+
+    @OneToMany(mappedBy = "client")
+    private List<Order> orders;
 
     @ManyToMany
     @JoinTable(name = "favorite_post",

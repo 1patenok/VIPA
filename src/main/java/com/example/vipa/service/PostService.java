@@ -21,6 +21,7 @@ public class PostService {
     private static final String POST_NOT_FOUND_MESSAGE = "Объявление не найдено.";
 
     private final PostMapper postMapper;
+    private final ClientService clientService;
     private final PostRepository postRepository;
 
     @Transactional
@@ -41,14 +42,23 @@ public class PostService {
                 .toList();
     }
 
-    public PostDetailsDto createPost(PostDetailsDto postDetailsDto) {
+    @Transactional
+    public List<PostPreviewDto> getPostsByAuthor(int authorId) {
+        return clientService.getClientEntity(authorId).getPosts().stream()
+                .map(postMapper::convertToPostPreviewDto)
+                .toList();
+    }
+
+    @Transactional
+    public PostDetailsDto createPost(int authorId, PostDetailsDto postDetailsDto) {
         Post postToSave = postMapper.convertToPost(postDetailsDto);
+        postToSave.setAuthor(clientService.getClientEntity(authorId));
         log.info("postToSave: {}", postToSave);
         return postMapper.convertToPostDetailsDto(postRepository.save(postToSave));
     }
 
     public PostDetailsDto updatePost(int postId, PostDetailsDto postDetailsDto) {
-        Post updatedPost = postMapper.convertToPost(postDetailsDto).setPostId(postId);
+        Post updatedPost = postMapper.convertToPost(postDetailsDto).setId(postId);
         return postMapper.convertToPostDetailsDto(postRepository.save(updatedPost));
     }
 

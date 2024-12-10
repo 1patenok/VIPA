@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 public class PostImageDto {
-    private int postImageId;
+    private int id;
 
     private String url;
 }

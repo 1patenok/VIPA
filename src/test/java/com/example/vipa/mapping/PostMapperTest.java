@@ -50,68 +50,68 @@ public class PostMapperTest {
     @Test
     void convertToPost_returnsCorrectPost() {
         List<PostImageDto> postImageDtos = List.of(
-                new PostImageDto().setPostImageId(POST_IMAGE_ID).setUrl(POST_IMAGE_URL),
-                new PostImageDto().setPostImageId(POST_IMAGE_OTHER_ID).setUrl(POST_IMAGE_OTHER_URL));
+                new PostImageDto().setId(POST_IMAGE_ID).setUrl(POST_IMAGE_URL),
+                new PostImageDto().setId(POST_IMAGE_OTHER_ID).setUrl(POST_IMAGE_OTHER_URL));
         PostDetailsDto postDetailsDto = new PostDetailsDto()
-                .setPostId(POST_ID).setTitle(POST_TITLE).setPrice(POST_PRICE)
+                .setId(POST_ID).setTitle(POST_TITLE).setPrice(POST_PRICE)
                 .setStatus(POST_STATUS).setDescription(POST_DESCRIPTION)
                 .setAddress(POST_ADDRESS).setImages(postImageDtos);
 
         Post resultPost = modelMapper.map(postDetailsDto, Post.class);
 
-        assertEquals(POST_ID, resultPost.getPostId());
+        assertEquals(POST_ID, resultPost.getId());
         assertEquals(POST_TITLE, resultPost.getTitle());
         assertEquals(POST_PRICE, resultPost.getPrice());
         assertEquals(POST_STATUS, resultPost.getStatus());
         assertEquals(POST_DESCRIPTION, resultPost.getDescription());
         assertEquals(POST_ADDRESS, resultPost.getAddress());
-        assertEquals(POST_IMAGE_ID, resultPost.getImages().get(0).getPostImageId());
+        assertEquals(POST_IMAGE_ID, resultPost.getImages().get(0).getId());
         assertEquals(POST_IMAGE_URL, resultPost.getImages().get(0).getUrl());
-        assertEquals(POST_IMAGE_OTHER_ID, resultPost.getImages().get(1).getPostImageId());
+        assertEquals(POST_IMAGE_OTHER_ID, resultPost.getImages().get(1).getId());
         assertEquals(POST_IMAGE_OTHER_URL, resultPost.getImages().get(1).getUrl());
     }
 
     @Test
     void convertToPostPreviewDto_returnsCorrectPostPreviewDto() {
         List<PostImage> postImages = List.of(
-                new PostImage().setPostImageId(POST_IMAGE_ID).setUrl(POST_IMAGE_URL),
+                new PostImage().setId(POST_IMAGE_ID).setUrl(POST_IMAGE_URL),
                 new PostImage());
         Post post = new Post()
-                .setPostId(POST_ID).setTitle(POST_TITLE).setPrice(POST_PRICE)
+                .setId(POST_ID).setTitle(POST_TITLE).setPrice(POST_PRICE)
                 .setStatus(POST_STATUS).setDescription(POST_DESCRIPTION)
                 .setAddress(POST_ADDRESS).setAuthor(new Client()).setImages(postImages);
 
         PostPreviewDto resultDto = modelMapper.map(post, PostPreviewDto.class);
 
-        assertEquals(POST_ID, resultDto.getPostId());
+        assertEquals(POST_ID, resultDto.getId());
         assertEquals(POST_TITLE, resultDto.getTitle());
         assertEquals(POST_PRICE, resultDto.getPrice());
         assertEquals(POST_ADDRESS, resultDto.getAddress());
-        assertEquals(POST_IMAGE_ID, resultDto.getCoverImage().getPostImageId());
+        assertEquals(POST_IMAGE_ID, resultDto.getCoverImage().getId());
         assertEquals(POST_IMAGE_URL, resultDto.getCoverImage().getUrl());
     }
 
     @Test
     void convertToPostDetailsDto_returnsCorrectPostDetailsDto() {
         List<PostImage> postImages = List.of(
-                new PostImage().setPostImageId(POST_IMAGE_ID).setUrl(POST_IMAGE_URL),
-                new PostImage().setPostImageId(POST_IMAGE_OTHER_ID).setUrl(POST_IMAGE_OTHER_URL));
+                new PostImage().setId(POST_IMAGE_ID).setUrl(POST_IMAGE_URL),
+                new PostImage().setId(POST_IMAGE_OTHER_ID).setUrl(POST_IMAGE_OTHER_URL));
         Post post = new Post()
-                .setPostId(POST_ID).setTitle(POST_TITLE).setPrice(POST_PRICE)
+                .setId(POST_ID).setTitle(POST_TITLE).setPrice(POST_PRICE)
                 .setStatus(POST_STATUS).setDescription(POST_DESCRIPTION)
                 .setAddress(POST_ADDRESS).setAuthor(new Client()).setImages(postImages);
 
         PostDetailsDto resultDto = modelMapper.map(post, PostDetailsDto.class);
 
-        assertEquals(POST_ID, resultDto.getPostId());
+        assertEquals(POST_ID, resultDto.getId());
         assertEquals(POST_TITLE, resultDto.getTitle());
         assertEquals(POST_PRICE, resultDto.getPrice());
         assertEquals(POST_STATUS, resultDto.getStatus());
         assertEquals(POST_DESCRIPTION, resultDto.getDescription());
         assertEquals(POST_ADDRESS, resultDto.getAddress());
-        assertEquals(POST_IMAGE_ID, resultDto.getImages().get(0).getPostImageId());
+        assertEquals(POST_IMAGE_ID, resultDto.getImages().get(0).getId());
         assertEquals(POST_IMAGE_URL, resultDto.getImages().get(0).getUrl());
-        assertEquals(POST_IMAGE_OTHER_ID, resultDto.getImages().get(1).getPostImageId());
+        assertEquals(POST_IMAGE_OTHER_ID, resultDto.getImages().get(1).getId());
         assertEquals(POST_IMAGE_OTHER_URL, resultDto.getImages().get(1).getUrl());
     }
 }
