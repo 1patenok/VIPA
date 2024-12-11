@@ -56,6 +56,15 @@ public class Client {
             inverseJoinColumns = @JoinColumn(name = "post_id"))
     private List<Post> postsInCart;
 
+    @OneToMany(mappedBy = "sender")
+    private List<Message> sentMessages;
+
+    @OneToMany(mappedBy = "recipient")
+    private List<Message> receivedMessages;
+
+    @OneToMany(mappedBy = "dialog")
+    private List<Dialog> dialogs;
+
     public void addFavorite(Post post) {
         favoritePosts.add(post);
     }
