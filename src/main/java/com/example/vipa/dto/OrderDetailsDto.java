@@ -12,8 +12,10 @@ import java.util.List;
 @Accessors(chain = true)
 public class OrderDetailsDto {
     private int id;
-    private int price;
     private String deliveryAddress;
     private DeliveryMethod deliveryMethod;
-    private List<PostPreviewDto> postsInOrder;
+    private String timeOfDelivery;
+    private String paymentMethod;
+    private String cardNumber;
+    private List<Integer> postsInOrder;
 }

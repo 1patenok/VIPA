@@ -28,6 +28,15 @@ public class Order {
     @Enumerated(value = EnumType.STRING)
     private DeliveryMethod deliveryMethod;
 
+    @Column(name = "time_of_delivery")
+    private Integer timeOfDelivery;
+
+    @Column(name = "payment_method")
+    private String paymentMethod;
+
+    @Column(name = "card_number")
+    private String cardNumber;
+
     @ManyToOne
     @JoinColumn(name = "client_id", referencedColumnName = "client_id")
     private Client client;

@@ -1,7 +1,9 @@
 package com.example.vipa.controller;
 
+import com.example.vipa.dto.OrderDetailsDto;
 import com.example.vipa.dto.PostDetailsDto;
 import com.example.vipa.dto.PostPreviewDto;
+import com.example.vipa.service.OrderService;
 import com.example.vipa.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -88,4 +90,6 @@ public class PostController {
         postService.deletePost(postId);
         return "/common/homepage";
     }
+
+
 }
