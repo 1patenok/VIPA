@@ -10,6 +10,7 @@ import lombok.Setter;
 @Table(name = "payment_account")
 public class PaymentAccount {
     @Id
+    @Column(name = "payment_account_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
@@ -18,7 +19,4 @@ public class PaymentAccount {
 
     @Column(name = "current_sum")
     private int currentSum;
-
-    @Column(name = "password")
-    private String password;
 }

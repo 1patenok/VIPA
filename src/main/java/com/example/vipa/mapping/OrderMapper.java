@@ -2,15 +2,9 @@ package com.example.vipa.mapping;
 
 import com.example.vipa.dto.*;
 import com.example.vipa.model.Order;
-import com.example.vipa.model.Post;
-import com.example.vipa.model.PostImage;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Slf4j
 @Component
@@ -36,4 +30,6 @@ public class OrderMapper {
         log.info("inside convertToPostDetailsDto()");
         return modelMapper.map(order, OrderDetailsDto.class);
     }
+
+
 }
