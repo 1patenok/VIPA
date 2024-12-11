@@ -5,7 +5,9 @@ import com.example.vipa.dto.OrderPreviewDto;
 import com.example.vipa.exception.NotFoundException;
 import com.example.vipa.mapping.OrderMapper;
 import com.example.vipa.model.Client;
+import com.example.vipa.model.DeliveryMethod;
 import com.example.vipa.model.Order;
+import com.example.vipa.model.Post;
 import com.example.vipa.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +25,7 @@ public class OrderService {
 
     private final OrderMapper orderMapper;
     private final ClientService clientService;
+    private final PostService postService;
     private final OrderRepository orderRepository;
 
     @Transactional
@@ -41,8 +44,21 @@ public class OrderService {
     @Transactional
     public void createOrder(int clientId, OrderDetailsDto orderDetailsDto) {
         Order orderToSave = orderMapper.convertToOrder(orderDetailsDto);
+        if(orderDetailsDto.getDeliveryMethod().equals(DeliveryMethod.COURIER)){
+            orderToSave.setTimeOfDelivery(1);
+        }else{
+            orderToSave.setTimeOfDelivery(3);
+        }
+        List<Post> listOfPosts = postService.getPostsByIds(orderDetailsDto.getPostsInOrder());
+        int sumOfPrice = 0;
+        for(Post post: listOfPosts){
+            sumOfPrice += post.getPrice();
+        }
+        orderToSave.setPrice(sumOfPrice);
         Client client = clientService.getClientEntity(clientId);
         orderToSave.setClient(client);
         orderRepository.save(orderToSave);
     }
+
+
 }
