@@ -1,5 +1,6 @@
 package com.example.vipa.service;
 
+import com.example.vipa.dto.OrderDetailsDto;
 import com.example.vipa.dto.PostDetailsDto;
 import com.example.vipa.dto.PostPreviewDto;
 import com.example.vipa.mapping.PostMapper;
@@ -28,6 +29,10 @@ public class PostService {
     public PostDetailsDto getPost(int postId) {
         return postRepository.findById(postId).map(postMapper::convertToPostDetailsDto)
                 .orElseThrow(() -> new RuntimeException(POST_NOT_FOUND_MESSAGE));
+    }
+
+    public List<Post> getPostsByIds(List<Integer> listIds) {
+        return postRepository.findAllById(listIds);
     }
 
     public Post getPostEntity(int postId) {

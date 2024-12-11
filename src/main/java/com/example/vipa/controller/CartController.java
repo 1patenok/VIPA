@@ -1,6 +1,8 @@
 package com.example.vipa.controller;
 
+import com.example.vipa.dto.OrderDetailsDto;
 import com.example.vipa.dto.PostPreviewDto;
+import com.example.vipa.dto.SignInDto;
 import com.example.vipa.service.CartService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,4 +47,17 @@ public class CartController {
         cartService.deletePostFromCart(clientId, postId);
         return ResponseEntity.ok("Объявление успешно удалено из корзины.");
     }
+
+
 }
+
+
+/**
+ *
+ * 1 получаю запрос из корзины с заказами для перехода на оплату
+ * 2 выбор способов доставки курьером(ввод адреса) или почта россии(выбор из списка, нужна бд с адресами)
+ * 3 вывод время доставки, если курьер 1 день, почта 3 дня
+ * 4 выбор способа оплаты => 3 разных запроса, изначально стоит по карте
+ * 4.1 по карте, ввожу номер карты, жму оплатить, отправляет в заглушку,
+ * где проверяется есть ли деньги, возвращаюсь
+ **/
