@@ -1,35 +1,23 @@
 package com.example.vipa.model;
 
-
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
-import java.util.Locale;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "message")
+@Table(name = "dialog")
 @Accessors(chain = true)
-public class Message {
+public class Dialog {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "message_id")
+    @Column(name = "dialog_id")
     private int id;
-
-    @Column(name = "text")
-    private String text;
-
-    @Column(name = "send_timestamp")
-    private LocalDateTime sendDateTime;
-
-    @ManyToOne
-    @JoinColumn(name = "dialog_id", referencedColumnName = "dialog_id")
-    private Dialog dialog;
 
     @ManyToOne
     @JoinColumn(name = "client_id", referencedColumnName = "client_id")
