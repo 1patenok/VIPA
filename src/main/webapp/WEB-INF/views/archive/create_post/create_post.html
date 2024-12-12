@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
@@ -54,16 +54,10 @@
                 <div class="post__input-img">
                     <input type="file" class="file" multiple required>
                 </div>
-                <select class="post__input-category">
-                    <option value="0">Категория ХХХ</option>
-                    <option value="1">Категория 1</option>
-                    <option value="2">Категория 2</option>
-                    <option value="3">Категория 3</option>
-                    <option value="4">Категория 4</option>
-                    <option value="5">Категория 5</option>
-                    <option value="6">Категория 6</option>
-                    <option value="7">Категория 7</option>
-                    <option value="8">Категория 8</option>
+                <select th:field="*{category}" class="post__input-category">
+                    <div th:each="category : ${categories}">
+                        <option th:title="${category.getName()}" th:value="${category.getId()}">Name</option>
+                    </div>
                 </select>
             </div>
             <div class="post__input-part2">

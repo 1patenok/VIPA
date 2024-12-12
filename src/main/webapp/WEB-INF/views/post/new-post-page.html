@@ -1,10 +1,539 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="UTF-8">
-    <title>New Post Page</title>
-</head>
-<body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/reset.css">
+    <link rel="stylesheet" href="style/style.css">
+    <title>Create Post</title>
+    <script type="text/javascript" src="script/script.js"></script>
+    <style>
+        * {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
 
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+:focus, :active {
+  outline: none;
+}
+
+a:focus, a:active {
+  outline: none;
+}
+
+nav, footer, header, aside {
+  display: block;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  font-size: 100%;
+  line-height: 1;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+input, button, textarea {
+  font-family: inherit;
+}
+
+input::-ms-clear {
+  display: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+button::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+
+a, a:visited {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+ul li {
+  list-style: none;
+}
+
+img {
+  vertical-align: top;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+        // ================================================================================================
+
+        @charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans&display=swap");
+:root {
+  --font-family: "Space Mono", sans-serif;
+  --second-family: "Work Sans", sans-serif;
+}
+
+.body {
+  background-color: #2b2b2b;
+  font-family: var(--second-family);
+  color: #fff;
+  height: 100%;
+}
+
+.wrapper {
+  max-width: 1050px;
+  margin: 0 auto;
+}
+
+.title {
+  padding: 5px;
+  font-weight: 600;
+  font-size: 38px;
+}
+
+.header {
+  background-color: #2b2b2b;
+  opacity: 0.8;
+  width: 100%;
+  display: flex;
+  height: 80px;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 16px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 2;
+}
+
+.header__logo {
+  margin: 20px;
+}
+
+.logo {
+  font-family: var(--font-family);
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100px;
+  transition: 0.3s;
+}
+
+.logo:hover {
+  color: #9c9c9c;
+}
+
+.header__navigation {
+  display: flex;
+  align-items: center;
+}
+.header__navigation .header__navigation-item {
+  padding: 12px 20px;
+  margin: 5px;
+  transition: 0.3s;
+}
+
+.header__navigation-item:hover {
+  color: #ccc;
+}
+
+.header__navigation-item-last {
+  padding: -50px;
+  font-weight: 600;
+  border-radius: 20px;
+  background-color: #a259ff;
+}
+.header__navigation-item-last p {
+  padding: 8px;
+}
+
+.header__navigation-item-last:hover {
+  background-color: #832ff1;
+}
+
+.header__navigation-item {
+  position: relative;
+  display: inline-block;
+}
+
+.header__profile {
+  margin: 0 10px 0 0;
+}
+
+.header__profile-title {
+  padding: 0 12px;
+  cursor: pointer;
+}
+
+.registration__button {
+  position: relative;
+  display: inline-block;
+  transition: 0.3s;
+}
+
+.registration__button:hover {
+  border-radius: 20px 20px 0 0;
+}
+.registration__button:hover .header__links {
+  display: block;
+  opacity: 1;
+}
+
+.header__links {
+  display: none;
+  opacity: 0;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #3b3b3b;
+  min-width: 160px;
+  z-index: 1;
+  transition: opacity 1s;
+  border-radius: 0 0 20px 20px;
+}
+
+.link {
+  display: block;
+  color: #fff;
+  padding: 12px 16px;
+  transition: 0.3s;
+}
+
+.link:hover {
+  color: #9c9c9c;
+}
+
+.registration {
+  display: flex;
+  font-weight: 600;
+  padding: 20px 30px;
+  background-color: #a259ff;
+  border-radius: 20px;
+  transition: 0.3s;
+}
+.registration img {
+  margin: -10px 5px;
+}
+
+.registration:hover {
+  background-color: #832ff1;
+}
+
+.post {
+  margin: 120px 0 80px 0;
+  height: 100vh;
+  text-align: center;
+}
+
+.post__title {
+  margin: 0 0 40px 0;
+}
+
+.post__input {
+  max-width: 1050px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+}
+.post__input p {
+  font-size: 24px;
+  margin: 0 0 40px 0;
+}
+
+.post__input-img {
+  display: flex;
+  background-color: #ccc;
+  border-radius: 30px;
+  border: 5px solid transparent;
+  transition: 0.3s;
+  margin: 0 0 20px 0;
+  position: relative;
+}
+.post__input-img input {
+  width: 400px;
+  padding: 10px 20px;
+  color: #000;
+  font-size: 20px;
+}
+
+.post__input-img input::after {
+  content: url("../img/icon/icons8-плюс.svg");
+  display: inline-block;
+  vertical-align: middle;
+  width: 80px;
+  margin: 0 0 0 10px;
+}
+
+.post__input-img:hover {
+  border: 5px solid #832ff1;
+}
+
+.file::file-selector-button {
+  display: none;
+}
+
+.post__input-text {
+  margin: 0 0 20px 0;
+}
+.post__input-text input {
+  display: block;
+  width: 600px;
+  margin: 15px auto;
+  padding: 15px 0 15px 20px;
+  border-radius: 20px;
+  font-size: 16px;
+}
+.post__input-text textarea {
+  display: block;
+  width: 600px;
+  margin: 15px auto;
+  padding: 15px 0 175px 20px;
+  border-radius: 20px;
+  font-size: 16px;
+  resize: none;
+}
+
+.post__input-text input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.post__input-category-title {
+  text-align: left;
+  font-size: 24px;
+  margin: 0 0 15px 0;
+}
+
+.post__input-category {
+  text-align: center;
+  max-width: 600px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  border-radius: 20px;
+  padding: 15px 60px;
+  font-size: 16px;
+  -webkit-appearance: none;
+  border: 3px solid transparent;
+  transition: 0.3s;
+  background-color: #ccc;
+}
+
+.post__input-category:hover {
+  border: 3px solid #832ff1;
+}
+
+.post__buttons {
+  display: flex;
+  justify-content: space-around;
+}
+.post__buttons button {
+  padding: 20px 80px;
+  border-radius: 20px;
+  font-size: 20px;
+  font-weight: 600;
+  background-color: #a259ff;
+  color: #fff;
+  transition: 0.3s;
+}
+
+.post__buttons button:hover {
+  background-color: #832ff1;
+  color: #9c9c9c;
+}
+
+.footer {
+  margin: -100px 0 0 0;
+  background-color: #3b3b3b;
+  padding: 0 0 10px 0;
+}
+
+.footer__parts {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+}
+
+.footer__part {
+  max-width: 240px;
+}
+
+.footer__title {
+  font-family: var(--font-family);
+  font-size: 24px;
+  margin: 0 0 30px 0;
+}
+
+.footer__text {
+  margin: 0 0 20px 0;
+}
+
+.social {
+  margin: 25px 0 0 0;
+  display: flex;
+}
+.social a {
+  margin: 0 5px 0 0;
+  transition: 0.3s;
+}
+.social a img {
+  padding: 5px;
+}
+.social a:hover {
+  border-radius: 10px;
+  background-color: #7110f0;
+}
+
+.footer__registration {
+  width: 44%;
+}
+
+.part2 p {
+  margin: 0 0 10px 0;
+  transition: 0.3s;
+}
+.part2 p:hover {
+  color: #9c9c9c;
+}
+
+.part3 {
+  max-width: 350px;
+}
+    </style>
+</head>
+
+<body class="body">
+<header class="header">
+    <a class="header__logo logo" href="homepage.html">
+        <img src="img/icon/nav_icon/Storefront.svg" alt="logo">
+        <nav>VIPA</nav>
+    </a>
+    <div class="header__navigation">
+        <a href="#" class="header__navigation-item">Чаты</a>
+        <a href="#" class="header__navigation-item">Избранные</a>
+        <a href="#" class="header__navigation-item">Уведомления</a>
+        <a href="#" class="header__navigation-item">Корзина</a>
+        <a href="#" class="header__navigation-item">Заказы</a>
+        <a href="#" class="header__navigation-item header__navigation-item-last">
+            <p>Подать объявление</p>
+        </a>
+        <div class="header__profile">
+            <div class="registration__button registration">
+                <img src="img/icon/nav_icon/User.svg" alt="User">
+                <p class="header__profile-title">Меню</p>
+                <div class="header__links">
+                    <a href="#" class="link">Профиль</a>
+                    <a href="#" class="link">Чаты</a>
+                    <a href="#" class="link">Избранные</a>
+                    <a href="#" class="link">Уведомления</a>
+                    <a href="#" class="link">Корзина</a>
+                    <a href="#" class="link">Заказы</a>
+                    <!-- <a href="../log_in/log_in.html" class="link">Войти</a>
+                    <a href="../create_account/create_account.html" class="link">Регистрация</a> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="post">
+    <div class="post__title title">
+        <p>Создать объявление</p>
+    </div>
+    <form class="post__input">
+        <div class="post__input-part1">
+            <p>Выберите фото товара</p>
+            <div class="post__input-img">
+                <input type="file" class="file" multiple required>
+            </div>
+            <select th:field="*{category}" class="post__input-category">
+                <div th:each="category : ${categories}">
+                    <option th:title="${category.getName()}" th:value="${category.getId()}">Name</option>
+                </div>
+            </select>
+        </div>
+        <div class="post__input-part2">
+            <div class="post__input-text">
+                <input type="text" placeholder="Название товара" required>
+                <input type="text" placeholder="Ваш адрес" required>
+                <input type="email" placeholder="Адрес эл.почты" required>
+                <input type="number" placeholder="Цена в рублях" required>
+                <textarea placeholder="Описание" required></textarea>
+            </div>
+            <div class="post__buttons">
+                <button type="submit">Отправить</button>
+                <button type="reset">Очистить</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<footer class="footer">
+    <div class="footer__parts wrapper">
+        <div class="footer__part part1">
+            <a href="../../../../../../../../Frontend/homepage/homepage.html" class="footer__title logo">
+                <img src="img/icon/nav_icon/Storefront.svg" alt="logo">
+                <nav>VIPA</nav>
+            </a>
+            <p class="footer__text">
+            <nav></nav>
+            <nav>Присоединяйтесь к нашему сообществу</nav>
+            <div class="social">
+                <a href="#"><img src="img/icon/nav_icon/DiscordLogo.svg" alt="discord"></a>
+                <a href="#"><img src="img/icon/nav_icon/YoutubeLogo.svg" alt="youtube"></a>
+                <a href="#"><img src="img/icon/nav_icon/TwitterLogo.svg" alt="twitter"></a>
+                <a href="#"><img src="img/icon/nav_icon/InstagramLogo.svg" alt="instagram"></a>
+            </div>
+            </p>
+        </div>
+        <div class="footer__part part2">
+            <div class="footer__title">
+                <nav>Навигация</nav>
+            </div>
+            <p class="footer__text">
+            <p><a href="#">Чаты</a></p>
+            <p><a href="#">Избранные</a></p>
+            <p><a href="#">Уведомления</a></p>
+            <p><a href="#">Корзина</a></p>
+            <p><a href="#">Заказы</a></p>
+            </p>
+        </div>
+        <div class="footer__part part3">
+            <div class="footer__title">
+                <p>Присоединяйтесь к нам</p>
+            </div>
+            <p class="footer__text">
+                Получайте эксклюзивные акции и обновления прямо в свой почтовый ящик.
+            </p>
+            <!-- <a href="create_account.html" class="footer__registration registration">
+                <img src="img/icon/RocketLaunch.svg" alt="rocket">
+                <p>Начать</p>
+            </a> -->
+        </div>
+    </div>
+</footer>
 </body>
+
 </html>
