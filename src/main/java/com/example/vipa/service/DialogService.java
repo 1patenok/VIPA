@@ -39,14 +39,17 @@ public class DialogService {
 
     @Transactional
     public DialogDetailsDto getDialog(int dialogId) {
-        return dialogRepository.findById(dialogId).map(dialogMapper::convertToDialogDetailsDto)
-                .orElseThrow(() -> new NotFoundException(DIALOG_NOT_FOUND_MESSAGE));
+        return dialogRepository.findById(dialogId).map(dialog -> {
+                    System.out.println(dialog);
+                    return dialogMapper.convertToDialogDetailsDto(dialog);
+                }).orElseThrow(() -> new NotFoundException(DIALOG_NOT_FOUND_MESSAGE));
     }
 
     @Transactional
     public List<DialogPreviewDto> getSellerDialogs(int clientId) {
         Client client = clientService.getClientEntity(clientId);
-        return client.getSellerDialogs().stream()
+        return client.getPosts().stream()
+                .flatMap(post -> post.getDialogs().stream())
                 .map(dialogMapper::convertToDialogPreviewDto)
                 .toList();
     }

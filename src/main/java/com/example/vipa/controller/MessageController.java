@@ -3,6 +3,7 @@ package com.example.vipa.controller;
 
 import com.example.vipa.dto.MessageDto;
 import com.example.vipa.model.DialogType;
+import com.example.vipa.model.Message;
 import com.example.vipa.service.DialogService;
 import com.example.vipa.service.MessageService;
 import lombok.RequiredArgsConstructor;
@@ -32,9 +33,9 @@ public class MessageController {
 
     @ResponseBody
     @PutMapping(value = "/update/{messageId}", produces = {"application/json; charset=UTF-8"})
-    public ResponseEntity<?> updateMessage(Model model, @PathVariable("messageId") int messageId) {
+    public ResponseEntity<?> updateMessage(@ModelAttribute("message") MessageDto messageDto,
+                                           @PathVariable("messageId") int messageId) {
         log.info("Принят запрос на изменение сообщения. messageId: {}", messageId);
-        MessageDto messageDto = (MessageDto) model.getAttribute("message");
         messageService.updateMessage(messageId, messageDto);
         return ResponseEntity.ok("Сообщение успешно изменено.");
     }

@@ -1,6 +1,5 @@
 package com.example.vipa.service;
 
-import com.example.vipa.dto.OrderDetailsDto;
 import com.example.vipa.dto.PostDetailsDto;
 import com.example.vipa.dto.PostPreviewDto;
 import com.example.vipa.mapping.PostMapper;
