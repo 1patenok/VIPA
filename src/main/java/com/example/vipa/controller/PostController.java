@@ -3,6 +3,7 @@ package com.example.vipa.controller;
 import com.example.vipa.dto.OrderDetailsDto;
 import com.example.vipa.dto.PostDetailsDto;
 import com.example.vipa.dto.PostPreviewDto;
+import com.example.vipa.service.CategoryService;
 import com.example.vipa.service.OrderService;
 import com.example.vipa.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,7 @@ import java.util.List;
 public class PostController {
 
     private final PostService postService;
+    private final CategoryService cateroryService;
 
     @GetMapping("/{postId}")
     public String getPostPage(Model model, @PathVariable("postId") int postId) {
@@ -40,12 +42,22 @@ public class PostController {
         return "/post/post-page";
     }
 
+
     @GetMapping("/catalog")
     public String getPostCatalogPage(Model model, Pageable pageable,
                                      @RequestParam("postTitlePattern") String postTitlePattern) {
         log.info("Получен запрос на просмотр каталога объявлений. Параметры пэйджинга: {}, postTitlePattern: {}",
                 pageable, postTitlePattern);
         List<PostPreviewDto> posts = postService.getPostPage(pageable, postTitlePattern);
+        log.info("posts: {}", posts);
+        model.addAttribute("posts", posts);
+        return "/post/posts-page";
+    }
+
+    @GetMapping("/catalog/{categoryId}")
+    public String getPostsByCategory(Model model, Pageable pageable, @PathVariable("categoryId") int categoryId){
+        log.info("Получен запрос на просмотр каталога объявлений по категории. categoryId: {}", categoryId);
+        List<PostPreviewDto> posts = postService.getPostsByCategory(pageable, categoryId);
         log.info("posts: {}", posts);
         model.addAttribute("posts", posts);
         return "/post/posts-page";
