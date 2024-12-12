@@ -1,14 +1,10 @@
 package com.example.vipa.service;
 
-import com.example.vipa.dto.DialogPreviewDto;
 import com.example.vipa.dto.MessageDto;
 import com.example.vipa.exception.NotFoundException;
-import com.example.vipa.mapping.DialogMapper;
 import com.example.vipa.mapping.MessageMapper;
 import com.example.vipa.model.Client;
-import com.example.vipa.model.Dialog;
 import com.example.vipa.model.Message;
-import com.example.vipa.repository.DialogRepository;
 import com.example.vipa.repository.MessageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,8 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Slf4j
 @Service
@@ -39,7 +33,7 @@ public class MessageService {
         log.info("inside createMessage(), messageDto: {}", messageDto);
         Client sender = clientService.getClientEntity(senderId);
         Message messageToSave = messageMapper.convertToMessage(messageDto);
-        messageToSave.setSendDateTime(LocalDateTime.now());
+        messageToSave.setTimestamp(LocalDateTime.now());
         messageToSave.setSenderName(sender.getFullName());
         messageToSave.setDialog(dialogService.getDialogEntity(dialogId));
         messageRepository.save(messageToSave);

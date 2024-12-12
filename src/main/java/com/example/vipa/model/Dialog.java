@@ -3,6 +3,7 @@ package com.example.vipa.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@ToString
 @Table(name = "dialog")
 @Accessors(chain = true)
 public class Dialog {
@@ -18,10 +20,6 @@ public class Dialog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "dialog_id")
     private int id;
-
-/*    @ManyToOne
-    @JoinColumn(name = "seller_id", referencedColumnName = "client_id")
-    private Client seller;*/
 
     @ManyToOne
     @JoinColumn(name = "customer_id", referencedColumnName = "client_id")

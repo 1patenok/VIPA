@@ -7,7 +7,6 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
-import java.util.Locale;
 
 @Getter
 @Setter
@@ -26,7 +25,7 @@ public class Message {
 
 
     @Column(name = "send_timestamp")
-    private LocalDateTime sendDateTime;
+    private LocalDateTime timestamp;
 
     @Column(name = "sender_name")
     private String senderName;
