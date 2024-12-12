@@ -18,7 +18,7 @@ public class MessageMapper {
     }
 
     public Message convertToMessage(MessageDto dto) {
-        log.info("inside convertToMessage()");
+        log.info("inside convertToMessage(), dto: {}", dto);
         return modelMapper.map(dto, Message.class);
     }
 

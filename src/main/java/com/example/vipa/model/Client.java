@@ -56,14 +56,21 @@ public class Client {
             inverseJoinColumns = @JoinColumn(name = "post_id"))
     private List<Post> postsInCart;
 
-    @OneToMany(mappedBy = "sender")
+/*    @OneToMany(mappedBy = "sender")
     private List<Message> sentMessages;
 
     @OneToMany(mappedBy = "recipient")
-    private List<Message> receivedMessages;
+    private List<Message> receivedMessages;*/
 
-    @OneToMany(mappedBy = "dialog")
-    private List<Dialog> dialogs;
+    @OneToMany(mappedBy = "seller")
+    private List<Dialog> sellerDialogs;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Dialog> customerDialogs;
+
+    public String getFullName() {
+        return name + " " + surname;
+    }
 
     public void addFavorite(Post post) {
         favoritePosts.add(post);

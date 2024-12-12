@@ -2,11 +2,15 @@ package com.example.vipa.controller;
 
 import com.example.vipa.dto.OrderDetailsDto;
 import com.example.vipa.dto.OrderPreviewDto;
+import com.example.vipa.dto.PostAddressDto;
+import com.example.vipa.dto.PostDetailsDto;
 import com.example.vipa.service.OrderService;
+import com.example.vipa.service.PostAddressService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +22,7 @@ import java.util.List;
 public class OrderController {
 
     private final OrderService orderService;
+    private final PostAddressService postAddressService;
 
     @GetMapping("/orderInfo/{orderId}")
     public String getOrderPage(@PathVariable("orderId") int orderId,
@@ -32,6 +37,13 @@ public class OrderController {
                                 @ModelAttribute("orderList") List<OrderPreviewDto> orderList) {
         log.info("Получен запрос на просмотр заказов пользователя. clientId: {}", clientId);
         orderList = orderService.getOrders(clientId);
+        return "/order/orders-page";
+    }
+
+    @GetMapping("/post_addresses")
+    public String getPostAddress(Model model) {
+        List<PostAddressDto> listPostAddress  = postAddressService.getPostAddress();
+        model.addAttribute("addresses", listPostAddress);
         return "/order/orders-page";
     }
 

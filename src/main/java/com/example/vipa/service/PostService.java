@@ -27,8 +27,11 @@ public class PostService {
 
     @Transactional
     public PostDetailsDto getPost(int postId) {
-        return postRepository.findById(postId).map(postMapper::convertToPostDetailsDto)
+        Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new RuntimeException(POST_NOT_FOUND_MESSAGE));
+        post.setNumberOfViews(post.getNumberOfViews() + 1);
+        postRepository.save(post);
+        return postMapper.convertToPostDetailsDto(post);
     }
 
     public List<Post> getPostsByIds(List<Integer> listIds) {

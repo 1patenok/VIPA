@@ -28,18 +28,21 @@ public class Order {
     @Enumerated(value = EnumType.STRING)
     private DeliveryMethod deliveryMethod;
 
+    @Column(name = "status_of_delivery")
+    @Enumerated(value = EnumType.STRING)
+    private OrderStatus orderStatus;
+
     @Column(name = "time_of_delivery")
     private Integer timeOfDelivery;
 
     @Column(name = "payment_method")
-    private String paymentMethod;
-
-    @Column(name = "card_number")
-    private String cardNumber;
+    @Enumerated(value = EnumType.STRING)
+    private PaymentMethod paymentMethod;
 
     @ManyToOne
     @JoinColumn(name = "client_id", referencedColumnName = "client_id")
     private Client client;
+
 
     @ManyToMany
     @JoinTable(name = "order_post",
