@@ -24,18 +24,19 @@ public class Message {
     @Column(name = "text")
     private String text;
 
+
     @Column(name = "send_timestamp")
     private LocalDateTime sendDateTime;
+
+    @Column(name = "sender_name")
+    private String senderName;
 
     @ManyToOne
     @JoinColumn(name = "dialog_id", referencedColumnName = "dialog_id")
     private Dialog dialog;
 
-    @ManyToOne
-    @JoinColumn(name = "client_id", referencedColumnName = "client_id")
-    private Client sender;
 
-    @ManyToOne
+/*    @ManyToOne
     @JoinColumn(name = "client_id", referencedColumnName = "client_id")
-    private Client recipient;
+    private Client recipient;*/
 }

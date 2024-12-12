@@ -33,6 +33,9 @@ public class Post {
     @Column(name = "address")
     private String address;
 
+    @Column(name = "number_of_views")
+    private int numberOfViews;
+
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "category_id")
     private Category category;
@@ -41,8 +44,11 @@ public class Post {
     @JoinColumn(name = "client_id", referencedColumnName = "client_id")
     private Client author;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "post")
     private List<PostImage> images;
+
+    @OneToMany(mappedBy = "post")
+    private List<Dialog> dialogs;
 
     @ManyToMany(mappedBy = "favoritePosts")
     private List<Client> clientsWithPostInFavorites; // данное поле представляет клиентов, которые добавили данное объявление в избранное

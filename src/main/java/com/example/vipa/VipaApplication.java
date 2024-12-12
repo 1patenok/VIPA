@@ -10,5 +10,4 @@ public class  VipaApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(VipaApplication.class, args);
 	}
-
 }

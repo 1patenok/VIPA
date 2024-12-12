@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,11 +19,26 @@ public class Dialog {
     @Column(name = "dialog_id")
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "client_id", referencedColumnName = "client_id")
-    private Client sender;
+/*    @ManyToOne
+    @JoinColumn(name = "seller_id", referencedColumnName = "client_id")
+    private Client seller;*/
 
     @ManyToOne
-    @JoinColumn(name = "client_id", referencedColumnName = "client_id")
-    private Client recipient;
+    @JoinColumn(name = "customer_id", referencedColumnName = "client_id")
+    private Client customer;
+
+    @ManyToOne
+    @JoinColumn(name = "post_id", referencedColumnName = "post_id")
+    private Post post;
+
+    @OneToMany(mappedBy = "dialog")
+    private List<Message> messages;
+
+    public void addMessage(Message message) {
+        messages.add(message);
+    }
+
+    public void removeMessage(Message message) {
+        messages.remove(message);
+    }
 }

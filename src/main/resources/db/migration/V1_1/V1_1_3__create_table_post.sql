@@ -3,6 +3,7 @@ CREATE TABLE post (
     title VARCHAR(50) NOT NULL,
     price INT NOT NULL,
     status VARCHAR(20) NOT NULL,
+    number_of_views INT NOT NULL,
     client_id INT NOT NULL,
     category_id INT NOT NULL,
     description TEXT NOT NULL CHECK (length(description) <= 1000),
