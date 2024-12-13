@@ -8,9 +8,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ViewController {
 
-    @GetMapping("/homepage")
-    public String getHomepage() {
+    @GetMapping("/homepage-guest")
+    public String getGuestHomepage() {
         log.info("inside getHomepage()");
         return "/common/homepage-guest";
+    }
+
+    @GetMapping("/homepage-client")
+    public String getClientHomepage() {
+        log.info("inside getHomepage()");
+        return "/common/homepage-client";
     }
 }

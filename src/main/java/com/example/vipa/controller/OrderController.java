@@ -24,7 +24,7 @@ public class OrderController {
     private final OrderService orderService;
     private final PostAddressService postAddressService;
 
-    @GetMapping("/orderInfo/{orderId}")
+    @GetMapping("/info/{orderId}")
     public String getOrderPage(@PathVariable("orderId") int orderId,
                                @ModelAttribute("order") OrderDetailsDto orderDetailsDto) {
         log.info("Получен запрос на просмотр информации о заказе. orderId: {}", orderId);
@@ -32,7 +32,7 @@ public class OrderController {
         return "/order/order-page";
     }
 
-    @GetMapping("/orderList/{clientId}")
+    @GetMapping("/list/{clientId}")
     public String getOrdersPage(@PathVariable("clientId") int clientId,
                                 @ModelAttribute("orderList") List<OrderPreviewDto> orderList) {
         log.info("Получен запрос на просмотр заказов пользователя. clientId: {}", clientId);

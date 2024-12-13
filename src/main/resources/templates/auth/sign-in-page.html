@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" th:href="@{style/reset.css}">
+    <link rel="stylesheet" th:href="@{/auth/sign-in-page/style/reset.css}">
     <link rel="stylesheet" th:href="@{/auth/sign-in-page/style/style.css}">
     <title>Log in Account</title>
 </head>
@@ -16,17 +16,17 @@
             <nav>VIPA</nav>
         </a>
         <div class="header__navigation">
-            <!-- <a href="#" class="header__navigation-item">Marketplace</a>
-            <a href="#" class="header__navigation-item">Chating</a>
-            <a href="#" class="header__navigation-item">Cart</a> -->
+            <!-- <ath:href="@{#" class="header__navigation-item">Marketplace</a>
+            <ath:href="@{#" class="header__navigation-item">Chating</a>
+            <ath:href="@{#" class="header__navigation-item">Cart</a> -->
             <div class="header__profile">
                 <div class="registration__button registration">
-                    <img src="img/icon/nav_icon/User.svg" alt="User">
+                    <img th:src="@{/auth/sign-in-page/img/icon/nav_icon/User.svg}" alt="User">
                     <p class="header__profile-title">Меню</p>
                     <div class="header__links">
-                        <!-- <a href="#" class="link">Profile</a> -->
-                        <a href="log_in.html" class="link">Войти</a>
-                        <a href="../create_account/create_account.html" class="link">Регистрация</a>
+                        <!-- <ath:href="@{#" class="link">Profile</a> -->
+                        <a th:href="@{/auth/sign-in}" class="link">Войти</a>
+                        <a th:href="@{/auth/sign-up}" class="link">Регистрация</a>
                     </div>
                 </div>
             </div>
@@ -41,7 +41,7 @@
             <p>Добро пожаловать! Введите свои данные и начните торговлю!</p>
         </div>
         <div class="log-in__form">
-            <form th:action="@{/auth/sign-in}" th:object="${signInDto}" class="log-in__form-form form__input">
+            <form th:action="@{/auth/sign-in}" th:object="${signInDto}" method="post" class="log-in__form-form form__input">
                 <input type="email" th:field="*{email}" placeholder="Почта" class="form__email form__input" required>
                 <input type="text" th:field="*{password}" placeholder="Пароль" class="form__password form__input" required>
                 <button type="submit" class="form__button">
@@ -54,18 +54,18 @@
     <footer class="footer">
         <div class="footer__parts wrapper">
             <div class="footer__part part1">
-                <a href="../../../../../../../../Frontend/homepage/homepage.html" class="footer__title logo">
-                    <img src="img/icon/nav_icon/Storefront.svg" alt="logo">
+                <a th:href="@{/homepage}" class="footer__title logo">
+                    <img th:src="@{/auth/sign-in-page/img/icon/nav_icon/Storefront.svg}" alt="logo">
                     <nav>VIPA</nav>
                 </a>
                 <p class="footer__text">
 
                 <nav>Присоединяйтесь к нашему сообществу</nav>
                 <div class="social">
-                    <a href="#"><img src="img/icon/nav_icon/DiscordLogo.svg" alt="discord"></a>
-                    <a href="#"><img src="img/icon/nav_icon/YoutubeLogo.svg" alt="youtube"></a>
-                    <a href="#"><img src="img/icon/nav_icon/TwitterLogo.svg" alt="twitter"></a>
-                    <a href="#"><img src="img/icon/nav_icon/InstagramLogo.svg" alt="instagram"></a>
+                    <a th:href="@{null}"><img th:src="@{/auth/sign-in-page/img/icon/nav_icon/DiscordLogo.svg}" alt="discord"></a>
+                    <a th:href="@{null}"><img th:src="@{/auth/sign-in-page/img/icon/nav_icon/YoutubeLogo.svg}" alt="youtube"></a>
+                    <a th:href="@{null}"><img th:src="@{/auth/sign-in-page/img/icon/nav_icon/TwitterLogo.svg}" alt="twitter"></a>
+                    <a th:href="@{null}"><img th:src="@{/auth/sign-in-page/img/icon/nav_icon/InstagramLogo.svg}" alt="instagram"></a>
                 </div>
                 </p>
             </div>
@@ -74,9 +74,9 @@
                     <nav>Explore</nav>
                 </div>
                 <p class="footer__text">
-                <p><a href="#">Marketplace</a></p>
-                <p><a href="#">Chating</a></p>
-                <p><a href="#">Cart</a></p>
+                <p><ath:href="@{#">Marketplace</a></p>
+                <p><ath:href="@{#">Chating</a></p>
+                <p><ath:href="@{#">Cart</a></p>
                 </p>
             </div> -->
             <div class="footer__part part3">
@@ -86,8 +86,8 @@
                 <p class="footer__text">
                     Получайте эксклюзивные акции и обновления прямо в свой почтовый ящик.
                 </p>
-                <a href="create_account.html" class="footer__registration registration">
-                    <img src="img/icon/RocketLaunch.svg" alt="rocket">
+                <a th:href="@{/auth/sign-up}" class="footer__registration registration">
+                    <img th:src="@{/auth/sign-in-page/img/icon/RocketLaunch.svg}" alt="rocket">
                     <p>Начать</p>
                 </a>
             </div>

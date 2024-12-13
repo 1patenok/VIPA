@@ -55,7 +55,7 @@ public class AuthenticationController {
     public String signIn(@ModelAttribute("signInDto") SignInDto signInDto) {
         log.info("signInDto: {}", signInDto);
         authService.signIn(signInDto);
-        return "/common/homepage";
+        return "/common/homepage-client";
     }
 
     /**
