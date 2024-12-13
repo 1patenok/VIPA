@@ -23,6 +23,8 @@ public class PostDetailsDto {
     @NotBlank(message = FIELD_IS_MANDATORY_MESSAGE)
     private String title;
 
+    private int categoryId;
+
     @NotBlank(message = FIELD_IS_MANDATORY_MESSAGE)
     @Min(value = 0, message = PRICE_CANNOT_BE_NEGATIVE_MESSAGE)
     private int price;

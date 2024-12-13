@@ -12,4 +12,7 @@ spring:
     properties:
       hibernate:
         show_sql: true
+logging:
+  level:
+    org.thymeleaf: DEBUG
 

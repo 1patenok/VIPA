@@ -3,6 +3,8 @@ package com.example.vipa.controller;
 import com.example.vipa.dto.OrderDetailsDto;
 import com.example.vipa.dto.PostDetailsDto;
 import com.example.vipa.dto.PostPreviewDto;
+import com.example.vipa.model.Category;
+import com.example.vipa.service.CategoryService;
 import com.example.vipa.service.OrderService;
 import com.example.vipa.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +33,7 @@ import java.util.List;
 public class PostController {
 
     private final PostService postService;
+    private final CategoryService categoryService;
 
     @GetMapping("/{postId}")
     public String getPostPage(Model model, @PathVariable("postId") int postId) {
@@ -64,6 +67,7 @@ public class PostController {
     public String getNewPostPage(Model model) {
         log.info("Получен запрос на получение формы для создания нового объявления.");
         model.addAttribute("post", new PostDetailsDto());
+        model.addAttribute("categories", categoryService.getCategories());
         return "/post/new-post-page";
     }
 

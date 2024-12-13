@@ -1,25 +1,22 @@
 package com.example.vipa.config;
 
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring6.view.ThymeleafViewResolver;
 
-import static org.modelmapper.config.Configuration.AccessLevel.PRIVATE;
-
 
 @Configuration
-@EnableWebMvc
+//@EnableWebMvc
 @RequiredArgsConstructor
 public class SpringConfig implements WebMvcConfigurer {
 
@@ -35,7 +32,7 @@ public class SpringConfig implements WebMvcConfigurer {
         return new HiddenHttpMethodFilter();
     }
 
-    @Bean
+ /*   @Bean
     public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
         templateResolver.setApplicationContext(applicationContext);
@@ -57,7 +54,13 @@ public class SpringConfig implements WebMvcConfigurer {
         ThymeleafViewResolver resolver = new ThymeleafViewResolver();
         resolver.setTemplateEngine(templateEngine());
         registry.viewResolver(resolver);
-    }
+    }*/
 
-
+/*    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/styles/**")
+                .addResourceLocations("classpath:/WEB-INF/styles");
+        registry.addResourceHandler("/files/**")
+                .addResourceLocations("classpath:/WEB-INF/files");
+    }*/
 }

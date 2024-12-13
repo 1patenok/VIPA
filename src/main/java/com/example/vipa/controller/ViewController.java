@@ -11,6 +11,6 @@ public class ViewController {
     @GetMapping("/homepage")
     public String getHomepage() {
         log.info("inside getHomepage()");
-        return "/homepage";
+        return "/common/homepage-guest";
     }
 }

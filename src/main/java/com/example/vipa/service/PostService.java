@@ -18,10 +18,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostService {
 
+
     private static final String POST_NOT_FOUND_MESSAGE = "Объявление не найдено.";
 
     private final PostMapper postMapper;
     private final ClientService clientService;
+    private final CategoryService categoryService;
     private final PostRepository postRepository;
 
     @Transactional
@@ -60,6 +62,7 @@ public class PostService {
     public PostDetailsDto createPost(int authorId, PostDetailsDto postDetailsDto) {
         Post postToSave = postMapper.convertToPost(postDetailsDto);
         postToSave.setAuthor(clientService.getClientEntity(authorId));
+        postToSave.setCategory(categoryService.getCategoryEntity(postDetailsDto.getCategoryId()));
         log.info("postToSave: {}", postToSave);
         return postMapper.convertToPostDetailsDto(postRepository.save(postToSave));
     }

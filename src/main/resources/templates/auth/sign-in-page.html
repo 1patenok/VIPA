@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style/reset.css">
-    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" th:href="@{style/reset.css}">
+    <link rel="stylesheet" th:href="@{/auth/sign-in-page/style/style.css}">
     <title>Log in Account</title>
 </head>
 
 <body class="body">
     <header class="header">
-        <a class="header__logo logo" href="../../../../../../../../Frontend/homepage/homepage.html">
-            <img src="img/icon/nav_icon/Storefront.svg" alt="logo">
+        <a class="header__logo logo" th:href="@{/homepage}">
+            <img th:src="@{/auth/sign-in-page/img/icon/nav_icon/Storefront.svg}" alt="logo">
             <nav>VIPA</nav>
         </a>
         <div class="header__navigation">
@@ -41,9 +41,9 @@
             <p>Добро пожаловать! Введите свои данные и начните торговлю!</p>
         </div>
         <div class="log-in__form">
-            <form action="log_in" class="log-in__form-form form__input">
-                <input type="email" placeholder="Почта" class="form__email form__input" required>
-                <input type="text" placeholder="Пароль" class="form__password form__input" required>
+            <form th:action="@{/auth/sign-in}" th:object="${signInDto}" class="log-in__form-form form__input">
+                <input type="email" th:field="*{email}" placeholder="Почта" class="form__email form__input" required>
+                <input type="text" th:field="*{password}" placeholder="Пароль" class="form__password form__input" required>
                 <button type="submit" class="form__button">
                     Войти
                 </button>
