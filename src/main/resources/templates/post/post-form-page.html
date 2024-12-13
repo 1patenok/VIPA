@@ -12,7 +12,7 @@
 
 <body class="body">
     <header class="header">
-        <a class="header__logo logo" th:href="@{/homepage}">
+        <a class="header__logo logo" th:href="@{/homepage-client}">
             <img th:src="@{/post/post-form-page/img/icon/nav_icon/Storefront.svg}" alt="logo">
             <nav>VIPA</nav>
         </a>
@@ -27,17 +27,15 @@
             </a>
             <div class="header__profile">
                 <div class="registration__button registration">
-                    <img th:src="@{post/post-form-page/img/icon/nav_icon/User.svg}" alt="User">
+                    <img th:src="@{/post/post-form-page/img/icon/nav_icon/User.svg}" alt="User">
                     <p class="header__profile-title">Меню</p>
                     <div class="header__links">
-                        <a th:href="kokoko" class="link">Профиль</a>
+                        <a th:href="@{/clients/{clientId}(clientId=1)}" class="link">Профиль</a>
                         <a th:href="@{/dialogs/list/{clientId}}" class="link">Чаты</a>
                         <a th:href="@{/favorites/{clientId}}" class="link">Избранные</a>
                         <a th:href="kokoko" class="link">Уведомления</a>
                         <a th:href="@{/cart/{clientId}}" class="link">Корзина</a>
                         <a th:href="@{/orders/orderList/{clientId}}" class="link">Заказы</a>
-                        <!-- <a th:href="../log_in/log_in.html" class="link">Войти</a>
-                        <a th:href="../create_account/sign-up-page.html" class="link">Регистрация</a> -->
                     </div>
                 </div>
             </div>
@@ -52,7 +50,7 @@
             <div class="post__input-part1">
                 <p>Выберите фото товара</p>
                 <div class="post__input-img">
-                    <input type="file" class="file" multiple required>
+                    <input th:field="*{images}" accept="image/*" type="file" class="file" multiple required>
                 </div>
                 <select th:field="*{categoryId}" class="post__input-category">
                         <option th:each="category : ${categories}" th:text="${category.getName()}"
@@ -111,10 +109,6 @@
                 <p class="footer__text">
                     Получайте эксклюзивные акции и обновления прямо в свой почтовый ящик.
                 </p>
-                <!-- <a th:href="sign-up-page.html" class="footer__registration registration">
-                    <img src="img/icon/RocketLaunch.svg" alt="rocket">
-                    <p>Начать</p>
-                </a> -->
             </div>
         </div>
     </footer>

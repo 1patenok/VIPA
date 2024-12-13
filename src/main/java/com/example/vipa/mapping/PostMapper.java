@@ -30,6 +30,10 @@ public class PostMapper {
                 src -> src.getSource().stream()
                         .map(image -> modelMapper.map(image, PostImageDto.class))
                         .toList();
+        Converter<List<String>, List<PostImage>> urlListToImageListConverter =
+                src -> src.getSource().stream()
+                        .map(url -> new PostImage().setUrl(url))
+                        .toList();
         modelMapper.createTypeMap(Post.class, PostPreviewDto.class)
                 .addMappings(mapper -> mapper.using(imageListToImageDtoConverter)
                         .map(Post::getImages, PostPreviewDto::setCoverImage))
@@ -38,6 +42,9 @@ public class PostMapper {
         modelMapper.createTypeMap(Post.class, PostDetailsDto.class)
                 .addMappings(mapper -> mapper.using(imageListToImageDtoListConverter)
                         .map(Post::getImages, PostDetailsDto::setImages));
+        modelMapper.createTypeMap(PostDetailsDto.class, Post.class)
+                .addMappings(mapper -> mapper.using(urlListToImageListConverter)
+                        .map(PostDetailsDto::getImages, Post::setImages));
     }
 
     public Post convertToPost(PostDetailsDto dto) {

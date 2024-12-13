@@ -7,6 +7,8 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -31,5 +33,6 @@ public class PostDetailsDto {
     private String status;
     private String description;
     private String address;
-    private List<PostImageDto> images;
+    private LocalDate createdAt;
+    private List<String> images;
 }

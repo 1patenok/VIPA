@@ -103,7 +103,7 @@ public class PostController {
         log.info("postDetailsDto: {}", postDetailsDto);
         PostDetailsDto updatedPost = postService.updatePost(postId, postDetailsDto);
         model.addAttribute("post", updatedPost);
-        return "/post/edit-post-page";
+        return "/post/post-page";
     }
 
     @DeleteMapping("/{postId}")

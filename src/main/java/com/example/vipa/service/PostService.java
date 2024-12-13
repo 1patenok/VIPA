@@ -14,6 +14,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -67,6 +69,7 @@ public class PostService {
         postToSave.setAuthor(clientService.getClientEntity(authorId));
         postToSave.setCategory(categoryService.getCategoryEntity(postDetailsDto.getCategoryId()));
         postToSave.setStatus("status");
+        postToSave.setCreatedAt(LocalDate.now());
         log.info("postToSave: {}", postToSave);
         return postMapper.convertToPostDetailsDto(postRepository.save(postToSave));
     }

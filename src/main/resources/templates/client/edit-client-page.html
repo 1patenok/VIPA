@@ -1,43 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../static/client/edit-client-page/style/reset.css">
-    <link rel="stylesheet" href="../../static/client/edit-client-page/style/style.css">
+    <link rel="stylesheet" th:href="@{/client/edit-client-page/style/reset.css}">
+    <link rel="stylesheet" th:href="@{/client/edit-client-page/style/style.css}">
     <title>Change Account Data</title>
-    <script src="../../static/client/edit-client-page/script/script.js"></script>
+    <script th:src="@{/client/edit-client-page/script/script.js}"></script>
 </head>
 
 <body class="body">
     <header class="header">
-        <a class="header__logo logo" href="homepage.html">
-            <img src="../../static/client/edit-client-page/img/icon/nav_icon/Storefront.svg" alt="logo">
+        <a class="header__logo logo" th:href="@{/homepage-client}">
+            <img th:src="@{/client/edit-client-page/img/icon/nav_icon/Storefront.svg}" alt="logo">
             <nav>VIPA</nav>
         </a>
         <div class="header__navigation">
-            <a href="#" class="header__navigation-item">Чаты</a>
-            <a href="#" class="header__navigation-item">Избранные</a>
-            <a href="#" class="header__navigation-item">Уведомления</a>
-            <a href="#" class="header__navigation-item">Корзина</a>
-            <a href="#" class="header__navigation-item">Заказы</a>
-            <a href="#" class="header__navigation-item header__navigation-item-last">
+            <a th:href="@{/dialogs/list/{clientId}(clientId=1)}" class="header__navigation-item">Чаты</a>
+            <a th:href="@{/favorites/{clientId}(clientId=1)}" class="header__navigation-item">Избранные</a>
+            <a th:href="@{null}" class="header__navigation-item">Уведомления</a>
+            <a th:href="@{/cart/{clientId}(clientId=1)}" class="header__navigation-item">Корзина</a>
+            <a th:href="@{/orders/list/{clientId}(clientId=1)}" class="header__navigation-item">Заказы</a>
+            <a th:href="@{/posts/new}" class="header__navigation-item header__navigation-item-last">
                 <p>Подать объявление</p>
             </a>
             <div class="header__profile">
                 <div class="registration__button registration">
-                    <img src="../../static/client/edit-client-page/img/icon/nav_icon/User.svg" alt="User">
+                    <img th:src="@{/client/edit-client-page/img/icon/nav_icon/User.svg}" alt="User">
                     <p class="header__profile-title">Меню</p>
                     <div class="header__links">
-                        <a href="#" class="link">Профиль</a>
-                        <a href="#" class="link">Чаты</a>
-                        <a href="#" class="link">Избранные</a>
-                        <a href="#" class="link">Уведомления</a>
-                        <a href="#" class="link">Корзина</a>
-                        <a href="#" class="link">Заказы</a>
-                        <!-- <a href="../log_in/log_in.html" class="link">Войти</a>
-                        <a href="../create_account/create_account.html" class="link">Регистрация</a> -->
+                        <a th:href="@{/clients/{clientId}(clientId=1)}" class="link">Профиль</a>
+                        <a th:href="@{/dialogs/list/{clientId}(clientId=1)}" class="link">Чаты</a>
+                        <a th:href="@{/favorites/{clientId}(clientId=1)}" class="link">Избранные</a>
+                        <a th:href="@{null}" class="link">Уведомления</a>
+                        <a th:href="@{/cart/{clientId}(clientId=1)}" class="link">Корзина</a>
+                        <a th:href="@{/posts/new}" class="link">Заказы</a>
                     </div>
                 </div>
             </div>
@@ -51,7 +49,7 @@
         <div class="change__data">
             <div class="old__data">
                 <div class="old__data-title">
-                    <p>Устаревшие данные</p>
+                    <p>Наименование</p>
                 </div>
                 <div class="old__data-name">
                     <p>Имя</p>
@@ -76,18 +74,17 @@
                 <div class="change__data-title">
                     <p>Новые данные</p>
                 </div>
-                <form action="create" class="create__form-form form__input">
-                    <input type="text" placeholder="Имя" class="form__name form__input" required>
-                    <input type="text" placeholder="Фамилия" class="form__surname form__input" required>
-                    <input type="date" class="form__birthdate form__input" required>
-                    <input type="tel" placeholder="+7(___)___-__-__" class="form__number form__input" id="online_phone"
+                <form th:action="@{/clients/edit/{clientId}(clientId=1)}" th:object="${client}" th:method="put" class="create__form-form form__input">
+                    <input th:value="${client.getName()}" th:field="*{name}" type="text" placeholder="Имя" class="form__name form__input" required>
+                    <input th:value="${client.getSurname()}" th:field="*{surname}" type="text" placeholder="Фамилия" class="form__surname form__input" required>
+                    <input th:value="${client.getBirthDate()}" th:field="*{birthDate}" type="date" class="form__birthdate form__input" required>
+                    <input th:value="${client.getPhoneNumber()}" th:field="*{phoneNumber}" type="tel" placeholder="+7(___)___-__-__" class="form__number form__input" id="online_phone"
                         pattern="\+7\s?[\(]{0,1}9[0-9]{2}[\)]{0,1}\s?\d{3}[-]{0,1}\d{2}[-]{0,1}\d{2}" required>
-                    <input type="email" placeholder="Электронная почта" class="form__email form__input" required>
-                    <input id="psw" type="text" placeholder="Пароль" class="form__password form__input" name="psw"
+                    <input th:value="${client.getEmail()}" th:field="*{email}" type="email" placeholder="Электронная почта" class="form__email form__input" required>
+                    <input id="psw" type="password" th:field="*{password}" placeholder="Пароль" class="form__password form__input" name="psw"
                         pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                        title="Должен содержать по меньшей мере одну цифру, одну большую и одну маленькую буквы латинского алфавита и быть в длину не менее 8 символов"
-                        required>
-                    <input id="psw2" type="text" placeholder="Пароль" class="form__password form__input" required
+                        title="Должен содержать по меньшей мере одну цифру, одну большую и одну маленькую буквы латинского алфавита и быть в длину не менее 8 символов">
+                    <input id="psw2" type="password" placeholder="Пароль" class="form__password form__input"
                         oninput="validatePassword()">
                     <button type="submit" class="form__button">
                         Изменить
@@ -100,17 +97,17 @@
     <footer class="footer">
         <div class="footer__parts wrapper">
             <div class="footer__part part1">
-                <a href="homepage.html" class="footer__title logo">
-                    <img src="../../static/client/edit-client-page/img/icon/nav_icon/Storefront.svg" alt="logo">
+                <a th:src="@{/homepage-client}" class="footer__title logo">
+                    <img th:src="@{/client/edit-client-page/img/icon/nav_icon/Storefront.svg}" alt="logo">
                     <nav>VIPA</nav>
                 </a>
                 <p class="footer__text">
                 <nav>Присоединяйтесь к нашему сообществу</nav>
                 <div class="social">
-                    <a href="#"><img src="../../static/client/edit-client-page/img/icon/nav_icon/DiscordLogo.svg" alt="discord"></a>
-                    <a href="#"><img src="../../static/client/edit-client-page/img/icon/nav_icon/YoutubeLogo.svg" alt="youtube"></a>
-                    <a href="#"><img src="../../static/client/edit-client-page/img/icon/nav_icon/TwitterLogo.svg" alt="twitter"></a>
-                    <a href="#"><img src="../../static/client/edit-client-page/img/icon/nav_icon/InstagramLogo.svg" alt="instagram"></a>
+                    <a th:href="@{null}"><img th:src="@{/client/client-page/img/icon/nav_icon/DiscordLogo.svg}" alt="discord"></a>
+                    <a th:href="@{null}"><img th:src="@{/client/client-page/img/icon/nav_icon/YoutubeLogo.svg}" alt="youtube"></a>
+                    <a th:href="@{null}"><img th:src="@{/client/client-page/img/icon/nav_icon/TwitterLogo.svg}" alt="twitter"></a>
+                    <a th:href="@{null}"><img th:src="@{/client/client-page/img/icon/nav_icon/InstagramLogo.svg}" alt="instagram"></a>
                 </div>
                 </p>
             </div>
@@ -119,11 +116,11 @@
                     <nav>Навигация</nav>
                 </div>
                 <p class="footer__text">
-                <p><a href="#">Чаты</a></p>
-                <p><a href="#">Избранные</a></p>
-                <p><a href="#">Уведомления</a></p>
-                <p><a href="#">Корзина</a></p>
-                <p><a href="#">Заказы</a></p>
+                <p><a th:href="@{/dialogs/list/{clientId}(clientId=1)}">Чаты</a></p>
+                <p><a th:href="@{/favorites/{clientId}(clientId=1)}">Избранные</a></p>
+                <p><a th:href="@{null}">Уведомления</a></p>
+                <p><a th:href="@{/cart/{clientId}(clientId=1)}">Корзина</a></p>
+                <p><a th:href="@{/orders/list/{clientId}(clientId=1)}">Заказы</a></p>
                 </p>
             </div>
             <div class="footer__part part3">
@@ -133,10 +130,6 @@
                 <p class="footer__text">
                     Получайте эксклюзивные акции и обновления прямо в свой почтовый ящик.
                 </p>
-                <!-- <a href="../create_account/create_account.html" class="footer__registration registration">
-                    <img src="img/icon/RocketLaunch.svg" alt="rocket">
-                    <p>Начать</p>
-                </a> -->
             </div>
         </div>
     </footer>

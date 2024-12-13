@@ -7,6 +7,8 @@ import com.example.vipa.model.Client;
 import com.example.vipa.repository.ClientRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Slf4j // для логирования
@@ -15,10 +17,9 @@ import org.springframework.stereotype.Service;
 public class ClientService {
 
     private static final String CLIENT_NOT_FOUND_MESSAGE = "Пользователь с указанным id не найден.";
-
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ClientMapper clientMapper; // для преобразования из ClientDetailsDto в Client и наоборот
     private final ClientRepository clientRepository;
-
     /**
      * Метод для получения пользователя по его id.
      * @param clientId - id пользователя
@@ -57,10 +58,14 @@ public class ClientService {
      */
     public ClientDetailsDto updateClient(int clientId, ClientDetailsDto clientDetailsDto) {
         log.info("inside updateClient(), clientId: {}, clientDetailsDto: {}", clientId, clientDetailsDto);
-        if (!clientRepository.existsById(clientId)) {
-            throw new NotFoundException(CLIENT_NOT_FOUND_MESSAGE);
-        }
+        Client client = clientRepository.findById(clientId)
+                .orElseThrow(()->new NotFoundException(CLIENT_NOT_FOUND_MESSAGE));
         Client updatedClient = clientMapper.convertToClient(clientDetailsDto);
+        if(clientDetailsDto.getPassword().isEmpty()){
+            updatedClient.setPassword(client.getPassword());
+        } else {
+            updatedClient.setPassword(bCryptPasswordEncoder.encode(updatedClient.getPassword()));
+        }
         /* Чтобы понять, какого именно клиента нужно обновить, нужно присвоить clientId.
            Если не сделать это, то вместо обновления существующего клиента будет создан новый клиент.*/
         updatedClient.setId(clientId);

@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -32,6 +34,9 @@ public class Post {
 
     @Column(name = "address")
     private String address;
+
+    @Column(name = "created_at")
+    private LocalDate createdAt;
 
     @Column(name = "number_of_views")
     private int numberOfViews;

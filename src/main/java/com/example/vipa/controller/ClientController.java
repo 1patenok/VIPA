@@ -55,11 +55,10 @@ public class ClientController {
      * @return - возвращаем название представления, в котором отображаются обновленные данные пользователя
      */
     @PutMapping("/edit/{clientId}")
-    public String updateClient(Model model, @PathVariable("clientId") int clientId,
+    public String updateClient(@PathVariable("clientId") int clientId,
                                @ModelAttribute("client") ClientDetailsDto clientDetailsDto) {
         log.info("inside updateClient(), clientId: {}, clientDetailsDto: {}", clientId, clientDetailsDto);
         ClientDetailsDto updatedClient = clientService.updateClient(clientId, clientDetailsDto);
-        model.addAttribute("client", updatedClient);
         return "/client/client-page";
     }
 

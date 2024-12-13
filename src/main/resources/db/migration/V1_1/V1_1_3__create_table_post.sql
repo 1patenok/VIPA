@@ -8,6 +8,7 @@ CREATE TABLE post (
     category_id INT NOT NULL,
     description TEXT NOT NULL CHECK (length(description) <= 1000),
     address VARCHAR(150) NOT NULL,
+    created_at DATE NOT NULL,
     FOREIGN KEY (category_id) REFERENCES category(category_id),
     FOREIGN KEY (client_id) REFERENCES client(client_id)
 );
