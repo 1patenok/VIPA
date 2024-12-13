@@ -54,6 +54,15 @@ public class PostController {
         return "/post/posts-page";
     }
 
+    @GetMapping("/catalog/{categoryId}")
+    public String getPostsByCategory(Model model, Pageable pageable, @PathVariable("categoryId") int categoryId){
+        log.info("Получен запрос на просмотр каталога объявлений по категории. categoryId: {}", categoryId);
+        List<PostPreviewDto> posts = postService.getPostsByCategory(pageable, categoryId);
+        log.info("posts: {}", posts);
+        model.addAttribute("posts", posts);
+        return "/post/posts-page";
+    }
+
     @GetMapping("/{authorId}/publications")
     public String getPublications(Model model, @PathVariable("authorId") int authorId) {
         log.info("Получен запрос на просмотр объявлений пользователя. authorId: {}", authorId);

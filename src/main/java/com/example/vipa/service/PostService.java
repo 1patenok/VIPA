@@ -1,8 +1,11 @@
 package com.example.vipa.service;
 
+import com.example.vipa.dto.CategoryDto;
+import com.example.vipa.dto.OrderDetailsDto;
 import com.example.vipa.dto.PostDetailsDto;
 import com.example.vipa.dto.PostPreviewDto;
 import com.example.vipa.mapping.PostMapper;
+import com.example.vipa.model.Category;
 import com.example.vipa.model.Post;
 import com.example.vipa.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -74,5 +77,15 @@ public class PostService {
 
     public void deletePost(int postId) {
         postRepository.deleteById(postId);
+    }
+
+
+    @Transactional
+    public List<PostPreviewDto> getPostsByCategory(Pageable pageable, int categoryId) {
+        Category category = categoryService.getCategory(categoryId);
+        List<Post> listPosts = postRepository.findAllByCategory(category, pageable);
+        return listPosts.stream()
+                .map(postMapper::convertToPostPreviewDto)
+                .toList();
     }
 }
