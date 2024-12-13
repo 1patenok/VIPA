@@ -27,7 +27,7 @@ public class CartController {
         List<PostPreviewDto> postsInCart = cartService.getProductsInCart(clientId);
         log.info("cart: {}", postsInCart);
         model.addAttribute("postsInCart", postsInCart);
-        return "/post/cart-page";
+        return "cart/cart-page";
     }
 
     @ResponseBody

@@ -1,54 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../static/cart/cart-page/style/reset.css">
-    <link rel="stylesheet" href="../../static/cart/cart-page/style/style.css">
+    <link rel="stylesheet" th:href="@{/cart/cart-page/style/reset.css}">
+    <link rel="stylesheet" th:href="@{/cart/cart-page/style/reset.css}">
     <title>Cart</title>
 </head>
 
 <body class="body">
     <header class="header">
-        <a class="header__logo logo" href="homepage.html">
-            <img src="../../static/cart/cart-page/img/icon/nav_icon/Storefront.svg" alt="logo">
+        <a class="header__logo logo" th:href="@{/homepage}">
+            <img th:src="@{/cart/cart-page/img/icon/nav_icon/Storefront.svg}" alt="logo">
             <nav>VIPA</nav>
         </a>
         <div class="header__navigation">
-            <a href="#" class="header__navigation-item">Чаты</a>
-            <a href="#" class="header__navigation-item">Избранные</a>
-            <a href="#" class="header__navigation-item">Уведомления</a>
-            <a href="#" class="header__navigation-item">Корзина</a>
-            <a href="#" class="header__navigation-item">Заказы</a>
-            <a href="#" class="header__navigation-item header__navigation-item-last">
+            <a th:href="@{/dialogs/list/{clientId}(clientId=1)}" class="header__navigation-item">Чаты</a>
+            <a th:href="@{/favorites/{clientId}(clientId=1)}" class="header__navigation-item">Избранные</a>
+            <a th:href="kokoko" class="header__navigation-item">Уведомления</a>
+            <a th:href="@{/cart/{clientId}(clientId=1)}" class="header__navigation-item">Корзина</a>
+            <a th:href="@{/orders/orderList/{clientId}(clientId=1)}" class="header__navigation-item">Заказы</a>
+            <a th:href="@{/posts/new}" class="header__navigation-item header__navigation-item-last">
                 <p>Подать объявление</p>
             </a>
             <div class="header__profile">
                 <div class="registration__button registration">
-                    <img src="../../static/cart/cart-page/img/icon/nav_icon/User.svg" alt="User">
+                    <img th:src="@{/cart/cart-page/img/icon/nav_icon/User.svg}" alt="User">
                     <p class="header__profile-title">Меню</p>
                     <div class="header__links">
-                        <a href="#" class="link">Профиль</a>
-                        <a href="#" class="link">Чаты</a>
-                        <a href="#" class="link">Избранные</a>
-                        <a href="#" class="link">Уведомления</a>
-                        <a href="#" class="link">Корзина</a>
-                        <a href="#" class="link">Заказы</a>
+                        <a th:href="kokoko" class="link">Профиль</a>
+                        <a th:href="@{/dialogs/list/{clientId}(clientId=1)}" class="link">Чаты</a>
+                        <a th:href="@{/favorites/{clientId}(clientId=1)}" class="link">Избранные</a>
+                        <a th:href="kokoko" class="link">Уведомления</a>
+                        <a th:href="@{/cart/{clientId}(clientId=1)}" class="link">Корзина</a>
+                        <a th:href="@{/orders/orderList/{clientId}(clientId=1)}" class="link">Заказы</a>
                     </div>
                 </div>
             </div>
         </div>
     </header>
 
-    <form class="posts wrapper">
+    <form th:action="@{/cart/{clientId}(clientId=1)}" th:object="${postsInCart}" method="post" class="posts wrapper">
         <div class="posts__title title">
             <p>Корзина</p>
         </div>
         <div class="posts__items">
             <div class="posts__item">
                 <div class="posts__item-img">
-                    <img src="../../static/cart/cart-page/img/image_/Primary%20Photo%20Placeholder-1.png" alt="" id="image">
+                    <img th:src="@{/cart/cart-page/img/image_/Primary%20Photo%20Placeholder-1.png}" alt="" id="image">
                 </div>
                 <div class="posts__item-info">
                     <div class="posts__item-title">
@@ -72,7 +72,7 @@
             </div>
             <div class="posts__item">
                 <div class="posts__item-img">
-                    <img src="../../static/cart/cart-page/img/image_/Primary%20Photo%20Placeholder-2.png" alt="">
+                    <img th:src="@{/cart/cart-page/img/image_/Primary%20Photo%20Placeholder-2.png}" alt="">
                 </div>
                 <div class="posts__item-info">
                     <div class="posts__item-title">
@@ -96,7 +96,7 @@
             </div>
             <div class="posts__item">
                 <div class="posts__item-img">
-                    <img src="../../static/cart/cart-page/img/image_/Primary%20Photo%20Placeholder.png" alt="">
+                    <img th:src="@{/cart/cart-page/img/image_/Primary%20Photo%20Placeholder.png}" alt="">
                 </div>
                 <div class="posts__item-info">
                     <div class="posts__item-title">
@@ -120,7 +120,7 @@
             </div>
             <div class="posts__item">
                 <div class="posts__item-img">
-                    <img src="../../static/cart/cart-page/img/image_/Primary%20Photo%20Placeholder.png" alt="">
+                    <img th:src="@{/cart/cart-page/img/image_/Primary%20Photo%20Placeholder.png}" alt="">
                 </div>
                 <div class="posts__item-info">
                     <div class="posts__item-title">
@@ -144,7 +144,7 @@
             </div>
             <div class="posts__item">
                 <div class="posts__item-img">
-                    <img src="../../static/cart/cart-page/img/image_/Primary%20Photo%20Placeholder-1.png" alt="">
+                    <img th:src="@{/cart/cart-page/img/image_/Primary%20Photo%20Placeholder-1.png}" alt="">
                 </div>
                 <div class="posts__item-info">
                     <div class="posts__item-title">
@@ -168,7 +168,7 @@
             </div>
             <div class="posts__item">
                 <div class="posts__item-img">
-                    <img src="../../static/cart/cart-page/img/image_/Primary%20Photo%20Placeholder-2.png" alt="">
+                    <img th:src="@{/cart/cart-page/img/image_/Primary%20Photo%20Placeholder-2.png}" alt="">
                 </div>
                 <div class="posts__item-info">
                     <div class="posts__item-title">
@@ -215,17 +215,17 @@
     <footer class="footer">
         <div class="footer__parts wrapper">
             <div class="footer__part part1">
-                <a href="homepage.html" class="footer__title logo">
-                    <img src="../../static/cart/cart-page/img/icon/nav_icon/Storefront.svg" alt="logo">
+                <a th:href="@{/homepage}" class="footer__title logo">
+                    <img th:src="@{/cart/cart-page/img/icon/nav_icon/Storefront.svg}" alt="logo">
                     <nav>VIPA</nav>
                 </a>
                 <p class="footer__text">
                 <nav>Присоединяйтесь к нашему сообществу</nav>
                 <div class="social">
-                    <a href="#"><img src="../../static/cart/cart-page/img/icon/nav_icon/DiscordLogo.svg" alt="discord"></a>
-                    <a href="#"><img src="../../static/cart/cart-page/img/icon/nav_icon/YoutubeLogo.svg" alt="youtube"></a>
-                    <a href="#"><img src="../../static/cart/cart-page/img/icon/nav_icon/TwitterLogo.svg" alt="twitter"></a>
-                    <a href="#"><img src="../../static/cart/cart-page/img/icon/nav_icon/InstagramLogo.svg" alt="instagram"></a>
+                    <a th:href="kokoko"><img th:src="@{/cart/cart-page/img/icon/nav_icon/DiscordLogo.svg}" alt="discord"></a>
+                    <a th:href="kokoko"><img th:src="@{/cart/cart-page/img/icon/nav_icon/YoutubeLogo.svg}" alt="youtube"></a>
+                    <a th:href="kokoko"><img th:src="@{/cart/cart-page/img/icon/nav_icon/TwitterLogo.svg}" alt="twitter"></a>
+                    <a th:href="kokoko"><img th:src="@{/cart/cart-page/img/icon/nav_icon/InstagramLogo.svg}" alt="instagram"></a>
                 </div>
                 </p>
             </div>
@@ -234,11 +234,11 @@
                     <nav>Навигация</nav>
                 </div>
                 <p class="footer__text">
-                <p><a href="#">Чаты</a></p>
-                <p><a href="#">Избранные</a></p>
-                <p><a href="#">Уведомления</a></p>
-                <p><a href="#">Корзина</a></p>
-                <p><a href="#">Заказы</a></p>
+                <p><a th:href="@{/dialogs/list/{clientId}(clientId=1)}">Чаты</a></p>
+                <p><a th:href=@{/favorites/{clientId}(clientId=1)}">Избранные</a></p>
+                <p><a th:href="kokoko">Уведомления</a></p>
+                <p><a th:href="@{/cart/{clientId}(clientId=1)}">Корзина</a></p>
+                <p><a th:href="@{/orders/orderList/{clientId}(clientId=1)}">Заказы</a></p>
                 </p>
             </div>
             <div class="footer__part part3">
@@ -248,7 +248,7 @@
                 <p class="footer__text">
                     Получайте эксклюзивные акции и обновления прямо в свой почтовый ящик.
                 </p>
-                <!-- <a href="../create_account/create_account.html" class="footer__registration registration">
+                <!-- <a th:href="../create_account/create_account.html" class="footer__registration registration">
                     <img src="img/icon/RocketLaunch.svg" alt="rocket">
                     <p>Начать</p>
                 </a> -->
