@@ -1,32 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style/reset.css">
-    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" th:href="@{/auth/sign-up-page/style/reset.css}">
+    <link rel="stylesheet" th:href="@{/auth/sign-up-page/style/style.css}">
     <title>Create Account</title>
 </head>
 
 <body class="body">
     <header class="header">
-        <a class="header__logo logo" href="../../../../../../../../Frontend/homepage/homepage.html">
-            <img src="img/icon/nav_icon/Storefront.svg" alt="logo">
+        <a class="header__logo logo" th:href="@{/homepage}">
+            <img th:src="@{/auth/sign-up-page/img/icon/nav_icon/Storefront.svg}" alt="logo">
             <nav>VIPA</nav>
         </a>
         <div class="header__navigation">
-            <a href="#" class="header__navigation-item">Marketplace</a>
-            <a href="#" class="header__navigation-item">Chating</a>
-            <a href="#" class="header__navigation-item">Cart</a>
+            <a th:href="#" class="header__navigation-item">Marketplace</a>
+            <a th:href="#" class="header__navigation-item">Chating</a>
+            <a th:href="#" class="header__navigation-item">Cart</a>
             <div class="header__profile">
                 <div class="registration__button registration">
-                    <img src="img/icon/nav_icon/User.svg" alt="User">
+                    <img th:src="img/icon/nav_icon/User.svg" alt="User">
                     <p class="header__profile-title">Profile</p>
                     <div class="header__links">
-                        <a href="#" class="link">Profile</a>
-                        <a href="../../../../../../../../Frontend/log_in/log_in.html" class="link">Log in</a>
-                        <a href="../create_account/create_account.html" class="link">Sing in</a>
+                        <a th:href="#" class="link">Profile</a>
+                        <a th:href="../../../../../../../../Frontend/log_in/log_in.html" class="link">Log in</a>
+                        <a th:href="../create_account/create_account.html" class="link">Sing in</a>
                     </div>
                 </div>
             </div>
@@ -59,7 +59,7 @@
     <footer class="footer">
         <div class="footer__parts wrapper">
             <div class="footer__part part1">
-                <a href="../../../../../../../../Frontend/homepage/homepage.html" class="footer__title logo">
+                <a th:href="../../../../../../../../Frontend/homepage/homepage.html" class="footer__title logo">
                     <img src="img/icon/nav_icon/Storefront.svg" alt="logo">
                     <nav>VIPA</nav>
                 </a>
@@ -67,10 +67,10 @@
                 <nav>NFT marketplace UI created with Anima for Figma.</nav>
                 <nav>Join our community</nav>
                 <div class="social">
-                    <a href="#"><img src="img/icon/nav_icon/DiscordLogo.svg" alt="discord"></a>
-                    <a href="#"><img src="img/icon/nav_icon/YoutubeLogo.svg" alt="youtube"></a>
-                    <a href="#"><img src="img/icon/nav_icon/TwitterLogo.svg" alt="twitter"></a>
-                    <a href="#"><img src="img/icon/nav_icon/InstagramLogo.svg" alt="instagram"></a>
+                    <a th:href="#"><img src="img/icon/nav_icon/DiscordLogo.svg" alt="discord"></a>
+                    <a th:href="#"><img src="img/icon/nav_icon/YoutubeLogo.svg" alt="youtube"></a>
+                    <a th:href="#"><img src="img/icon/nav_icon/TwitterLogo.svg" alt="twitter"></a>
+                    <a th:href="#"><img src="img/icon/nav_icon/InstagramLogo.svg" alt="instagram"></a>
                 </div>
                 </p>
             </div>
@@ -79,9 +79,9 @@
                     <nav>Explore</nav>
                 </div>
                 <p class="footer__text">
-                <p><a href="#">Marketplace</a></p>
-                <p><a href="#">Chating</a></p>
-                <p><a href="#">Cart</a></p>
+                <p><a th:href="#">Marketplace</a></p>
+                <p><a th:href="#">Chating</a></p>
+                <p><a th:href="#">Cart</a></p>
                 </p>
             </div>
             <div class="footer__part part3">
@@ -91,7 +91,7 @@
                 <p class="footer__text">
                     Get exclusive promotions & updates straight to your inbox.
                 </p>
-                <a href="sign-up-page.html" class="footer__registration registration">
+                <a th:href="sign-up-page.html" class="footer__registration registration">
                     <img src="img/icon/RocketLaunch.svg" alt="rocket">
                     <p>Get Started</p>
                 </a>

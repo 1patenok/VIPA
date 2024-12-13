@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/post/post-form-page/style/reset.css}">
+    <link rel="stylesheet" th:href="@{/post/post-form-page/style/style.css}">
+    <title>Create Post</title>
+    <script type="text/javascript" th:src="@{/post/post-form-page/script/script.js}"></script>
+</head>
+
+<body class="body">
+    <header class="header">
+        <a class="header__logo logo" th:href="@{/homepage}">
+            <img th:src="@{/post/post-form-page/img/icon/nav_icon/Storefront.svg}" alt="logo">
+            <nav>VIPA</nav>
+        </a>
+        <div class="header__navigation">
+            <a th:href="@{/dialogs/list/{clientId}}" class="header__navigation-item">Чаты</a>
+            <a th:href="@{/favorites/{clientId}}" class="header__navigation-item">Избранные</a>
+            <a th:href="kokokoko" class="header__navigation-item">Уведомления</a>
+            <a th:href="@{/cart/{clientId}}" class="header__navigation-item">Корзина</a>
+            <a th:href="@{/orders/orderList/{clientId}}" class="header__navigation-item">Заказы</a>
+            <a th:href="@{/posts/new}" class="header__navigation-item header__navigation-item-last">
+                <p>Подать объявление</p>
+            </a>
+            <div class="header__profile">
+                <div class="registration__button registration">
+                    <img th:src="@{post/post-form-page/img/icon/nav_icon/User.svg}" alt="User">
+                    <p class="header__profile-title">Меню</p>
+                    <div class="header__links">
+                        <a th:href="kokoko" class="link">Профиль</a>
+                        <a th:href="@{/dialogs/list/{clientId}}" class="link">Чаты</a>
+                        <a th:href="@{/favorites/{clientId}}" class="link">Избранные</a>
+                        <a th:href="kokoko" class="link">Уведомления</a>
+                        <a th:href="@{/cart/{clientId}}" class="link">Корзина</a>
+                        <a th:href="@{/orders/orderList/{clientId}}" class="link">Заказы</a>
+                        <!-- <a th:href="../log_in/log_in.html" class="link">Войти</a>
+                        <a th:href="../create_account/sign-up-page.html" class="link">Регистрация</a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="post">
+        <div class="post__title title">
+            <p>Создать объявление</p>
+        </div>
+        <form th:action="@{/posts/new/{clientId}(clientId=1)}" th:object="${post}" method="post" class="post__input">
+            <div class="post__input-part1">
+                <p>Выберите фото товара</p>
+                <div class="post__input-img">
+                    <input type="file" class="file" multiple required>
+                </div>
+                <select th:field="*{categoryId}" class="post__input-category">
+                        <option th:each="category : ${categories}" th:text="${category.getName()}"
+                                th:value="${category.getId()}">Name</option>
+                </select>
+            </div>
+            <div class="post__input-part2">
+                <div class="post__input-text">
+                    <input th:field="*{title}" type="text" placeholder="Название товара" required>
+                    <input th:field="*{address}" type="text" placeholder="Ваш адрес" required>
+                    <input th:field="*{price}" type="number" placeholder="Цена в рублях" required>
+                    <textarea th:field="*{description}" placeholder="Описание" required></textarea>
+                </div>
+                <div class="post__buttons">
+                    <button type="submit">Отправить</button>
+                    <button type="reset">Очистить</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <footer class="footer">
+        <div class="footer__parts wrapper">
+            <div class="footer__part part1">
+                <a th:href="@{/post/post-form-page/img/icon/nav_icon/Storefront.svg}" class="footer__title logo">
+                    <img th:src="@{/post/post-form-page/img/icon/nav_icon/Storefront.svg}" alt="logo">
+                    <nav>VIPA</nav>
+                </a>
+                <p class="footer__text">
+                <nav></nav>
+                <nav>Присоединяйтесь к нашему сообществу</nav>
+                <div class="social">
+                    <a th:href="kokoko"><img th:src="@{/post/post-form-page/img/icon/nav_icon/DiscordLogo.svg}" alt="discord"></a>
+                    <a th:href="kokoko"><img th:src="@{/post/post-form-page/img/icon/nav_icon/YoutubeLogo.svg}" alt="youtube"></a>
+                    <a th:href="kokoko"><img th:src="@{/post/post-form-page/img/icon/nav_icon/TwitterLogo.svg}" alt="twitter"></a>
+                    <a th:href="kokoko"><img th:src="@{/post/post-form-page/img/icon/nav_icon/InstagramLogo.svg}" alt="instagram"></a>
+                </div>
+                </p>
+            </div>
+            <div class="footer__part part2">
+                <div class="footer__title">
+                    <nav>Навигация</nav>
+                </div>
+                <p class="footer__text">
+                <p><a th:href="@{/dialogs/list/{clientId}}">Чаты</a></p>
+                <p><a th:href="@{/favorites/{clientId}}">Избранные</a></p>
+                <p><a th:href="kokoko">Уведомления</a></p>
+                <p><a th:href="@{/cart/{clientId}}">Корзина</a></p>
+                <p><a th:href="@{/orders/orderList/{clientId}}">Заказы</a></p>
+                </p>
+            </div>
+            <div class="footer__part part3">
+                <div class="footer__title">
+                    <p>Присоединяйтесь к нам</p>
+                </div>
+                <p class="footer__text">
+                    Получайте эксклюзивные акции и обновления прямо в свой почтовый ящик.
+                </p>
+                <!-- <a th:href="sign-up-page.html" class="footer__registration registration">
+                    <img src="img/icon/RocketLaunch.svg" alt="rocket">
+                    <p>Начать</p>
+                </a> -->
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

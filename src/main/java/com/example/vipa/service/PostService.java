@@ -66,6 +66,7 @@ public class PostService {
         Post postToSave = postMapper.convertToPost(postDetailsDto);
         postToSave.setAuthor(clientService.getClientEntity(authorId));
         postToSave.setCategory(categoryService.getCategoryEntity(postDetailsDto.getCategoryId()));
+        postToSave.setStatus("status");
         log.info("postToSave: {}", postToSave);
         return postMapper.convertToPostDetailsDto(postRepository.save(postToSave));
     }
@@ -82,7 +83,7 @@ public class PostService {
 
     @Transactional
     public List<PostPreviewDto> getPostsByCategory(Pageable pageable, int categoryId) {
-        Category category = categoryService.getCategory(categoryId);
+        Category category = categoryService.getCategoryEntity(categoryId);
         List<Post> listPosts = postRepository.findAllByCategory(category, pageable);
         return listPosts.stream()
                 .map(postMapper::convertToPostPreviewDto)

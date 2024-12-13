@@ -77,7 +77,7 @@ public class PostController {
         log.info("Получен запрос на получение формы для создания нового объявления.");
         model.addAttribute("post", new PostDetailsDto());
         model.addAttribute("categories", categoryService.getCategories());
-        return "/post/new-post-page";
+        return "/post/post-form-page";
     }
 
     @GetMapping("/edit")
@@ -88,9 +88,8 @@ public class PostController {
     }
 
     @PostMapping("/new/{clientId}")
-    public String createPost(Model model, @PathVariable("clientId") int authorId) {
+    public String createPost(Model model, @ModelAttribute("post") PostDetailsDto postDetailsDto, @PathVariable("clientId") int authorId) {
         log.info("Получен запрос на публикацию нового объявления.");
-        PostDetailsDto postDetailsDto = (PostDetailsDto) model.getAttribute("post");
         log.info("postDetailsDto: {}", postDetailsDto);
         PostDetailsDto createdPost = postService.createPost(authorId, postDetailsDto);
         model.addAttribute("post", createdPost);
