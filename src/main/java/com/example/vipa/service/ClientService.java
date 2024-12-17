@@ -7,8 +7,12 @@ import com.example.vipa.model.Client;
 import com.example.vipa.repository.ClientRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Slf4j // для логирования
@@ -17,7 +21,8 @@ import org.springframework.stereotype.Service;
 public class ClientService {
 
     private static final String CLIENT_NOT_FOUND_MESSAGE = "Пользователь с указанным id не найден.";
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    private final PasswordEncoder passwordEncoder;
     private final ClientMapper clientMapper; // для преобразования из ClientDetailsDto в Client и наоборот
     private final ClientRepository clientRepository;
     /**
@@ -64,7 +69,7 @@ public class ClientService {
         if(clientDetailsDto.getPassword().isEmpty()){
             updatedClient.setPassword(client.getPassword());
         } else {
-            updatedClient.setPassword(bCryptPasswordEncoder.encode(updatedClient.getPassword()));
+            updatedClient.setPassword(passwordEncoder.encode(updatedClient.getPassword()));
         }
         /* Чтобы понять, какого именно клиента нужно обновить, нужно присвоить clientId.
            Если не сделать это, то вместо обновления существующего клиента будет создан новый клиент.*/

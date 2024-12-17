@@ -31,7 +31,6 @@ public class DialogService {
     private final ClientService clientService;
     private final DialogRepository dialogRepository;
 
-
     public Dialog getDialogEntity(int dialogId) {
         return dialogRepository.findById(dialogId)
                 .orElseThrow(() -> new NotFoundException(DIALOG_NOT_FOUND_MESSAGE));
@@ -39,10 +38,18 @@ public class DialogService {
 
     @Transactional
     public DialogDetailsDto getDialog(int dialogId) {
-        return dialogRepository.findById(dialogId).map(dialog -> {
-                    System.out.println(dialog);
-                    return dialogMapper.convertToDialogDetailsDto(dialog);
-                }).orElseThrow(() -> new NotFoundException(DIALOG_NOT_FOUND_MESSAGE));
+        DialogDetailsDto result = dialogRepository.findById(dialogId).map(dialogMapper::convertToDialogDetailsDto)
+                .orElseThrow(() -> new NotFoundException(DIALOG_NOT_FOUND_MESSAGE));
+        log.info("messages: {}", result.getMessages());
+        return result;
+    }
+
+    public int getDialogIdByPostAndCustomer(int postId, int customerId) {
+        Post post = postService.getPostEntity(postId);
+        Client customer = clientService.getClientEntity(customerId);
+        return dialogRepository.findByPostAndCustomer(post, customer)
+                .map(Dialog::getId)
+                .orElse(0);
     }
 
     @Transactional

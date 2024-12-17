@@ -2,6 +2,7 @@ package com.example.vipa.controller;
 
 
 import com.example.vipa.dto.MessageDto;
+import com.example.vipa.model.Client;
 import com.example.vipa.model.DialogType;
 import com.example.vipa.model.Message;
 import com.example.vipa.service.DialogService;
@@ -9,6 +10,7 @@ import com.example.vipa.service.MessageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,12 +24,12 @@ public class MessageController {
     private final MessageService messageService;
 
     @ResponseBody
-    @PostMapping(value = "/{senderId}", produces = {"application/json; charset=UTF-8"})
+    @PostMapping(produces = {"application/json; charset=UTF-8"})
     public ResponseEntity<?> sendMessage(@ModelAttribute("message") MessageDto messageDto,
                                          @PathVariable("dialogId") int dialogId,
-                                         @PathVariable("senderId") int senderId) {
-        log.info("Принят запрос на отправку сообщения. dialogId: {}, senderId: {}", dialogId, senderId);
-        messageService.createMessage(dialogId, senderId, messageDto);
+                                         @AuthenticationPrincipal Client currentClient) {
+        log.info("Принят запрос на отправку сообщения. dialogId: {}, currentClient: {}", dialogId, currentClient);
+        messageService.createMessage(dialogId, currentClient.getId(), messageDto);
         return ResponseEntity.ok("Сообщение успешно отправлено.");
     }
 

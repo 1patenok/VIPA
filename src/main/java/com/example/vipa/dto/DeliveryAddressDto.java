@@ -7,7 +7,7 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class PostAddressDto {
+public class DeliveryAddressDto {
     private int id;
     private String postAddresses;
 }

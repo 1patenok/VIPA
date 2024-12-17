@@ -11,7 +11,7 @@ import com.example.vipa.model.Client;
 import com.example.vipa.repository.ClientRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Slf4j // для логирования
@@ -25,7 +25,7 @@ public class AuthenticationService {
     private static final String WRONG_PASSWORD_CONFIRMATION_MESSAGE = "Пароли не совпадают.";
 
     private final ClientMapper clientMapper; // маппер для преобразования из ClientDetailsDto в Client
-    private final BCryptPasswordEncoder passwordEncoder; // кодировщик паролей
+    private final PasswordEncoder passwordEncoder; // кодировщик паролей
     private final ClientRepository clientRepository; // репозиторий для взаимодействия с БД
 
     /**
@@ -36,7 +36,7 @@ public class AuthenticationService {
      */
     public ClientDetailsDto signIn(SignInDto signInDto) {
         log.info("signInDto: {}", signInDto); // выводим в логи данные, переданные в метод (просто чтобы посмотреть)
-        Client client = clientRepository.findByEmail(signInDto.getEmail())
+        Client client = clientRepository.findByEmail(signInDto.getUsername())
                 .orElseThrow(() -> new NotFoundException(CLIENT_NOT_FOUND_MESSAGE));
         if (passwordEncoder.matches(signInDto.getPassword(), client.getPassword())) {
             log.info("Проверка пароля пройдена.");

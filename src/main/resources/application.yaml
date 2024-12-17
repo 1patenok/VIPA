@@ -1,6 +1,10 @@
 spring:
   application:
     name: vipa
+  thymeleaf:
+    extras:
+      springsecurity6:
+        enabled: true
   datasource:
     url: jdbc:postgresql://localhost:5432/vipa_db
     username: postgres

@@ -14,5 +14,6 @@ public class PostPreviewDto {
     private String title;
     private int price;
     private String address;
+    private String authorName;
     private PostImageDto coverImage;
 }

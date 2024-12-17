@@ -3,26 +3,13 @@ package com.example.vipa.controller;
 import com.example.vipa.dto.ClientDetailsDto;
 import com.example.vipa.dto.SignInDto;
 import com.example.vipa.service.AuthenticationService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.RequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.ui.Model;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 
-
-import java.util.Collection;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -78,13 +65,13 @@ public class AuthenticationControllerTest {
         ArgumentCaptor<SignInDto> signInCaptor = ArgumentCaptor.forClass(SignInDto.class);
         verify(authServiceMock).signIn(signInCaptor.capture());
         SignInDto capturedSignInDto = signInCaptor.getValue();
-        assertEquals(EMAIL, capturedSignInDto.getEmail());
+        assertEquals(EMAIL, capturedSignInDto.getUsername());
         assertEquals(PASSWORD, capturedSignInDto.getPassword());
     }
 
     @Test
     void signUp_returnsStatusOkAndHomepageView() throws Exception {
-        when(authServiceMock.signUp(any())).thenReturn(new ClientDetailsDto());
+        when(authServiceMock.signUp(any())).thenReturn("");
 
         mockMvc.perform(post("/auth/sign-up")
                         .formField("name", NAME))

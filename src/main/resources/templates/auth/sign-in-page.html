@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-store">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/auth/sign-in-page/style/reset.css}">
     <link rel="stylesheet" th:href="@{/auth/sign-in-page/style/style.css}">
@@ -11,14 +12,11 @@
 
 <body class="body">
     <header class="header">
-        <a class="header__logo logo" th:href="@{/homepage}">
+        <a class="header__logo logo" th:href="@{/homepage-guest}">
             <img th:src="@{/auth/sign-in-page/img/icon/nav_icon/Storefront.svg}" alt="logo">
             <nav>VIPA</nav>
         </a>
         <div class="header__navigation">
-            <!-- <ath:href="@{#" class="header__navigation-item">Marketplace</a>
-            <ath:href="@{#" class="header__navigation-item">Chating</a>
-            <ath:href="@{#" class="header__navigation-item">Cart</a> -->
             <div class="header__profile">
                 <div class="registration__button registration">
                     <img th:src="@{/auth/sign-in-page/img/icon/nav_icon/User.svg}" alt="User">
@@ -42,7 +40,7 @@
         </div>
         <div class="log-in__form">
             <form th:action="@{/auth/sign-in}" th:object="${signInDto}" method="post" class="log-in__form-form form__input">
-                <input type="email" th:field="*{email}" placeholder="Почта" class="form__email form__input" required>
+                <input type="email" th:field="*{username}" placeholder="Почта" class="form__email form__input" required>
                 <input type="text" th:field="*{password}" placeholder="Пароль" class="form__password form__input" required>
                 <button type="submit" class="form__button">
                     Войти
@@ -54,7 +52,7 @@
     <footer class="footer">
         <div class="footer__parts wrapper">
             <div class="footer__part part1">
-                <a th:href="@{/homepage}" class="footer__title logo">
+                <a th:href="@{/homepage-guest}" class="footer__title logo">
                     <img th:src="@{/auth/sign-in-page/img/icon/nav_icon/Storefront.svg}" alt="logo">
                     <nav>VIPA</nav>
                 </a>
@@ -69,16 +67,6 @@
                 </div>
                 </p>
             </div>
-            <!-- <div class="footer__part part2">
-                <div class="footer__title">
-                    <nav>Explore</nav>
-                </div>
-                <p class="footer__text">
-                <p><ath:href="@{#">Marketplace</a></p>
-                <p><ath:href="@{#">Chating</a></p>
-                <p><ath:href="@{#">Cart</a></p>
-                </p>
-            </div> -->
             <div class="footer__part part3">
                 <div class="footer__title">
                     <p>Присоединяйтесь к нам</p>

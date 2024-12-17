@@ -12,7 +12,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -44,26 +46,21 @@ public class OrderService {
     public void createOrder(int clientId, OrderDetailsDto orderDetailsDto) {
         log.info("inside createOrder(), orderDetailsDto: {}", orderDetailsDto);
         Order orderToSave = orderMapper.convertToOrder(orderDetailsDto);
-
-        if (orderDetailsDto.getDeliveryMethod().equals(DeliveryMethod.COURIER)) {
-            orderToSave.setTimeOfDelivery(1);
-        } else {
-            orderToSave.setTimeOfDelivery(3);
+        switch (orderDetailsDto.getDeliveryMethod()) {
+            case COURIER -> orderToSave.setTimeOfDelivery(1);
+            case DELIVERY_POINT -> orderToSave.setTimeOfDelivery(3);
         }
-        List<Post> listOfPosts = postService.getPostsByIds(orderDetailsDto.getPostsInOrder());
-        int sumOfPrice = 0;
-        for (Post post : listOfPosts) {
-            sumOfPrice += post.getPrice();
-        }
-        orderToSave.setPrice(sumOfPrice);
-        Client client = clientService.getClientEntity(clientId);
-        orderToSave.setClient(client);
-
+        orderToSave.setPrice(
+                postService.getPostsByIds(orderDetailsDto.getPostsInOrder()).stream()
+                        .mapToInt(Post::getPrice)
+                        .sum());
+        orderToSave.setClient(clientService.getClientEntity(clientId));
+        orderToSave.setOrderDate(LocalDate.now());
         PaymentAccount paymentAccount = paymentAccountService.getPaymentAccountByCardNumber(orderDetailsDto.getCardNumber());
-        if (paymentAccount.getCurrentSum() < sumOfPrice) {
+        if (paymentAccount.getCurrentSum() < orderToSave.getPrice()) {
             throw new NotEnoughMoneyException("Недостаточно средств на счету.");
         }
-        paymentAccount.setCurrentSum(paymentAccount.getCurrentSum() - sumOfPrice);
+        paymentAccount.setCurrentSum(paymentAccount.getCurrentSum() - orderToSave.getPrice());
         paymentAccountService.savePaymentAccount(paymentAccount);
         orderToSave.setOrderStatus(OrderStatus.PROCESSING);
         orderRepository.save(orderToSave);

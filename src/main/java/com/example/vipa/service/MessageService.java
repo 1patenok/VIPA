@@ -34,7 +34,7 @@ public class MessageService {
         Client sender = clientService.getClientEntity(senderId);
         Message messageToSave = messageMapper.convertToMessage(messageDto);
         messageToSave.setTimestamp(LocalDateTime.now());
-        messageToSave.setSenderName(sender.getFullName());
+        messageToSave.setSenderName(sender.getName());
         messageToSave.setDialog(dialogService.getDialogEntity(dialogId));
         messageRepository.save(messageToSave);
     }

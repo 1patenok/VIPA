@@ -1,7 +1,7 @@
 package com.example.vipa.mapping;
 
-import com.example.vipa.dto.PostAddressDto;
-import com.example.vipa.model.PostAddress;
+import com.example.vipa.dto.DeliveryAddressDto;
+import com.example.vipa.model.DeliveryAddress;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -16,8 +16,8 @@ public class PostAddressMapper {
         this.modelMapper = modelMapper;
     }
 
-    public PostAddressDto convertToPostAddressDto(PostAddress postAddress) {
+    public DeliveryAddressDto convertToPostAddressDto(DeliveryAddress deliveryAddress) {
         log.info("inside convertToPostAddressDto()");
-        return modelMapper.map(postAddress, PostAddressDto.class);
+        return modelMapper.map(deliveryAddress, DeliveryAddressDto.class);
     }
 }

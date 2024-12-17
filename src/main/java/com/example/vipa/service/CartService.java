@@ -23,7 +23,7 @@ public class CartService {
     @Transactional(readOnly = true)
     public List<PostPreviewDto> getProductsInCart(int clientId) {
         return clientService.getClientEntity(clientId)
-                .getFavoritePosts().stream()
+                .getPostsInCart().stream()
                 .map(postMapper::convertToPostPreviewDto)
                 .toList();
     }

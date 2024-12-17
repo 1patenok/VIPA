@@ -15,5 +15,6 @@ import java.time.LocalDateTime;
 public class MessageDto {
     private int id;
     private String text;
+    private String senderName;
     private LocalDateTime timestamp;
 }

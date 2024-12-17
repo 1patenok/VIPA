@@ -11,4 +11,5 @@ import lombok.experimental.Accessors;
 public class DialogPreviewDto {
     private int id;
     private String receiverName;
+    private String postTitle;
 }

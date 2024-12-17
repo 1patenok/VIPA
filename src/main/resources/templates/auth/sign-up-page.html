@@ -7,26 +7,23 @@
     <link rel="stylesheet" th:href="@{/auth/sign-up-page/style/reset.css}">
     <link rel="stylesheet" th:href="@{/auth/sign-up-page/style/style.css}">
     <title>Create Account</title>
+    <script th:src="@{/auth/sign-up-page/script/script.js}"></script>
 </head>
 
 <body class="body">
     <header class="header">
-        <a class="header__logo logo" th:href="@{/homepage}">
+        <a class="header__logo logo" th:href="@{/homepage-guest}">
             <img th:src="@{/auth/sign-up-page/img/icon/nav_icon/Storefront.svg}" alt="logo">
             <nav>VIPA</nav>
         </a>
         <div class="header__navigation">
-            <a th:href="#" class="header__navigation-item">Marketplace</a>
-            <a th:href="#" class="header__navigation-item">Chating</a>
-            <a th:href="#" class="header__navigation-item">Cart</a>
             <div class="header__profile">
                 <div class="registration__button registration">
-                    <img th:src="img/icon/nav_icon/User.svg" alt="User">
-                    <p class="header__profile-title">Profile</p>
+                    <img th:src="@{/auth/sign-up-page/img/icon/nav_icon/User.svg}" alt="User">
+                    <p class="header__profile-title">Меню</p>
                     <div class="header__links">
-                        <a th:href="#" class="link">Profile</a>
-                        <a th:href="../../../../../../../../Frontend/log_in/log_in.html" class="link">Log in</a>
-                        <a th:href="../create_account/create_account.html" class="link">Sing in</a>
+                        <a th:href="@{/auth/sign-up}" class="link">Регистрация</a>
+                        <a th:href="@{/auth/sign-in}" class="link">Вход</a>
                     </div>
                 </div>
             </div>
@@ -35,22 +32,27 @@
 
     <div class="create wrapper">
         <div class="create__title title">
-            <p>Create account</p>
+            <p>Создать аккаунт</p>
         </div>
         <div class="create__text text">
-            <p>Welcome! Enter Your Details And Start Trade!</p>
+            <p>Добро пожаловать! Введите свои данные и начните торговать!</p>
         </div>
         <div class="create__form">
-            <form action="create" class="create__form-form form__input">
-                <input type="text" placeholder="Your name" class="form__name form__input">
-                <input type="text" placeholder="Your surname" class="form__surname form__input">
-                <input type="date" class="form__birthdate form__input">
-                <input type="tel" placeholder="+7 (XXX) XXX-XX-XX" class="form__number form__input">
-                <input type="email" placeholder="Your email" class="form__email form__input">
-                <input type="text" placeholder="Password" class="form__password form__input">
-                <input type="text" placeholder="Password" class="form__password form__input">
+            <form th:action="@{/auth/sign-up}" th:object="${client}" method="post" class="create__form-form form__input">
+                <input th:field="*{name}" type="text" placeholder="Имя" class="form__name form__input" required>
+                <input th:field="*{surname}" type="text" placeholder="Фамилия" class="form__surname form__input" required>
+                <input th:field="*{birthDate}" type="date" class="form__birthdate form__input" required>
+                <input th:field="*{phoneNumber}" type="tel" placeholder="+7(___)___-__-__" class="form__number form__input" id="online_phone"
+                    pattern="\+7\s?[\(]{0,1}9[0-9]{2}[\)]{0,1}\s?\d{3}[-]{0,1}\d{2}[-]{0,1}\d{2}" required>
+                <input th:field="*{email}" type="email" placeholder="Электронная почта" class="form__email form__input" required>
+                <input th:field="*{password}" id="psw" type="text" placeholder="Пароль" class="form__password form__input" name="psw"
+                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                    title="Должен содержать по меньшей мере одну цифру, одну большую и одну маленькую буквы латинского алфавита и быть в длину не менее 8 символов"
+                    required>
+                <input th:field="*{passwordConfirmation}" id="psw2" type="text" placeholder="Пароль" class="form__password form__input" required
+                    oninput="validatePassword()">
                 <button type="submit" class="form__button">
-                    Create account
+                    Начать
                 </button>
             </form>
         </div>
@@ -59,41 +61,30 @@
     <footer class="footer">
         <div class="footer__parts wrapper">
             <div class="footer__part part1">
-                <a th:href="../../../../../../../../Frontend/homepage/homepage.html" class="footer__title logo">
-                    <img src="img/icon/nav_icon/Storefront.svg" alt="logo">
+                <a th:href="@{/homepage-guest}" class="footer__title logo">
+                    <img th:src="@{/auth/sign-up-page/img/icon/nav_icon/Storefront.svg}" alt="logo">
                     <nav>VIPA</nav>
                 </a>
                 <p class="footer__text">
-                <nav>NFT marketplace UI created with Anima for Figma.</nav>
-                <nav>Join our community</nav>
+                <nav>Присоединяйтесь к нашему сообществу</nav>
                 <div class="social">
-                    <a th:href="#"><img src="img/icon/nav_icon/DiscordLogo.svg" alt="discord"></a>
-                    <a th:href="#"><img src="img/icon/nav_icon/YoutubeLogo.svg" alt="youtube"></a>
-                    <a th:href="#"><img src="img/icon/nav_icon/TwitterLogo.svg" alt="twitter"></a>
-                    <a th:href="#"><img src="img/icon/nav_icon/InstagramLogo.svg" alt="instagram"></a>
+                    <a th:href="@{null}"><img th:src="@{/auth/sign-up-page/img/icon/nav_icon/DiscordLogo.svg}" alt="discord"></a>
+                    <a th:href="@{null}"><img th:src="@{/auth/sign-up-page/img/icon/nav_icon/YoutubeLogo.svg}" alt="youtube"></a>
+                    <a th:href="@{null}"><img th:src="@{/auth/sign-up-page/img/icon/nav_icon/TwitterLogo.svg}" alt="twitter"></a>
+                    <a th:href="@{null}"><img th:src="@{/auth/sign-up-page/img/icon/nav_icon/InstagramLogo.svg}" alt="instagram"></a>
                 </div>
-                </p>
-            </div>
-            <div class="footer__part part2">
-                <div class="footer__title">
-                    <nav>Explore</nav>
-                </div>
-                <p class="footer__text">
-                <p><a th:href="#">Marketplace</a></p>
-                <p><a th:href="#">Chating</a></p>
-                <p><a th:href="#">Cart</a></p>
                 </p>
             </div>
             <div class="footer__part part3">
                 <div class="footer__title">
-                    <p>Join our weekly digest</p>
+                    <p>Присоединяйтесь к нам</p>
                 </div>
                 <p class="footer__text">
-                    Get exclusive promotions & updates straight to your inbox.
+                    Получайте эксклюзивные акции и обновления прямо в свой почтовый ящик.
                 </p>
-                <a th:href="sign-up-page.html" class="footer__registration registration">
-                    <img src="img/icon/RocketLaunch.svg" alt="rocket">
-                    <p>Get Started</p>
+                <a th:href="@{/auth/sign-up}" class="footer__registration registration">
+                    <img th:src="@{/auth/sign-up-page/img/icon/RocketLaunch.svg}" alt="rocket">
+                    <p>Начать</p>
                 </a>
             </div>
         </div>

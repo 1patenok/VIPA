@@ -1,6 +1,6 @@
 package com.example.vipa.service;
 
-import com.example.vipa.dto.PostAddressDto;
+import com.example.vipa.dto.DeliveryAddressDto;
 import com.example.vipa.mapping.PostAddressMapper;
 import com.example.vipa.repository.PostAddressRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ public class PostAddressService {
     private final PostAddressMapper postAddressMapper;
     private final PostAddressRepository postAddressRepository;
     @Transactional
-    public List<PostAddressDto> getPostAddress() {
+    public List<DeliveryAddressDto> getPostAddress() {
         return postAddressRepository.findAll().stream()
                 .map(postAddressMapper::convertToPostAddressDto)
                 .toList();

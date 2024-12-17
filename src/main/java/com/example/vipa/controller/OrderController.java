@@ -1,14 +1,13 @@
 package com.example.vipa.controller;
 
-import com.example.vipa.dto.OrderDetailsDto;
-import com.example.vipa.dto.OrderPreviewDto;
-import com.example.vipa.dto.PostAddressDto;
-import com.example.vipa.dto.PostDetailsDto;
+import com.example.vipa.dto.*;
+import com.example.vipa.model.Client;
 import com.example.vipa.service.OrderService;
 import com.example.vipa.service.PostAddressService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,34 +24,32 @@ public class OrderController {
     private final PostAddressService postAddressService;
 
     @GetMapping("/info/{orderId}")
-    public String getOrderPage(@PathVariable("orderId") int orderId,
-                               @ModelAttribute("order") OrderDetailsDto orderDetailsDto) {
+    public String getOrderPage(Model model, @PathVariable("orderId") int orderId) {
         log.info("Получен запрос на просмотр информации о заказе. orderId: {}", orderId);
-        orderDetailsDto = orderService.getOrder(orderId);
+        model.addAttribute("order", orderService.getOrder(orderId));
         return "/order/order-page";
     }
 
-    @GetMapping("/list/{clientId}")
-    public String getOrdersPage(@PathVariable("clientId") int clientId,
-                                @ModelAttribute("orderList") List<OrderPreviewDto> orderList) {
-        log.info("Получен запрос на просмотр заказов пользователя. clientId: {}", clientId);
-        orderList = orderService.getOrders(clientId);
+    @GetMapping("/list")
+    public String getOrdersPage(Model model, @AuthenticationPrincipal Client currentClient) {
+        log.info("Получен запрос на просмотр заказов пользователя. currentClient: {}", currentClient);
+        model.addAttribute("orders", orderService.getOrders(currentClient.getId()));
         return "/order/orders-page";
     }
 
-    @GetMapping("/post_addresses")
-    public String getPostAddress(Model model) {
-        List<PostAddressDto> listPostAddress  = postAddressService.getPostAddress();
-        model.addAttribute("addresses", listPostAddress);
+    @GetMapping("/delivery-addresses")
+    public String getPostAddresses(Model model) {
+        List<DeliveryAddressDto> deliveryAddresses  = postAddressService.getPostAddress();
+        model.addAttribute("addresses", deliveryAddresses);
         return "/order/orders-page";
     }
 
     @ResponseBody
-    @PostMapping(value = "/{clientId}", produces = {"application/json; charset=UTF-8"})
-    public ResponseEntity<?> placeAnOrder(@PathVariable("clientId") int clientId,
+    @PostMapping(value = "/new", produces = {"application/json; charset=UTF-8"})
+    public ResponseEntity<?> placeAnOrder(@AuthenticationPrincipal Client currentClient,
                                           @ModelAttribute("order") OrderDetailsDto orderDetailsDto) {
-        log.info("Получен запрос на оформление нового заказа. clientId: {}, orderDetailsDto: {}", clientId, orderDetailsDto);
-        orderService.createOrder(clientId, orderDetailsDto);
+        log.info("Получен запрос на оформление нового заказа. currentClient: {}, orderDetailsDto: {}", currentClient, orderDetailsDto);
+        orderService.createOrder(currentClient.getId(), orderDetailsDto);
         return ResponseEntity.ok("Заказ успешно оформлен.");
     }
 }

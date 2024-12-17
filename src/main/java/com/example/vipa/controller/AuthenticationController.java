@@ -40,22 +40,8 @@ public class AuthenticationController {
     @GetMapping("/sign-up")
     public String getSignUpPage(Model model) {
         log.info("Inside getSignUpPage()");
-        model.addAttribute("clientDetailsDto", new ClientDetailsDto());
+        model.addAttribute("client", new ClientDetailsDto());
         return "/auth/sign-up-page";
-    }
-
-    /**
-     * Данный метод вызывается, когда на сервер отправляется заполненная форма для входа в аккаунт.
-     * @param signInDto - данный аргумент должен поступить из заполненной формы для входа, аннотация
-     *                  @ModelAttribute означает, что данный аргумент должен быть получен из
-     *                  заполненной html-формы по имени signInDto.
-     * @return - редирект на homepage
-     */
-    @PostMapping("/sign-in")// вход в аккаунт
-    public String signIn(@ModelAttribute("signInDto") SignInDto signInDto) {
-        log.info("signInDto: {}", signInDto);
-        authService.signIn(signInDto);
-        return "/common/homepage-client";
     }
 
     /**
@@ -69,7 +55,7 @@ public class AuthenticationController {
     public String signUp(@ModelAttribute("clientDetailsDto") ClientDetailsDto clientDetailsDto){
         log.info("clientDetailsDto: {}", clientDetailsDto);
         authService.signUp(clientDetailsDto);
-        return "/common/homepage";
+        return "/common/homepage-client";
     }
 
 

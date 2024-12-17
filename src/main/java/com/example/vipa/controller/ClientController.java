@@ -3,8 +3,10 @@ package com.example.vipa.controller;
 import com.example.vipa.dto.ClientDetailsDto;
 import com.example.vipa.model.Client;
 import com.example.vipa.service.ClientService;
+import com.example.vipa.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor // для автоматической генерации конструктора со всеми финальными полями
 public class ClientController {
 
+    private final PostService postService;
     private final ClientService clientService;
 
     /**
@@ -26,39 +29,24 @@ public class ClientController {
      */
     @GetMapping("/{clientId}")
     public String getClientPage(Model model, @PathVariable("clientId") int clientId) {
-        log.info("inside getClientPage(), clientId: {}", clientId);
+        log.info("Получен запрос на просмотр профиля клиента. clientId: {}", clientId);
         ClientDetailsDto client = clientService.getClient(clientId);
         model.addAttribute("client", client);
+        model.addAttribute("posts", postService.getPostsByAuthor(clientId));
         return "/client/client-page";
     }
 
-    /**
-     * Данный метод вызывается, когда нужно получить веб-страницу для редактирования данных о пользователе.
-     * @param model - изначально модель пустая, в методе в нее добавляется объект ClientDetailsDto,
-     *              данные которого нужно изменить
-     * @param clientId - id пользователя, данные которого нужно изменить
-     * @return - возвращаем название представления (html-файла), в котором происходит редактирование пользователя
-     */
-    @GetMapping("/edit/{clientId}")
-    public String getEditClientPage(Model model, @PathVariable("clientId") int clientId) {
-        log.info("inside getEditClientPage(), clientId: {}", clientId);
-        ClientDetailsDto client = clientService.getClient(clientId);
-        model.addAttribute("client", client);
+    @GetMapping("/edit")
+    public String getEditClientPage(@AuthenticationPrincipal Client client) {
+        log.info("Получен запрос на получение формы для изменения данных клиента. client: {}", client);
         return "/client/edit-client-page";
     }
 
-    /**
-     * Данный метод вызывается, когда на сервер отправляется заполненная форма для обновления данных пользователя.
-     * @param model - изначально модель пустая, в методе в нее помещается объект с обновленными данными пользователя.
-     * @param clientId - id пользователя, данные которого нужно изменить
-     * @param clientDetailsDto - измененные данные пользователя, полученные из формы
-     * @return - возвращаем название представления, в котором отображаются обновленные данные пользователя
-     */
-    @PutMapping("/edit/{clientId}")
-    public String updateClient(@PathVariable("clientId") int clientId,
+    @PutMapping("/edit")
+    public String updateClient(@AuthenticationPrincipal Client currentClient,
                                @ModelAttribute("client") ClientDetailsDto clientDetailsDto) {
-        log.info("inside updateClient(), clientId: {}, clientDetailsDto: {}", clientId, clientDetailsDto);
-        ClientDetailsDto updatedClient = clientService.updateClient(clientId, clientDetailsDto);
+        log.info("Получен запрос на обновление данных клиента. currentClient: {}, clientDetailsDto: {}", currentClient, clientDetailsDto);
+        clientService.updateClient(currentClient.getId(), clientDetailsDto);
         return "/client/client-page";
     }
 
@@ -69,7 +57,7 @@ public class ClientController {
      */
     @DeleteMapping("/delete/{clientId}")
     public String deleteClient(@PathVariable("clientId") int clientId){
-        log.info("inside deleteClient(), clientId: {}", clientId);
+        log.info("Получен запрос на удаление пользователя. clientId: {}", clientId);
         clientService.deleteClient(clientId);
         return "/common/homepage";
     }

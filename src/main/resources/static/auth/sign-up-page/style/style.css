@@ -10,12 +10,17 @@
   background-color: #2b2b2b;
   font-family: var(--second-family);
   color: #fff;
-  height: 100%;
 }
 
 .wrapper {
   max-width: 1050px;
   margin: 0 auto;
+}
+
+.title {
+  padding: 5px;
+  font-weight: 600;
+  font-size: 38px;
 }
 
 .header {
@@ -61,8 +66,22 @@
   transition: 0.3s;
 }
 
-.header__navigation-item:hover:not(:last-child) {
+.header__navigation-item:hover {
   color: #ccc;
+}
+
+.header__navigation-item-last {
+  padding: -50px;
+  font-weight: 600;
+  border-radius: 20px;
+  background-color: #a259ff;
+}
+.header__navigation-item-last p {
+  padding: 8px;
+}
+
+.header__navigation-item-last:hover {
+  background-color: #7110f0;
 }
 
 .header__navigation-item {
@@ -75,6 +94,7 @@
 }
 
 .header__profile-title {
+  padding: 0 12px;
   cursor: pointer;
 }
 
@@ -98,8 +118,8 @@
   position: absolute;
   top: 100%;
   right: 0;
-  min-width: 135px;
   background-color: #3b3b3b;
+  min-width: 160px;
   z-index: 1;
   transition: opacity 1s;
   border-radius: 0 0 20px 20px;
@@ -130,18 +150,6 @@
 
 .registration:hover {
   background-color: #832ff1;
-}
-
-.text {
-  padding: 5px;
-  font-weight: 400;
-  font-size: 22px;
-}
-
-.title {
-  padding: 5px;
-  font-weight: 600;
-  font-size: 38px;
 }
 
 .create {

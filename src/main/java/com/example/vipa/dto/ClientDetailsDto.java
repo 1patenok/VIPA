@@ -10,6 +10,7 @@ import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 import lombok.experimental.Accessors;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Getter
@@ -31,8 +32,8 @@ public class ClientDetailsDto {
     private String surname;
 
     @NotNull(message = FIELD_IS_MANDATORY_MESSAGE)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date birthDate;
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private LocalDate birthDate;
 
     @NotBlank(message = FIELD_IS_MANDATORY_MESSAGE)
     @Pattern(regexp = "^((8|\\+7)[\\- ]?)?(\\(?\\d{3}\\)?[\\- ]?)?[\\d\\- ]{7,10}$",

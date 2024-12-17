@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -34,6 +35,9 @@ public class Order {
 
     @Column(name = "time_of_delivery")
     private Integer timeOfDelivery;
+
+    @Column(name = "order_date")
+    private LocalDate orderDate;
 
     @Column(name = "payment_method")
     @Enumerated(value = EnumType.STRING)

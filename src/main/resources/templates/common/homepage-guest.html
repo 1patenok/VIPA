@@ -3,8 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-store">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!--    <link rel="stylesheet" th:href="../css/reset.css">-->
+    <link rel="stylesheet" th:href="@{common/homepage-guest/style/reset.css}">
     <link rel="stylesheet" th:href="@{common/homepage-guest/style/style.css}">
     <title>Homepage</title>
 </head>
@@ -94,30 +95,20 @@
     <footer class="footer">
         <div class="footer__parts wrapper">
             <div class="footer__part part1">
-                <a th:href="@{/homepage}" class="footer__title logo">
+                <a th:href="@{/homepage-guest}" class="footer__title logo">
                     <img th:src="@{common/homepage-guest/img/icon/nav_icon/Storefront.svg}" alt="logo">
                     <nav>VIPA</nav>
                 </a>
                 <p class="footer__text">
                 <nav>Присоединяйтесь к нашему сообществу</nav>
                 <div class="social">
-                    <a th:href="kokoko"><img th:src="@{common/homepage-guest/img/icon/nav_icon/DiscordLogo.svg}" alt="discord"></a>
-                    <a th:href="kokoko"><img th:src="@{common/homepage-guest/img/icon/nav_icon/YoutubeLogo.svg}" alt="youtube"></a>
-                    <a th:href="kokoko"><img th:src="@{common/homepage-guest/img/icon/nav_icon/TwitterLogo.svg}" alt="twitter"></a>
-                    <a th:href="kokoko"><img th:src="@{common/homepage-guest/img/icon/nav_icon/InstagramLogo.svg}" alt="instagram"></a>
+                    <a th:href="@{null}"><img th:src="@{common/homepage-guest/img/icon/nav_icon/DiscordLogo.svg}" alt="discord"></a>
+                    <a th:href="@{null}"><img th:src="@{common/homepage-guest/img/icon/nav_icon/YoutubeLogo.svg}" alt="youtube"></a>
+                    <a th:href="@{null}"><img th:src="@{common/homepage-guest/img/icon/nav_icon/TwitterLogo.svg}" alt="twitter"></a>
+                    <a th:href="@{null}"><img th:src="@{common/homepage-guest/img/icon/nav_icon/InstagramLogo.svg}" alt="instagram"></a>
                 </div>
                 </p>
             </div>
-            <!-- <div class="footer__part part2">
-                <div class="footer__title">
-                    <nav>Навигация</nav>
-                </div>
-                <p class="footer__text">
-                <p><a th:href="#">Объявления</a></p>
-                <p><a th:href="#">Чаты</a></p>
-                <p><a th:href="#">Корзина</a></p>
-                </p>
-            </div> -->
             <div class="footer__part part3">
                 <div class="footer__title">
                     <p>Присоединяйтесь к нам</p>

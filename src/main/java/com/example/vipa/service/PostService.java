@@ -1,28 +1,28 @@
 package com.example.vipa.service;
 
-import com.example.vipa.dto.CategoryDto;
-import com.example.vipa.dto.OrderDetailsDto;
 import com.example.vipa.dto.PostDetailsDto;
 import com.example.vipa.dto.PostPreviewDto;
 import com.example.vipa.mapping.PostMapper;
 import com.example.vipa.model.Category;
+import com.example.vipa.model.Client;
 import com.example.vipa.model.Post;
+import com.example.vipa.repository.ClientRepository;
 import com.example.vipa.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class PostService {
-
 
     private static final String POST_NOT_FOUND_MESSAGE = "Объявление не найдено.";
 
@@ -50,7 +50,14 @@ public class PostService {
     }
 
     @Transactional
-    public List<PostPreviewDto> getPostPage(Pageable pageable, String postTitlePattern) {
+    public List<PostPreviewDto> getPosts(Pageable pageable) {
+        return postRepository.findAll(pageable).stream()
+                .map(postMapper::convertToPostPreviewDto)
+                .toList();
+    }
+
+    @Transactional
+    public List<PostPreviewDto> getPosts(Pageable pageable, String postTitlePattern) {
         return postRepository.findAllByTitleLike("%" + postTitlePattern + "%", pageable).stream()
                 .map(postMapper::convertToPostPreviewDto)
                 .toList();
@@ -59,6 +66,14 @@ public class PostService {
     @Transactional
     public List<PostPreviewDto> getPostsByAuthor(int authorId) {
         return clientService.getClientEntity(authorId).getPosts().stream()
+                .map(postMapper::convertToPostPreviewDto)
+                .toList();
+    }
+
+    @Transactional
+    public List<PostPreviewDto> getMostPopularPosts(int pageNumber) {
+        Pageable pageable = PageRequest.of(pageNumber, 5, Sort.by(Sort.Direction.DESC, "numberOfViews"));
+        return postRepository.findAll(pageable).stream()
                 .map(postMapper::convertToPostPreviewDto)
                 .toList();
     }

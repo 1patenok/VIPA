@@ -41,6 +41,9 @@ public class DialogMapper {
                         .map(Dialog::getCustomer, DialogDetailsDto::setCustomer))*/
                 .addMappings(mapper -> mapper.using(messageListToMessageDtoListConverter)
                         .map(Dialog::getMessages, DialogDetailsDto::setMessages));
+                modelMapper.createTypeMap(Dialog.class, DialogPreviewDto.class)
+                        .addMappings(mapper -> mapper.using(postToPostTitleConverter)
+                                .map(Dialog::getPost, DialogPreviewDto::setPostTitle));
     }
 
     public DialogPreviewDto convertToDialogPreviewDto(Dialog dialog) {

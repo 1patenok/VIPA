@@ -10,12 +10,12 @@ import lombok.experimental.Accessors;
 @Entity
 @Table(name = "post_address")
 @Accessors(chain = true)
-public class PostAddress {
+public class DeliveryAddress {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
     @Column(name = "address")
-    private String postAddress;
+    private String address;
 }
