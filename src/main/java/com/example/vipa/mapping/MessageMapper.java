@@ -1,9 +1,7 @@
 package com.example.vipa.mapping;
 
 import com.example.vipa.dto.MessageDto;
-import com.example.vipa.dto.OrderDetailsDto;
 import com.example.vipa.model.Message;
-import com.example.vipa.model.Order;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;

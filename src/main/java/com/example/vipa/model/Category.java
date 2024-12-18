@@ -22,7 +22,7 @@ public class Category {
     private String name;
 
     @Column(name = "image")
-    private String image;
+    private String imagePath;
 
     @OneToMany(mappedBy = "category")
     private List<Post> posts;

@@ -1,8 +1,7 @@
 package com.example.vipa.controller;
 
-import com.example.vipa.dto.OrderDetailsDto;
+import com.example.vipa.dto.OrderDetailsOtputDto;
 import com.example.vipa.dto.PostPreviewDto;
-import com.example.vipa.dto.SignInDto;
 import com.example.vipa.model.Client;
 import com.example.vipa.service.CartService;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +28,7 @@ public class CartController {
         List<PostPreviewDto> postsInCart = cartService.getProductsInCart(currentClient.getId());
         log.info("cart: {}", postsInCart);
         model.addAttribute("posts", postsInCart);
-        model.addAttribute("order", new OrderDetailsDto());
+        model.addAttribute("order", new OrderDetailsOtputDto());
         return "/cart/cart-page";
     }
 

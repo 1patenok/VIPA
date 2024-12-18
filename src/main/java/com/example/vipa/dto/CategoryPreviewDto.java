@@ -9,5 +9,6 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class CategoryPreviewDto {
     private int id;
-    private String coverImagePath;
+    private String name;
+    private String imagePath;
 }

@@ -16,7 +16,7 @@ public class OrderMapper {
         this.modelMapper = modelMapper;
     }
 
-    public Order convertToOrder(OrderDetailsDto dto) {
+    public Order convertToOrder(OrderDetailsOtputDto dto) {
         log.info("inside convertToPost()");
         return modelMapper.map(dto, Order.class);
     }
@@ -26,9 +26,9 @@ public class OrderMapper {
         return modelMapper.map(order, OrderPreviewDto.class);
     }
 
-    public OrderDetailsDto convertToOrderDetailsDto(Order order) {
+    public OrderDetailsOtputDto convertToOrderDetailsDto(Order order) {
         log.info("inside convertToPostDetailsDto()");
-        return modelMapper.map(order, OrderDetailsDto.class);
+        return modelMapper.map(order, OrderDetailsOtputDto.class);
     }
 
 
