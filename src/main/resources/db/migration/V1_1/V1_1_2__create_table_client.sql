@@ -5,5 +5,6 @@ CREATE TABLE client (
     birth_date DATE NOT NULL,
     phone_number VARCHAR(20) NOT NULL UNIQUE,
     email VARCHAR(80) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL
+    password VARCHAR(255) NOT NULL,
+    image VARCHAR(255) NOT NULL UNIQUE
 );
