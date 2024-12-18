@@ -4,9 +4,8 @@ import com.example.vipa.dto.PostDetailsDto;
 import com.example.vipa.dto.PostPreviewDto;
 import com.example.vipa.mapping.PostMapper;
 import com.example.vipa.model.Category;
-import com.example.vipa.model.Client;
 import com.example.vipa.model.Post;
-import com.example.vipa.repository.ClientRepository;
+import com.example.vipa.model.PostImage;
 import com.example.vipa.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +14,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -37,7 +39,10 @@ public class PostService {
                 .orElseThrow(() -> new RuntimeException(POST_NOT_FOUND_MESSAGE));
         post.setNumberOfViews(post.getNumberOfViews() + 1);
         postRepository.save(post);
-        return postMapper.convertToPostDetailsDto(post);
+
+        PostDetailsDto postDetailsDto = postMapper.convertToPostDetailsDto(post);
+
+        return postDetailsDto;
     }
 
     public List<Post> getPostsByIds(List<Integer> listIds) {
@@ -79,7 +84,7 @@ public class PostService {
     }
 
     @Transactional
-    public PostDetailsDto createPost(int authorId, PostDetailsDto postDetailsDto) {
+    public PostDetailsDto createPost(int authorId, PostDetailsDto postDetailsDto, MultipartFile file) throws IOException {
         Post postToSave = postMapper.convertToPost(postDetailsDto);
         postToSave.setAuthor(clientService.getClientEntity(authorId));
         postToSave.setCategory(categoryService.getCategoryEntity(postDetailsDto.getCategoryId()));

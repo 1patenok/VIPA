@@ -14,7 +14,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Slf4j
@@ -93,10 +95,11 @@ public class PostController {
 
     @PostMapping("/new")
     public String createPost(Model model, @AuthenticationPrincipal Client currentClient,
-                             @ModelAttribute("post") PostDetailsDto postDetailsDto) {
+                             @ModelAttribute("post") PostDetailsDto postDetailsDto,
+                             @RequestParam("file") MultipartFile file) throws IOException {
         log.info("Получен запрос на публикацию нового объявления. currentClient: {}, postDetailsDto: {}",
                 currentClient, postDetailsDto);
-        PostDetailsDto createdPost = postService.createPost(currentClient.getId(), postDetailsDto);
+        PostDetailsDto createdPost = postService.createPost(currentClient.getId(), postDetailsDto, file);
         model.addAttribute("post", createdPost);
         return "/post/post-page";
     }

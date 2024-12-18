@@ -22,4 +22,6 @@ public class PostImage {
     @ManyToOne
     @JoinColumn(name = "post_id", referencedColumnName = "post_id")
     private Post post;
+
+
 }

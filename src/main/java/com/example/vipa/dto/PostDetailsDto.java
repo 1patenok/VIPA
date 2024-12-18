@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -36,5 +37,5 @@ public class PostDetailsDto {
     private String description;
     private String address;
     private LocalDate createdAt;
-    private List<String> images;
+    private List<MultipartFile> images;
 }

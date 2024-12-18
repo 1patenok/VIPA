@@ -64,6 +64,7 @@ public class Post {
     @ManyToMany(mappedBy = "postsInOrder")
     private List<Order> ordersWithPost;
 
+
     @Override
     public String toString() {
         return "Post{" +
@@ -78,4 +79,6 @@ public class Post {
                 ", postId=" + id +
                 '}';
     }
+
+
 }
