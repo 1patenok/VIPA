@@ -36,6 +36,9 @@
                         <a th:href="@{null}" class="link">Уведомления</a>
                         <a th:href="@{/cart}" class="link">Корзина</a>
                         <a th:href="@{/orders/list}" class="link">Заказы</a>
+                        <form th:action="@{/auth/sign-out}" method="post">
+                            <button type="submit" class="link">Выйти из аккаунта</button>
+                        </form>
                     </div>
                 </div>
             </div>

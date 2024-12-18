@@ -71,7 +71,7 @@ public class AuthenticationService {
         }
 
         // Валидация пароля
-        passwordValidator.validatePassword(clientDetailsDto.getPassword());
+        //passwordValidator.validatePassword(clientDetailsDto.getPassword());
 
         // Преобразуем DTO в модель клиента и кодируем пароль
         Client clientToSave = clientMapper.convertToClient(clientDetailsDto);

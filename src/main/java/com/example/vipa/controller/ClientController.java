@@ -37,8 +37,9 @@ public class ClientController {
     }
 
     @GetMapping("/edit")
-    public String getEditClientPage(@AuthenticationPrincipal Client client) {
-        log.info("Получен запрос на получение формы для изменения данных клиента. client: {}", client);
+    public String getEditClientPage(Model model, @AuthenticationPrincipal Client currentClient) {
+        log.info("Получен запрос на получение формы для изменения данных клиента. currentClient: {}", currentClient);
+        model.addAttribute("client", clientService.getClient(currentClient.getId()));
         return "/client/edit-client-page";
     }
 

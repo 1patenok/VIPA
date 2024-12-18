@@ -68,16 +68,6 @@
                  th:class="${msg.getSenderName().equals(#authentication.principal.name) ? 'window\_\_message-my' : 'window\_\_message-companion'}">
 <!--                <p th:text="${message.getText()}"></p>-->
             </div>
-            <!--            <div class="window__message-my">
-                            <p>
-                                Мое сообщение
-                            </p>
-                        </div>
-                        <div class="window__message-companion">
-                            <p>
-                                Не мое сообщение
-                            </p>
-                        </div>-->
         </div>
     </div>
     <form th:action="@{/messages/{dialogId}(dialogId=${dialog.getId()})}" th:object="${message}" th:method="post" class="send wrapper">

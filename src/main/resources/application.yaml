@@ -1,9 +1,15 @@
 spring:
   application:
     name: vipa
+  web:
+    resources:
+      cache:
+        cachecontrol:
+          no-cache: true
+          must-revalidate: true
   servlet:
     multipart:
-      location: D:\java-programming\vipa\src\main\resources\static\uploads\post-images
+      location: ./uploads
       max-file-size: 50MB
   thymeleaf:
     extras:
@@ -12,7 +18,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/vipa_db
     username: postgres
-    password: admin
+    password: My_passw0rd
   flyway:
     baseline-on-migrate: true
   jpa:
@@ -35,9 +41,6 @@ spring:
           ssl:
             trust: smtp.gmail.com
         debug: true
-
-file:
-  upload-dir: ./images
 
 logging:
   level:

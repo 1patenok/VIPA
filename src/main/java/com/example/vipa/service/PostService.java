@@ -5,7 +5,6 @@ import com.example.vipa.dto.PostDetailsOutputDto;
 import com.example.vipa.dto.PostPreviewDto;
 import com.example.vipa.mapping.PostMapper;
 import com.example.vipa.model.Category;
-import com.example.vipa.model.Client;
 import com.example.vipa.model.Post;
 import com.example.vipa.model.PostImage;
 import com.example.vipa.repository.PostRepository;
@@ -90,7 +89,7 @@ public class PostService {
         postToSave.setImages(
                 postDetailsInputDto.getImages().stream()
                         .map(multipart -> new PostImage()
-                                .setUrl(imageService.saveImage(multipart))
+                                .setUrl(imageService.savePostImage(multipart))
                                 .setPost(postToSave))
                         .toList());
         log.info("postToSave: {}", postToSave);
