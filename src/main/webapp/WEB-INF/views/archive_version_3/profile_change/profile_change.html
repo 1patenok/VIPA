@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/reset.css">
+    <link rel="stylesheet" href="style/style.css">
+    <title>Change Account Data</title>
+    <script src="script/script.js"></script>
+</head>
+
+<body class="body">
+    <header class="header">
+        <a class="header__logo logo" href="homepage.html">
+            <img src="img/icon/nav_icon/Storefront.svg" alt="logo">
+            <nav>VIPA</nav>
+        </a>
+        <div class="header__navigation">
+            <a href="#" class="header__navigation-item">Чаты</a>
+            <a href="#" class="header__navigation-item">Избранные</a>
+            <a href="#" class="header__navigation-item">Уведомления</a>
+            <a href="#" class="header__navigation-item">Корзина</a>
+            <a href="#" class="header__navigation-item">Заказы</a>
+            <a href="#" class="header__navigation-item header__navigation-item-last">
+                <p>Подать объявление</p>
+            </a>
+            <div class="header__profile">
+                <div class="registration__button registration">
+                    <img src="img/icon/nav_icon/User.svg" alt="User">
+                    <p class="header__profile-title">Меню</p>
+                    <div class="header__links">
+                        <a href="#" class="link">Профиль</a>
+                        <a href="#" class="link">Чаты</a>
+                        <a href="#" class="link">Избранные</a>
+                        <a href="#" class="link">Уведомления</a>
+                        <a href="#" class="link">Корзина</a>
+                        <a href="#" class="link">Заказы</a>
+                        <!-- <a href="../log_in/log_in.html" class="link">Войти</a>
+                        <a href="../create_account/create_account.html" class="link">Регистрация</a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="create wrapper">
+        <div class="create__title title">
+            <p>Изменить данные</p>
+        </div>
+        <div class="change__data">
+            <div class="old__data">
+                <div class="old__data-title">
+                    <p>Устаревшие данные</p>
+                </div>
+                <div class="old__data-name">
+                    <p>Имя</p>
+                </div>
+                <div class="old__data-surname">
+                    <p>Фамилия</p>
+                </div>
+                <div class="old__data-birthdate">
+                    <p>Дата рожидения</p>
+                </div>
+                <div class="old__data-phone">
+                    <p>Номер телефон</p>
+                </div>
+                <div class="old__data-email">
+                    <p>Электронная почта</p>
+                </div>
+                <div class="old__data-password">
+                    <p>Пароль</p>
+                </div>
+            </div>
+            <div class="create__form">
+                <div class="change__data-title">
+                    <p>Новые данные</p>
+                </div>
+                <form action="create" class="create__form-form form__input">
+                    <input type="text" placeholder="Имя" class="form__name form__input" required>
+                    <input type="text" placeholder="Фамилия" class="form__surname form__input" required>
+                    <input type="date" class="form__birthdate form__input" required>
+                    <input type="tel" placeholder="+7(___)___-__-__" class="form__number form__input" id="online_phone"
+                        pattern="\+7\s?[\(]{0,1}9[0-9]{2}[\)]{0,1}\s?\d{3}[-]{0,1}\d{2}[-]{0,1}\d{2}" required>
+                    <input type="email" placeholder="Электронная почта" class="form__email form__input" required>
+                    <input id="psw" type="text" placeholder="Пароль" class="form__password form__input" name="psw"
+                        pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                        title="Должен содержать по меньшей мере одну цифру, одну большую и одну маленькую буквы латинского алфавита и быть в длину не менее 8 символов"
+                        required>
+                    <input id="psw2" type="text" placeholder="Пароль" class="form__password form__input" required
+                        oninput="validatePassword()">
+                    <button type="submit" class="form__button">
+                        Изменить
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer__parts wrapper">
+            <div class="footer__part part1">
+                <a href="homepage.html" class="footer__title logo">
+                    <img src="img/icon/nav_icon/Storefront.svg" alt="logo">
+                    <nav>VIPA</nav>
+                </a>
+                <p class="footer__text">
+                <nav>Присоединяйтесь к нашему сообществу</nav>
+                <div class="social">
+                    <a href="#"><img src="img/icon/nav_icon/DiscordLogo.svg" alt="discord"></a>
+                    <a href="#"><img src="img/icon/nav_icon/YoutubeLogo.svg" alt="youtube"></a>
+                    <a href="#"><img src="img/icon/nav_icon/TwitterLogo.svg" alt="twitter"></a>
+                    <a href="#"><img src="img/icon/nav_icon/InstagramLogo.svg" alt="instagram"></a>
+                </div>
+                </p>
+            </div>
+            <div class="footer__part part2">
+                <div class="footer__title">
+                    <nav>Навигация</nav>
+                </div>
+                <p class="footer__text">
+                <p><a href="#">Чаты</a></p>
+                <p><a href="#">Избранные</a></p>
+                <p><a href="#">Уведомления</a></p>
+                <p><a href="#">Корзина</a></p>
+                <p><a href="#">Заказы</a></p>
+                </p>
+            </div>
+            <div class="footer__part part3">
+                <div class="footer__title">
+                    <p>Присоединяйтесь к нам</p>
+                </div>
+                <p class="footer__text">
+                    Получайте эксклюзивные акции и обновления прямо в свой почтовый ящик.
+                </p>
+                <!-- <a href="../create_account/create_account.html" class="footer__registration registration">
+                    <img src="img/icon/RocketLaunch.svg" alt="rocket">
+                    <p>Начать</p>
+                </a> -->
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
