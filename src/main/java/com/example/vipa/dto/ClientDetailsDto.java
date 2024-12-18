@@ -4,14 +4,14 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.format.annotation.DateTimeFormat;
 import lombok.experimental.Accessors;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Getter
 @Setter
@@ -22,6 +22,7 @@ public class ClientDetailsDto {
     private static final String FIELD_IS_MANDATORY_MESSAGE = "Это поле является обязательным для заполнения.";
     private static final String EMAIL_IS_NOT_VALID_MESSAGE = "Вы ввели невалидный email.";
     private static final String PHONE_NUMBER_IS_NOT_VALID_MESSAGE = "Вы ввели невалидный номер телефона.";
+    private static final String PASSWORDS_DO_NOT_MATCH_MESSAGE = "Пароль и его подтверждение не совпадают.";
 
     private int id;
 
@@ -37,7 +38,7 @@ public class ClientDetailsDto {
 
     @NotBlank(message = FIELD_IS_MANDATORY_MESSAGE)
     @Pattern(regexp = "^((8|\\+7)[\\- ]?)?(\\(?\\d{3}\\)?[\\- ]?)?[\\d\\- ]{7,10}$",
-             message = PHONE_NUMBER_IS_NOT_VALID_MESSAGE)
+            message = PHONE_NUMBER_IS_NOT_VALID_MESSAGE)
     private String phoneNumber;
 
     @NotBlank(message = FIELD_IS_MANDATORY_MESSAGE)
@@ -45,8 +46,14 @@ public class ClientDetailsDto {
     private String email;
 
     @NotBlank(message = FIELD_IS_MANDATORY_MESSAGE)
+    @Size(min = 6, message = "Пароль должен содержать минимум 6 символов.")
     private String password;
 
     @NotBlank(message = FIELD_IS_MANDATORY_MESSAGE)
     private String passwordConfirmation;
+
+    // Метод для проверки, совпадают ли пароли
+    public boolean isPasswordValid() {
+        return password != null && password.equals(passwordConfirmation);
+    }
 }

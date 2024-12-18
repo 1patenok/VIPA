@@ -7,6 +7,7 @@ import com.example.vipa.model.Client;
 import com.example.vipa.service.CategoryService;
 import com.example.vipa.service.DialogService;
 import com.example.vipa.service.PostService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +15,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -94,9 +96,19 @@ public class PostController {
 
     @PostMapping("/new")
     public String createPost(Model model, @AuthenticationPrincipal Client currentClient,
-                             @ModelAttribute("post") PostDetailsInputDto postDetailsInputDto) {
+                             @ModelAttribute("post") @Valid PostDetailsInputDto postDetailsInputDto,
+                             BindingResult bindingResult) {
         log.info("Получен запрос на публикацию нового объявления. currentClient: {}, postDetailsDto: {}",
                 currentClient, postDetailsInputDto);
+
+        if (bindingResult.hasErrors()) {
+            // Если есть ошибки валидации, возвращаем пользователя обратно на форму с ошибками
+            log.error("Ошибка валидации: {}", bindingResult.getAllErrors());
+            model.addAttribute("errors", bindingResult.getAllErrors());
+            model.addAttribute("categories", categoryService.getCategories());
+            return "/post/post-form-page";
+        }
+
         PostDetailsOutputDto createdPost = postService.createPost(currentClient.getId(), postDetailsInputDto);
         model.addAttribute("post", createdPost);
         return "/post/post-page";

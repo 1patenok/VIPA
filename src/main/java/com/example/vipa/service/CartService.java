@@ -5,6 +5,7 @@ import com.example.vipa.mapping.PostMapper;
 import com.example.vipa.model.Client;
 import com.example.vipa.model.Post;
 import com.example.vipa.repository.ClientRepository;
+import com.example.vipa.validators.OrderValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,12 +21,8 @@ public class CartService {
     private final PostMapper postMapper;
     private final ClientService clientService;
     private final PostService postService;
-    private final EmailSenderService emailSenderService;
+    private final OrderValidator orderValidator;
     private final ClientRepository clientRepository;
-
-
-
-
 
     @Transactional(readOnly = true)
     public List<PostPreviewDto> getProductsInCart(int clientId) {
@@ -37,8 +34,12 @@ public class CartService {
 
     @Transactional
     public void addPostToCart(int clientId, int postId) {
+        // Вызов валидатора перед добавлением
+        orderValidator.validateAddToCart(clientId, postId);
+
         Client client = clientService.getClientEntity(clientId);
         Post post = postService.getPostEntity(postId);
+
         client.addToCart(post);
         clientService.updateClient(client);
     }
@@ -48,6 +49,12 @@ public class CartService {
         Client client = clientService.getClientEntity(clientId);
         Post post = postService.getPostEntity(postId);
 
+        // Проверка на наличие товара в корзине
+        if (!client.getPostsInCart().contains(post)) {
+            throw new IllegalArgumentException("Товар отсутствует в корзине.");
+        }
+
+        client.getPostsInCart().remove(post);
         clientService.updateClient(client);
     }
 }

@@ -9,40 +9,43 @@ import com.example.vipa.exception.PasswordMismatchException;
 import com.example.vipa.mapping.ClientMapper;
 import com.example.vipa.model.Client;
 import com.example.vipa.repository.ClientRepository;
+import com.example.vipa.validators.PasswordValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-@Slf4j // для логирования
-@Service // = Component (чтобы автоматически создать объект класса AuthenticationService и поместить его в контекст приложения Spring)
-@RequiredArgsConstructor // для автоматической генерации конструктора со всеми финальными полями
+@Slf4j
+@Service
+@RequiredArgsConstructor
 public class AuthenticationService {
 
     private static final String CLIENT_NOT_FOUND_MESSAGE = "Пользователь не найден.";
     private static final String EMAIL_ALREADY_EXIST_MESSAGE = "Пользователь с указанным email уже зарегистрирован.";
-    private static final String INVALID_PASSWORD_MESSAGE = "Неверый пароль.";
+    private static final String INVALID_PASSWORD_MESSAGE = "Неверный пароль.";
     private static final String WRONG_PASSWORD_CONFIRMATION_MESSAGE = "Пароли не совпадают.";
 
-    private final ClientMapper clientMapper; // маппер для преобразования из ClientDetailsDto в Client
-    private final PasswordEncoder passwordEncoder; // кодировщик паролей
-    private final ClientRepository clientRepository; // репозиторий для взаимодействия с БД
+    private final ClientMapper clientMapper;
+    private final PasswordEncoder passwordEncoder;
+    private final ClientRepository clientRepository;
+    private final PasswordValidator passwordValidator; // Сервис для проверки пароля
 
     /**
      * Метод, выполняющий вход в аккаунт зарегистрированного пользователя.
      * @param signInDto - dto, в котором хранятся учетные данные пользователя
-     * @return - возвращаем пользователя, если учетные данные указаны верно, в противном
-     * случае выбрасываем исключение RuntimeException.
+     * @return - возвращаем пользователя, если учетные данные указаны верно, в противном случае выбрасываем исключение RuntimeException.
      */
     public ClientDetailsDto signIn(SignInDto signInDto) {
-        log.info("signInDto: {}", signInDto); // выводим в логи данные, переданные в метод (просто чтобы посмотреть)
+        log.info("Вход пользователя с email: {}", signInDto.getUsername());
+
         Client client = clientRepository.findByEmail(signInDto.getUsername())
                 .orElseThrow(() -> new NotFoundException(CLIENT_NOT_FOUND_MESSAGE));
+
         if (passwordEncoder.matches(signInDto.getPassword(), client.getPassword())) {
-            log.info("Проверка пароля пройдена.");
+            log.info("Проверка пароля пройдена успешно.");
             return clientMapper.convertToClientDetailsDto(client);
         } else {
-            log.info("Проверка пароля не пройдена.");
+            log.info("Неверный пароль для пользователя с email: {}", signInDto.getUsername());
             throw new BadCredentialsException(INVALID_PASSWORD_MESSAGE);
         }
     }
@@ -53,15 +56,31 @@ public class AuthenticationService {
      * @return - возвращаем зарегистрированного пользователя.
      */
     public ClientDetailsDto signUp(ClientDetailsDto clientDetailsDto) {
-        log.info("newClient: {}", clientDetailsDto); // выводим в логи данные, переданные в метод (просто чтобы посмотреть)
+        log.info("Регистрация нового пользователя с email: {}", clientDetailsDto.getEmail());
+
+        // Проверка совпадения паролей
         if (!clientDetailsDto.getPassword().equals(clientDetailsDto.getPasswordConfirmation())) {
+            log.error("Пароли не совпадают для email: {}", clientDetailsDto.getEmail());
             throw new PasswordMismatchException(WRONG_PASSWORD_CONFIRMATION_MESSAGE);
         }
+
+        // Проверка существования пользователя с таким email
         if (clientRepository.existsByEmail(clientDetailsDto.getEmail())) {
+            log.error("Пользователь с таким email уже существует: {}", clientDetailsDto.getEmail());
             throw new AlreadyExistException(EMAIL_ALREADY_EXIST_MESSAGE);
         }
-        Client clientToSave = clientMapper.convertToClient(clientDetailsDto); // преобразуем NewClientDto в Client
-        clientToSave.setPassword(passwordEncoder.encode(clientToSave.getPassword())); // кодируем пароль и записываем в сохраняемого клиента
-        return clientMapper.convertToClientDetailsDto(clientRepository.save(clientToSave));
+
+        // Валидация пароля
+        passwordValidator.validatePassword(clientDetailsDto.getPassword());
+
+        // Преобразуем DTO в модель клиента и кодируем пароль
+        Client clientToSave = clientMapper.convertToClient(clientDetailsDto);
+        clientToSave.setPassword(passwordEncoder.encode(clientDetailsDto.getPassword()));
+
+        // Сохраняем клиента в базе данных
+        Client savedClient = clientRepository.save(clientToSave);
+
+        log.info("Новый пользователь успешно зарегистрирован с email: {}", savedClient.getEmail());
+        return clientMapper.convertToClientDetailsDto(savedClient);
     }
 }
