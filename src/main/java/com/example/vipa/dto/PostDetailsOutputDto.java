@@ -6,17 +6,16 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
-import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Path;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Getter
 @Setter
 @ToString
 @Accessors(chain = true)
-public class PostDetailsDto {
+public class PostDetailsOutputDto {
 
     private static final String FIELD_IS_MANDATORY_MESSAGE = "Это поле является обязательным для заполнения.";
     private static final String PRICE_CANNOT_BE_NEGATIVE_MESSAGE = "Цена не может быть отрицательной.";
@@ -37,5 +36,5 @@ public class PostDetailsDto {
     private String description;
     private String address;
     private LocalDate createdAt;
-    private List<MultipartFile> images;
+    private List<String> imagePaths;
 }

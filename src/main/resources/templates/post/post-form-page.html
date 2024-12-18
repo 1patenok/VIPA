@@ -12,107 +12,112 @@
 </head>
 
 <body class="body">
-    <header class="header">
-        <a class="header__logo logo" th:href="@{/homepage-client}">
-            <img th:src="@{/post/post-form-page/img/icon/nav_icon/Storefront.svg}" alt="logo">
-            <nav>VIPA</nav>
+<header class="header">
+    <a class="header__logo logo" th:href="@{/homepage-client}">
+        <img th:src="@{/post/post-form-page/img/icon/nav_icon/Storefront.svg}" alt="logo">
+        <nav>VIPA</nav>
+    </a>
+    <div class="header__navigation">
+        <a th:href="@{/dialogs/list}" class="header__navigation-item">Чаты</a>
+        <a th:href="@{/favorites}" class="header__navigation-item">Избранное</a>
+        <a th:href="@{null}" class="header__navigation-item">Уведомления</a>
+        <a th:href="@{/cart}" class="header__navigation-item">Корзина</a>
+        <a th:href="@{/orders/list}" class="header__navigation-item">Заказы</a>
+        <a th:href="@{/posts/new}" class="header__navigation-item header__navigation-item-last">
+            <p>Подать объявление</p>
         </a>
-        <div class="header__navigation">
-            <a th:href="@{/dialogs/list}" class="header__navigation-item">Чаты</a>
-            <a th:href="@{/favorites}" class="header__navigation-item">Избранное</a>
-            <a th:href="@{null}" class="header__navigation-item">Уведомления</a>
-            <a th:href="@{/cart}" class="header__navigation-item">Корзина</a>
-            <a th:href="@{/orders/list}" class="header__navigation-item">Заказы</a>
-            <a th:href="@{/posts/new}" class="header__navigation-item header__navigation-item-last">
-                <p>Подать объявление</p>
-            </a>
-            <div class="header__profile">
-                <div class="registration__button registration">
-                    <img th:src="@{/post/post-form-page/img/icon/nav_icon/User.svg}" alt="User">
-                    <p class="header__profile-title">Меню</p>
-                    <div class="header__links">
-                        <a th:href="@{/clients/{clientId}(clientId=${#authentication.principal.id})}" class="link">Профиль</a>
-                        <a th:href="@{/dialogs/list}" class="link">Чаты</a>
-                        <a th:href="@{/favorites}" class="link">Избранное</a>
-                        <a th:href="@{null}" class="link">Уведомления</a>
-                        <a th:href="@{/cart}" class="link">Корзина</a>
-                        <a th:href="@{/orders/list}" class="link">Заказы</a>
-                    </div>
+        <div class="header__profile">
+            <div class="registration__button registration">
+                <img th:src="@{/post/post-form-page/img/icon/nav_icon/User.svg}" alt="User">
+                <p class="header__profile-title">Меню</p>
+                <div class="header__links">
+                    <a th:href="@{/clients/{clientId}(clientId=${#authentication.principal.id})}"
+                       class="link">Профиль</a>
+                    <a th:href="@{/dialogs/list}" class="link">Чаты</a>
+                    <a th:href="@{/favorites}" class="link">Избранное</a>
+                    <a th:href="@{null}" class="link">Уведомления</a>
+                    <a th:href="@{/cart}" class="link">Корзина</a>
+                    <a th:href="@{/orders/list}" class="link">Заказы</a>
                 </div>
             </div>
         </div>
-    </header>
-
-    <div class="post">
-        <div class="post__title title">
-            <p>Создать объявление</p>
-        </div>
-        <form th:action="@{/posts/new}" th:object="${post}" method="post" class="post__input">
-            <div class="post__input-part1">
-                <p>Выберите фото товара</p>
-                <div class="post__input-img">
-                    <input th:field="*{images}" accept="image/*" type="file" class="file" multiple required>
-                </div>
-                <select th:field="*{categoryId}" class="post__input-category">
-                        <option th:each="category : ${categories}" th:text="${category.getName()}"
-                                th:value="${category.getId()}">Name</option>
-                </select>
-            </div>
-            <div class="post__input-part2">
-                <div class="post__input-text">
-                    <input th:field="*{title}" type="text" placeholder="Название товара" required>
-                    <input th:field="*{address}" type="text" placeholder="Ваш адрес" required>
-                    <input th:field="*{price}" type="number" placeholder="Цена в рублях" required>
-                    <textarea th:field="*{description}" placeholder="Описание" required></textarea>
-                </div>
-                <div class="post__buttons">
-                    <button type="submit">Отправить</button>
-                    <button type="reset">Очистить</button>
-                </div>
-            </div>
-        </form>
     </div>
+</header>
 
-    <footer class="footer">
-        <div class="footer__parts wrapper">
-            <div class="footer__part part1">
-                <a th:href="@{/post/post-form-page/img/icon/nav_icon/Storefront.svg}" class="footer__title logo">
-                    <img th:src="@{/post/post-form-page/img/icon/nav_icon/Storefront.svg}" alt="logo">
-                    <nav>VIPA</nav>
-                </a>
-                <p class="footer__text">
-                <nav></nav>
-                <nav>Присоединяйтесь к нашему сообществу</nav>
-                <div class="social">
-                    <a th:href="@{null}"><img th:src="@{/post/post-form-page/img/icon/nav_icon/DiscordLogo.svg}" alt="discord"></a>
-                    <a th:href="@{null}"><img th:src="@{/post/post-form-page/img/icon/nav_icon/YoutubeLogo.svg}" alt="youtube"></a>
-                    <a th:href="@{null}"><img th:src="@{/post/post-form-page/img/icon/nav_icon/TwitterLogo.svg}" alt="twitter"></a>
-                    <a th:href="@{null}"><img th:src="@{/post/post-form-page/img/icon/nav_icon/InstagramLogo.svg}" alt="instagram"></a>
-                </div>
-                </p>
+<div class="post">
+    <div class="post__title title">
+        <p>Создать объявление</p>
+    </div>
+    <form th:action="@{/posts/new}" th:object="${post}" method="post" class="post__input" enctype="multipart/form-data">
+        <div class="post__input-part1">
+            <p>Выберите фото товара</p>
+            <div class="post__input-img">
+                <input th:field="*{images}" accept="image/*" type="file" class="file" multiple required>
             </div>
-            <div class="footer__part part2">
-                <div class="footer__title">
-                    <nav>Навигация</nav>
-                </div>
-                <p class="footer__text">
-                <p><a th:href="@{/dialogs/list}">Чаты</a></p>
-                <p><a th:href="@{/favorites}">Избранное</a></p>
-                <p><a th:href="@{null}">Уведомления</a></p>
-                <p><a th:href="@{/cart}">Корзина</a></p>
-                <p><a th:href="@{/orders/list}">Заказы</a></p>
-                </p>
+            <select th:field="*{categoryId}" class="post__input-category">
+                <option th:each="category : ${categories}" th:text="${category.getName()}"
+                        th:value="${category.getId()}">Name</option>
+            </select>
+        </div>
+        <div class="post__input-part2">
+            <div class="post__input-text">
+                <input th:field="*{title}" type="text" placeholder="Название товара" required>
+                <input th:field="*{address}" type="text" placeholder="Ваш адрес" required>
+                <input th:field="*{price}" type="number" placeholder="Цена в рублях" required>
+                <textarea th:field="*{description}" placeholder="Описание" required></textarea>
             </div>
-            <div class="footer__part part3">
-                <div class="footer__title">
-                    <p>Присоединяйтесь к нам</p>
-                </div>
-                <p class="footer__text">
-                    Получайте эксклюзивные акции и обновления прямо в свой почтовый ящик.
-                </p>
+            <div class="post__buttons">
+                <button type="submit">Отправить</button>
+                <button type="reset">Очистить</button>
             </div>
         </div>
-    </footer>
+    </form>
+</div>
+
+<footer class="footer">
+    <div class="footer__parts wrapper">
+        <div class="footer__part part1">
+            <a th:href="@{/post/post-form-page/img/icon/nav_icon/Storefront.svg}" class="footer__title logo">
+                <img th:src="@{/post/post-form-page/img/icon/nav_icon/Storefront.svg}" alt="logo">
+                <nav>VIPA</nav>
+            </a>
+            <p class="footer__text">
+            <nav></nav>
+            <nav>Присоединяйтесь к нашему сообществу</nav>
+            <div class="social">
+                <a th:href="@{null}"><img th:src="@{/post/post-form-page/img/icon/nav_icon/DiscordLogo.svg}"
+                                          alt="discord"></a>
+                <a th:href="@{null}"><img th:src="@{/post/post-form-page/img/icon/nav_icon/YoutubeLogo.svg}"
+                                          alt="youtube"></a>
+                <a th:href="@{null}"><img th:src="@{/post/post-form-page/img/icon/nav_icon/TwitterLogo.svg}"
+                                          alt="twitter"></a>
+                <a th:href="@{null}"><img th:src="@{/post/post-form-page/img/icon/nav_icon/InstagramLogo.svg}"
+                                          alt="instagram"></a>
+            </div>
+            </p>
+        </div>
+        <div class="footer__part part2">
+            <div class="footer__title">
+                <nav>Навигация</nav>
+            </div>
+            <p class="footer__text">
+            <p><a th:href="@{/dialogs/list}">Чаты</a></p>
+            <p><a th:href="@{/favorites}">Избранное</a></p>
+            <p><a th:href="@{null}">Уведомления</a></p>
+            <p><a th:href="@{/cart}">Корзина</a></p>
+            <p><a th:href="@{/orders/list}">Заказы</a></p>
+            </p>
+        </div>
+        <div class="footer__part part3">
+            <div class="footer__title">
+                <p>Присоединяйтесь к нам</p>
+            </div>
+            <p class="footer__text">
+                Получайте эксклюзивные акции и обновления прямо в свой почтовый ящик.
+            </p>
+        </div>
+    </div>
+</footer>
 </body>
 
 </html>

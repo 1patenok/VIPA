@@ -1,6 +1,7 @@
 package com.example.vipa.controller;
 
-import com.example.vipa.dto.PostDetailsDto;
+import com.example.vipa.dto.PostDetailsInputDto;
+import com.example.vipa.dto.PostDetailsOutputDto;
 import com.example.vipa.dto.PostPreviewDto;
 import com.example.vipa.model.Client;
 import com.example.vipa.service.CategoryService;
@@ -14,9 +15,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 @Slf4j
@@ -33,7 +32,7 @@ public class PostController {
     public String getPostPage(Model model, @PathVariable("postId") int postId,
                               @AuthenticationPrincipal Client currentClient) {
         log.info("Получен запрос на просотр объявления. postId: {}", postId);
-        PostDetailsDto post = postService.getPost(postId);
+        PostDetailsOutputDto post = postService.getPost(postId);
         int dialogId = dialogService.getDialogIdByPostAndCustomer(postId, currentClient.getId());
         model.addAttribute("post", post);
         model.addAttribute("dialogId", dialogId);
@@ -81,7 +80,7 @@ public class PostController {
     @GetMapping("/new")
     public String getNewPostPage(Model model) {
         log.info("Получен запрос на получение формы для создания нового объявления.");
-        model.addAttribute("post", new PostDetailsDto());
+        model.addAttribute("post", new PostDetailsInputDto());
         model.addAttribute("categories", categoryService.getCategories());
         return "/post/post-form-page";
     }
@@ -89,26 +88,25 @@ public class PostController {
     @GetMapping("/edit")
     public String getEditPostPage(Model model) {
         log.info("Получен запрос на получение формы для редактирования объявления.");
-        model.addAttribute("post", new PostDetailsDto());
+        model.addAttribute("post", new PostDetailsInputDto());
         return "/post/edit-post-page";
     }
 
     @PostMapping("/new")
     public String createPost(Model model, @AuthenticationPrincipal Client currentClient,
-                             @ModelAttribute("post") PostDetailsDto postDetailsDto,
-                             @RequestParam("file") MultipartFile file) throws IOException {
+                             @ModelAttribute("post") PostDetailsInputDto postDetailsInputDto) {
         log.info("Получен запрос на публикацию нового объявления. currentClient: {}, postDetailsDto: {}",
-                currentClient, postDetailsDto);
-        PostDetailsDto createdPost = postService.createPost(currentClient.getId(), postDetailsDto, file);
+                currentClient, postDetailsInputDto);
+        PostDetailsOutputDto createdPost = postService.createPost(currentClient.getId(), postDetailsInputDto);
         model.addAttribute("post", createdPost);
         return "/post/post-page";
     }
 
     @PutMapping("/edit/{postId}")
     public String updatePost(Model model, @PathVariable("postId") int postId,
-                             @ModelAttribute("post") PostDetailsDto postDetailsDto) {
-        log.info("Получен запрос на обновление информации об объявлении. postId: {}, postDetailsDto: {}", postId, postDetailsDto);
-        PostDetailsDto updatedPost = postService.updatePost(postId, postDetailsDto);
+                             @ModelAttribute("post") PostDetailsInputDto postDetailsInputDto) {
+        log.info("Получен запрос на обновление информации об объявлении. postId: {}, postDetailsDto: {}", postId, postDetailsInputDto);
+        PostDetailsInputDto updatedPost = postService.updatePost(postId, postDetailsInputDto);
         model.addAttribute("post", updatedPost);
         return "/post/post-page";
     }

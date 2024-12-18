@@ -1,6 +1,10 @@
 spring:
   application:
     name: vipa
+  servlet:
+    multipart:
+      location: D:\java-programming\vipa\src\main\resources\static\uploads\post-images
+      max-file-size: 50MB
   thymeleaf:
     extras:
       springsecurity6:

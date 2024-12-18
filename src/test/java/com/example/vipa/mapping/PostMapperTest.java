@@ -1,6 +1,6 @@
 package com.example.vipa.mapping;
 
-import com.example.vipa.dto.PostDetailsDto;
+import com.example.vipa.dto.PostDetailsInputDto;
 import com.example.vipa.dto.PostImageDto;
 import com.example.vipa.dto.PostPreviewDto;
 import com.example.vipa.model.Client;
@@ -41,10 +41,10 @@ public class PostMapperTest {
                         .toList();
         modelMapper.createTypeMap(Post.class, PostPreviewDto.class)
                 .addMappings(mapper ->
-                        mapper.using(getFirstImageConverter).map(Post::getImages, PostPreviewDto::setCoverImage));
-        modelMapper.createTypeMap(Post.class, PostDetailsDto.class)
+                        mapper.using(getFirstImageConverter).map(Post::getImages, PostPreviewDto::setCoverImagePath));
+        modelMapper.createTypeMap(Post.class, PostDetailsInputDto.class)
                 .addMappings(mapper -> mapper.using(imageListToImageDtoListConverter)
-                        .map(Post::getImages, PostDetailsDto::setImages));
+                        .map(Post::getImages, PostDetailsInputDto::setImages));
     }
 
     @Test
@@ -52,12 +52,12 @@ public class PostMapperTest {
         List<PostImageDto> postImageDtos = List.of(
                 new PostImageDto().setId(POST_IMAGE_ID).setUrl(POST_IMAGE_URL),
                 new PostImageDto().setId(POST_IMAGE_OTHER_ID).setUrl(POST_IMAGE_OTHER_URL));
-        PostDetailsDto postDetailsDto = new PostDetailsDto()
+        PostDetailsInputDto postDetailsInputDto = new PostDetailsInputDto()
                 .setId(POST_ID).setTitle(POST_TITLE).setPrice(POST_PRICE)
                 .setStatus(POST_STATUS).setDescription(POST_DESCRIPTION)
                 .setAddress(POST_ADDRESS).setImages(postImageDtos);
 
-        Post resultPost = modelMapper.map(postDetailsDto, Post.class);
+        Post resultPost = modelMapper.map(postDetailsInputDto, Post.class);
 
         assertEquals(POST_ID, resultPost.getId());
         assertEquals(POST_TITLE, resultPost.getTitle());
@@ -87,12 +87,12 @@ public class PostMapperTest {
         assertEquals(POST_TITLE, resultDto.getTitle());
         assertEquals(POST_PRICE, resultDto.getPrice());
         assertEquals(POST_ADDRESS, resultDto.getAddress());
-        assertEquals(POST_IMAGE_ID, resultDto.getCoverImage().getId());
-        assertEquals(POST_IMAGE_URL, resultDto.getCoverImage().getUrl());
+        assertEquals(POST_IMAGE_ID, resultDto.getCoverImagePath().getId());
+        assertEquals(POST_IMAGE_URL, resultDto.getCoverImagePath().getUrl());
     }
 
     @Test
-    void convertToPostDetailsDto_returnsCorrectPostDetailsDto() {
+    void convertToPostDetailsDto_returnsCorrectPostDetailsInputDto() {
         List<PostImage> postImages = List.of(
                 new PostImage().setId(POST_IMAGE_ID).setUrl(POST_IMAGE_URL),
                 new PostImage().setId(POST_IMAGE_OTHER_ID).setUrl(POST_IMAGE_OTHER_URL));
@@ -101,7 +101,7 @@ public class PostMapperTest {
                 .setStatus(POST_STATUS).setDescription(POST_DESCRIPTION)
                 .setAddress(POST_ADDRESS).setAuthor(new Client()).setImages(postImages);
 
-        PostDetailsDto resultDto = modelMapper.map(post, PostDetailsDto.class);
+        PostDetailsInputDto resultDto = modelMapper.map(post, PostDetailsInputDto.class);
 
         assertEquals(POST_ID, resultDto.getId());
         assertEquals(POST_TITLE, resultDto.getTitle());

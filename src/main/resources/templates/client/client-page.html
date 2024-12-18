@@ -86,9 +86,9 @@
             <p>Мои объявления</p>
         </div>
         <div th:each="post : ${posts}" class="posts__items">
-            <div class="posts__item">
+            <a th:href="@{/posts/{postId}(postId=${post.getId()})}" class="posts__item">
                 <div class="posts__item-img">
-                    <img th:src="@{/client/client-page/img/image_/Primary%20Photo%20Placeholder-1.png}" alt="">
+                    <img th:src="@{${post.getCoverImagePath()}}" alt="">
                 </div>
                 <div class="posts__item-info">
                     <div class="posts__item-title">
@@ -99,7 +99,7 @@
                         <p>рублей</p>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
 

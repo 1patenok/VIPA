@@ -49,7 +49,7 @@ public class Post {
     @JoinColumn(name = "client_id", referencedColumnName = "client_id")
     private Client author;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<PostImage> images;
 
     @OneToMany(mappedBy = "post")

@@ -60,8 +60,7 @@
     <div th:each="post : ${posts}" class="posts__items">
         <a th:href="@{/posts/{postId}(postId=${post.getId()})}" class="posts__item">
             <div class="posts__item-img">
-                <img th:src="${post.getCoverImage()}"
-                <!--th:src="@{/common/homepage-client/img/image_/Primary Photo Placeholder-1.png}"--> alt="">
+                <img th:src="${post.getCoverImagePath()}">
             </div>
             <div class="posts__item-info">
                 <div class="posts__item-title">

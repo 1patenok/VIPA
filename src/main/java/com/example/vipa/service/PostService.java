@@ -1,9 +1,11 @@
 package com.example.vipa.service;
 
-import com.example.vipa.dto.PostDetailsDto;
+import com.example.vipa.dto.PostDetailsInputDto;
+import com.example.vipa.dto.PostDetailsOutputDto;
 import com.example.vipa.dto.PostPreviewDto;
 import com.example.vipa.mapping.PostMapper;
 import com.example.vipa.model.Category;
+import com.example.vipa.model.Client;
 import com.example.vipa.model.Post;
 import com.example.vipa.model.PostImage;
 import com.example.vipa.repository.PostRepository;
@@ -14,10 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -29,20 +28,18 @@ public class PostService {
     private static final String POST_NOT_FOUND_MESSAGE = "Объявление не найдено.";
 
     private final PostMapper postMapper;
+    private final ImageService imageService;
     private final ClientService clientService;
     private final CategoryService categoryService;
     private final PostRepository postRepository;
 
     @Transactional
-    public PostDetailsDto getPost(int postId) {
+    public PostDetailsOutputDto getPost(int postId) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new RuntimeException(POST_NOT_FOUND_MESSAGE));
         post.setNumberOfViews(post.getNumberOfViews() + 1);
         postRepository.save(post);
-
-        PostDetailsDto postDetailsDto = postMapper.convertToPostDetailsDto(post);
-
-        return postDetailsDto;
+        return postMapper.convertToPostDetailsOutputDto(post);
     }
 
     public List<Post> getPostsByIds(List<Integer> listIds) {
@@ -84,19 +81,25 @@ public class PostService {
     }
 
     @Transactional
-    public PostDetailsDto createPost(int authorId, PostDetailsDto postDetailsDto, MultipartFile file) throws IOException {
-        Post postToSave = postMapper.convertToPost(postDetailsDto);
+    public PostDetailsOutputDto createPost(int authorId, PostDetailsInputDto postDetailsInputDto) {
+        Post postToSave = postMapper.convertToPost(postDetailsInputDto);
         postToSave.setAuthor(clientService.getClientEntity(authorId));
-        postToSave.setCategory(categoryService.getCategoryEntity(postDetailsDto.getCategoryId()));
+        postToSave.setCategory(categoryService.getCategoryEntity(postDetailsInputDto.getCategoryId()));
         postToSave.setStatus("status");
         postToSave.setCreatedAt(LocalDate.now());
+        postToSave.setImages(
+                postDetailsInputDto.getImages().stream()
+                        .map(multipart -> new PostImage()
+                                .setUrl(imageService.saveImage(multipart))
+                                .setPost(postToSave))
+                        .toList());
         log.info("postToSave: {}", postToSave);
-        return postMapper.convertToPostDetailsDto(postRepository.save(postToSave));
+        return postMapper.convertToPostDetailsOutputDto(postRepository.save(postToSave));
     }
 
-    public PostDetailsDto updatePost(int postId, PostDetailsDto postDetailsDto) {
-        Post updatedPost = postMapper.convertToPost(postDetailsDto).setId(postId);
-        return postMapper.convertToPostDetailsDto(postRepository.save(updatedPost));
+    public PostDetailsInputDto updatePost(int postId, PostDetailsInputDto postDetailsInputDto) {
+        Post updatedPost = postMapper.convertToPost(postDetailsInputDto).setId(postId);
+        return postMapper.convertToPostDetailsInputDto(postRepository.save(updatedPost));
     }
 
     public void deletePost(int postId) {

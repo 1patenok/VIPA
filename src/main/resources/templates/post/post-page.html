@@ -12,7 +12,7 @@
 
 <body class="body">
 <header class="header">
-    <a class="header__logo logo" th:href="@{homepage-client}">
+    <a class="header__logo logo" th:href="@{/homepage-client}">
         <img th:src="@{/post/post-page/img/icon/nav_icon/Storefront.svg}" alt="logo">
         <nav>VIPA</nav>
     </a>
@@ -49,7 +49,7 @@
     <div class="profile__info">
         <div class="bio__info">
             <div class="bio__price">
-                <p th:text="${post.getPrice() + ' руб'}"></p>
+                <p th:text="${post.getPrice() + ' руб'}">Цена</p>
             </div>
             <div class="bio__date">
                 <p>Дата публикации</p>
@@ -95,8 +95,9 @@
     </div>
     <div class="posts__items">
         <div class="posts__item">
-            <div class="posts__item-img">
-                <img th:src="@{null}" alt="" id="image"> <!--нужно подтянуть с сервера-->
+            <div th:each="imagePath : ${post.getImagePaths()}" class="posts__item-img">
+                <!--<img th:src="@{${'/uploads/post-images/' + imagePath}}" alt="" id="image"> -->
+                <img th:src="@{${imagePath}}" alt="" id="image"> <!--нужно подтянуть с сервера-->
             </div>
         </div>
     </div>
