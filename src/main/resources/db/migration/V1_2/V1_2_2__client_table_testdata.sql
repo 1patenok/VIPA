@@ -1,8 +1,8 @@
 INSERT INTO client(name, surname, birth_date, phone_number, email, password, image)
 VALUES
-('name1', 'surname1', CURRENT_TIMESTAMP,'+79999999991', 'email1@gmail.com', '$2a$12$S69zH2.WOCoxs3I84/IqK.gMs6Di8Kpf8TO/LSrSYcawHo3wTfUk.', '/images/client-images/hacker.jpg'), -- пароль = password
-('name2', 'surname2', CURRENT_TIMESTAMP,'+79999999992', 'email2@gmail.com', '$2a$12$S69zH2.WOCoxs3I84/IqK.gMs6Di8Kpf8TO/LSrSYcawHo3wTfUk.', '/images/client-images/man.jpg'),
-('name3', 'surname3', CURRENT_TIMESTAMP,'+79999999993', 'email3@gmail.com', '$2a$12$S69zH2.WOCoxs3I84/IqK.gMs6Di8Kpf8TO/LSrSYcawHo3wTfUk.', '/images/client-images/redman.jpg'),
-('name4', 'surname4', CURRENT_TIMESTAMP,'+79999999994', 'email4@gmail.com', '$2a$12$S69zH2.WOCoxs3I84/IqK.gMs6Di8Kpf8TO/LSrSYcawHo3wTfUk.', '/images/client-images/shuhrat.jpg'),
-('name5', 'surname5', CURRENT_TIMESTAMP,'+79999999995', 'email5@gmail.com', '$2a$12$S69zH2.WOCoxs3I84/IqK.gMs6Di8Kpf8TO/LSrSYcawHo3wTfUk.', '/images/client-images/womeninglaces.jpg')
+('Vadim', 'Ipatov', CURRENT_TIMESTAMP,'+79811319587', 'ipatovvadim138@yandex.ru', '$2a$10$Vtn1QPdrI9qOCsvE.40NPuX7VBU8kCJKAKsVnNGr8r0u//kEIotOW', '/images/client-images/hacker.jpg'), -- пароль = Admin1337
+('Nikita', 'Трифонов', CURRENT_TIMESTAMP,'+79119059964', 'trifa.nik@mail.ru', '$2a$10$Vtn1QPdrI9qOCsvE.40NPuX7VBU8kCJKAKsVnNGr8r0u//kEIotOW', '/images/client-images/man.jpg'),-- пароль = Admin1337
+('Denis', 'Popov', CURRENT_TIMESTAMP,'+79333333333', 'popov@gmail.com', '$2a$10$Vtn1QPdrI9qOCsvE.40NPuX7VBU8kCJKAKsVnNGr8r0u//kEIotOW', '/images/client-images/redman.jpg'),-- пароль = Admin1337
+('Shuha', 'Asrorov', CURRENT_TIMESTAMP,'+789112437947', 'shuhratasrorov@gmail.com', '$2a$10$Vtn1QPdrI9qOCsvE.40NPuX7VBU8kCJKAKsVnNGr8r0u//kEIotOW', '/images/client-images/shuhrat.jpg'),-- пароль = Admin1337
+('George', 'Kedrov', CURRENT_TIMESTAMP,'+79114844859', 'kedrov@gmail.com', '$2a$10$Vtn1QPdrI9qOCsvE.40NPuX7VBU8kCJKAKsVnNGr8r0u//kEIotOW', '/images/client-images/womeninglaces.jpg')-- пароль = Admin1337
 ;
