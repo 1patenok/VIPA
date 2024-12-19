@@ -65,10 +65,15 @@
                th:text="${dialog.getPost().getAuthor().getName() + ' ' + dialog.getPost().getAuthor().getSurname()}">Имя собеседника</a>
         </div>
         <div class="window__messages">
-            <p th:each="msg : ${dialog.getMessages()}"
-               th:text="${msg.getText()}"
-               th:class="${msg.getSenderName().equals(#authentication.principal.name) ? 'window\_\_message-companion' : 'window\_\_message-my'}">
-            </p>
+            <div th:each="msg : ${dialog.getMessages()}">
+                <p
+                   th:text="${msg.getText()}"
+                   th:class="${msg.getSenderName().equals(#authentication.principal.name) ? 'window\_\_message-companion-p' : 'window\_\_message-my-p'}">
+                </p>
+                <p th:text="${msg.getTimestamp().toLocalTime().withSecond(0).withNano(0)}"
+                   th:class="${msg.getSenderName().equals(#authentication.principal.name) ? 'window\_\_message-companion-time' : 'window\_\_message-my-time'}">
+                </p>
+            </div>
         </div>
     </div>
     <form th:action="@{/messages/{dialogId}(dialogId=${dialog.getId()})}" th:object="${message}" th:method="post"

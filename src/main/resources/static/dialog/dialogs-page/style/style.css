@@ -166,11 +166,11 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
+  color: #9c9c9c;
 }
 
 .chat__part button {
   background-color: #2b2b2b;
-  color: #ccc;
   font-size: 20px;
   padding: 5px 200px;
 }
