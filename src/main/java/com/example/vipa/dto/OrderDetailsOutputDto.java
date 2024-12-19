@@ -15,7 +15,7 @@ import java.util.List;
 @Setter
 @ToString
 @Accessors(chain = true)
-public class OrderDetailsOtputDto {
+public class OrderDetailsOutputDto {
     private int id;
     private String deliveryAddress;
     private DeliveryMethod deliveryMethod;

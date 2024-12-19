@@ -47,7 +47,7 @@ public class OrderController {
     @ResponseBody
     @PostMapping(value = "/new", produces = {"application/json; charset=UTF-8"})
     public ResponseEntity<?> placeAnOrder(@AuthenticationPrincipal Client currentClient,
-                                          @ModelAttribute("order") OrderDetailsOtputDto orderDetailsDto) {
+                                          @ModelAttribute("order") OrderDetailsDto orderDetailsDto) {
         log.info("Получен запрос на оформление нового заказа. currentClient: {}, orderDetailsDto: {}", currentClient, orderDetailsDto);
         orderService.createOrder(currentClient.getId(), orderDetailsDto);
         return ResponseEntity.ok("Заказ успешно оформлен.");

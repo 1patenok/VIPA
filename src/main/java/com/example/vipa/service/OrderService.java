@@ -1,6 +1,7 @@
 package com.example.vipa.service;
 
-import com.example.vipa.dto.OrderDetailsOtputDto;
+import com.example.vipa.dto.OrderDetailsDto;
+import com.example.vipa.dto.OrderDetailsOutputDto;
 import com.example.vipa.dto.OrderPreviewDto;
 import com.example.vipa.exception.NotEnoughMoneyException;
 import com.example.vipa.exception.NotFoundException;
@@ -31,7 +32,7 @@ public class OrderService {
     private final EmailSenderService emailSenderService;
 
     @Transactional
-    public OrderDetailsOtputDto getOrder(int orderId) {
+    public OrderDetailsOutputDto getOrder(int orderId) {
         return orderRepository.findById(orderId).map(orderMapper::convertToOrderDetailsDto)
                 .orElseThrow(() -> new NotFoundException(ORDER_NOT_FOUND_MESSAGE));
     }
@@ -44,9 +45,9 @@ public class OrderService {
     }
 
     @Transactional
-    public void createOrder(int clientId, OrderDetailsOtputDto orderDetailsDto) {
+    public void createOrder(int clientId, OrderDetailsDto orderDetailsDto) {
         log.info("inside createOrder(), orderDetailsDto: {}", orderDetailsDto);
-        orderDetailsDto= new OrderDetailsOtputDto().setPostsInOrder(List.of(1, 2, 3))
+        orderDetailsDto= new OrderDetailsDto().setPostsInOrder(List.of(1, 2, 3))
                 .setDeliveryAddress("sdffd").setCardNumber("1234567812345678")
                 .setDeliveryMethod(DeliveryMethod.DELIVERY_POINT)
                 .setPaymentMethod(PaymentMethod.BY_CARD);

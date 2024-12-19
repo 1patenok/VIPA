@@ -1,6 +1,6 @@
 package com.example.vipa.controller;
 
-import com.example.vipa.dto.OrderDetailsOtputDto;
+import com.example.vipa.dto.OrderDetailsOutputDto;
 import com.example.vipa.dto.PostPreviewDto;
 import com.example.vipa.model.Client;
 import com.example.vipa.service.CartService;
@@ -28,7 +28,7 @@ public class CartController {
         List<PostPreviewDto> postsInCart = cartService.getProductsInCart(currentClient.getId());
         log.info("cart: {}", postsInCart);
         model.addAttribute("posts", postsInCart);
-        model.addAttribute("order", new OrderDetailsOtputDto());
+        model.addAttribute("order", new OrderDetailsOutputDto());
         return "/cart/cart-page";
     }
 

@@ -69,6 +69,11 @@
                 <div class="post__item-checked">
                     <input th:field="*{postsInOrder}" th:value="${post.getId()}"type="checkbox">
                 </div>
+                <div class="post__item-urn">
+                    <button type="button">
+                        <img th:src="@{/cart/cart-page/img/icon/icons8-мусор.svg}" alt="">
+                    </button>
+                </div>
             </div>
         </div>
         <div class="posts__title title">

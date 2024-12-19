@@ -63,11 +63,10 @@
                 переписываемся</p>
         </div>
         <div class="window__messages">
-            <div th:each="msg : ${dialog.getMessages()}"
+            <p th:each="msg : ${dialog.getMessages()}"
                  th:text="${msg.getText()}"
-                 th:class="${msg.getSenderName().equals(#authentication.principal.name) ? 'window\_\_message-my' : 'window\_\_message-companion'}">
-<!--                <p th:text="${message.getText()}"></p>-->
-            </div>
+                 th:class="${msg.getSenderName().equals(#authentication.principal.name) ? 'window\_\_message-companion' : 'window\_\_message-my'}">
+            </p>
         </div>
     </div>
     <form th:action="@{/messages/{dialogId}(dialogId=${dialog.getId()})}" th:object="${message}" th:method="post" class="send wrapper">

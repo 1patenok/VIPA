@@ -7,6 +7,5 @@ VALUES
 ('Дом и сад', '/images/category-images/home_garden.jpg'),
 ('Детские товары', '/images/category-images/kids.jpg'),
 ('Спорт и отдых', '/images/category-images/sports.jpg'),
-('Книги и учебные материалы', '/images/category-images/books.jpg'),
-('Красота и здоровье', '/images/category-images/beauty.jpg'),
-('Услуги', '/images/category-images/services.jpg');
+('Учебные материалы', '/images/category-images/books.jpg'),
+('Красота и здоровье', '/images/category-images/beauty.jpg');
