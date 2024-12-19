@@ -4,6 +4,7 @@ import com.example.vipa.dto.OrderDetailsOutputDto;
 import com.example.vipa.dto.PostPreviewDto;
 import com.example.vipa.model.Client;
 import com.example.vipa.service.CartService;
+import com.example.vipa.service.DeliveryAddressService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -21,14 +22,14 @@ import java.util.List;
 public class CartController {
 
     private final CartService cartService;
+    private final DeliveryAddressService deliveryAddressService;
 
     @GetMapping
     public String getCartPage(Model model, @AuthenticationPrincipal Client currentClient) {
         log.info("Принят запрос на получение списка товаров в корзине. currentClient: {}", currentClient);
-        List<PostPreviewDto> postsInCart = cartService.getProductsInCart(currentClient.getId());
-        log.info("cart: {}", postsInCart);
-        model.addAttribute("posts", postsInCart);
+        model.addAttribute("posts", cartService.getProductsInCart(currentClient.getId()));
         model.addAttribute("order", new OrderDetailsOutputDto());
+        model.addAttribute("deliveryAddresses", deliveryAddressService.getAddresses());
         return "/cart/cart-page";
     }
 

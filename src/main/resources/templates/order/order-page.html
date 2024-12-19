@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" th:href="@{/order/order-page/style/reset.css">
-    <link rel="stylesheet" th:href="@{/order/order-page/style/style.css">
+    <link rel="stylesheet" th:href="@{/order/order-page/style/reset.css}">
+    <link rel="stylesheet" th:href="@{/order/order-page/style/style.css}">
     <title>Order</title>
 </head>
 
@@ -26,7 +26,7 @@
             </a>
             <div class="header__profile">
                 <div class="registration__button registration">
-                    <img th:src="@{../../static/order/order-page/img/icon/nav_icon/User.svg" alt="User">
+                    <img th:src="@{/order/order-page/img/icon/nav_icon/User.svg}" alt="User">
                     <p class="header__profile-title">Меню</p>
                     <div class="header__links">
                         <a th:href="@{/clients/{clientId}(clientId=${#authentication.principal.id})}"
@@ -57,10 +57,9 @@
                 <p>Адрес доставки:</p>
                 <p>Способ доставки:</p>
                 <p>Способ оплаты:</p>
-                <p>Способ оплаты:</p>
             </div>
             <div class="posts__pay-part">
-                <p th:text="${order.getDate()}"></p>
+                <p th:text="${order.getOrderDate()}"></p>
                 <p th:text="${order.getStatus()}"></p>
                 <p th:text="${order.getDeliveryDate()}"></p>
                 <p th:text="${order.getDeliveryAddress()}"></p>
@@ -72,44 +71,39 @@
             <p>Объявления в вашем заказе</p>
         </div>
         <div class="posts__items">
-            <div th:each="post : ${order.getPostsInOrder()}" class="posts__item">
+            <a th:each="post : ${order.getPostsInOrder()}" th:href="@{/posts/{postId}(postId=${post.getId()})}" class="posts__item">
                 <div class="posts__item-img">
                     <img th:src="@{${post.getCoverImagePath()}}" alt="" id="image">
                 </div>
                 <div class="posts__item-info">
                     <div class="posts__item-title">
-                        <p>Название объявления</p>
+                        <p th:text="${post.getTitle()}">Название объявления</p>
                     </div>
                     <div class="posts__item-author">
-                        <p>Имя автора</p>
+                        <p th:text="${post.getAuthorName()}">Имя автора</p>
                     </div>
                     <div class="posts__item-price">
-                        <p>
-                            100
-                        </p>
-                        <p>
-                            рублей
-                        </p>
+                        <p th:text="${post.getPrice() + ' руб'}"></p>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
 
     <footer class="footer">
         <div class="footer__parts wrapper">
             <div class="footer__part part1">
-                <a th:href="@{homepage.html" class="footer__title logo">
-                    <img th:src="@{../../static/order/order-page/img/icon/nav_icon/Storefront.svg" alt="logo">
+                <a th:href="@{/homepage-client}" class="footer__title logo">
+                    <img th:src="@{/order/order-page/img/icon/nav_icon/Storefront.svg}" alt="logo">
                     <nav>VIPA</nav>
                 </a>
                 <p class="footer__text">
                 <nav>Присоединяйтесь к нашему сообществу</nav>
                 <div class="social">
-                    <a th:href="@{#"><img th:src="@{../../static/order/order-page/img/icon/nav_icon/DiscordLogo.svg" alt="discord"></a>
-                    <a th:href="@{#"><img th:src="@{../../static/order/order-page/img/icon/nav_icon/YoutubeLogo.svg" alt="youtube"></a>
-                    <a th:href="@{#"><img th:src="@{../../static/order/order-page/img/icon/nav_icon/TwitterLogo.svg" alt="twitter"></a>
-                    <a th:href="@{#"><img th:src="@{../../static/order/order-page/img/icon/nav_icon/InstagramLogo.svg" alt="instagram"></a>
+                    <a th:href="@{null}"><img th:src="@{/order/order-page/img/icon/nav_icon/DiscordLogo.svg}" alt="discord"></a>
+                    <a th:href="@{null}"><img th:src="@{/order/order-page/img/icon/nav_icon/YoutubeLogo.svg}" alt="youtube"></a>
+                    <a th:href="@{null}"><img th:src="@{/order/order-page/img/icon/nav_icon/TwitterLogo.svg}" alt="twitter"></a>
+                    <a th:href="@{null}"><img th:src="@{/order/order-page/img/icon/nav_icon/InstagramLogo.svg}" alt="instagram"></a>
                 </div>
                 </p>
             </div>
@@ -118,11 +112,11 @@
                     <nav>Навигация</nav>
                 </div>
                 <p class="footer__text">
-                <p><a th:href="@{#">Чаты</a></p>
-                <p><a th:href="@{#">Избранные</a></p>
-                <p><a th:href="@{#">Уведомления</a></p>
-                <p><a th:href="@{#">Корзина</a></p>
-                <p><a th:href="@{#">Заказы</a></p>
+                <p><a th:href="@{/dialogs/list}">Чаты</a></p>
+                <p><a th:href="@{/favorites}">Избранное</a></p>
+                <p><a th:href="@{null}">Уведомления</a></p>
+                <p><a th:href="@{/cart}">Корзина</a></p>
+                <p><a th:href="@{/orders/list}">Заказы</a></p>
                 </p>
             </div>
             <div class="footer__part part3">
@@ -132,10 +126,6 @@
                 <p class="footer__text">
                     Получайте эксклюзивные акции и обновления прямо в свой почтовый ящик.
                 </p>
-                <!-- <a th:href="@{../create_account/create_account.html" class="footer__registration registration">
-                    <img th:src="@{img/icon/RocketLaunch.svg" alt="rocket">
-                    <p>Начать</p>
-                </a> -->
             </div>
         </div>
     </footer>

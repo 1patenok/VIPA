@@ -44,12 +44,12 @@ public class OrderController {
         return "/order/orders-page";
     }
 
-    @ResponseBody
-    @PostMapping(value = "/new", produces = {"application/json; charset=UTF-8"})
-    public ResponseEntity<?> placeAnOrder(@AuthenticationPrincipal Client currentClient,
-                                          @ModelAttribute("order") OrderDetailsDto orderDetailsDto) {
-        log.info("Получен запрос на оформление нового заказа. currentClient: {}, orderDetailsDto: {}", currentClient, orderDetailsDto);
-        orderService.createOrder(currentClient.getId(), orderDetailsDto);
-        return ResponseEntity.ok("Заказ успешно оформлен.");
+    @PostMapping(value = "/new"/*, produces = {"application/json; charset=UTF-8"}*/)
+    public String placeAnOrder(@AuthenticationPrincipal Client currentClient,
+                                          @ModelAttribute("order") OrderDetailsInputDto orderDetailsInputDto) {
+        log.info("Получен запрос на оформление нового заказа. currentClient: {}, orderDetailsDto: {}", currentClient, orderDetailsInputDto);
+        OrderDetailsOutputDto createdOrder = orderService.createOrder(currentClient.getId(), orderDetailsInputDto);
+        return "redirect:/orders/info/" + createdOrder.getId();
+        //return ResponseEntity.ok("Заказ успешно оформлен.");
     }
 }

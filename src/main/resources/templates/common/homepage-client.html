@@ -92,7 +92,7 @@
     </div>
     <div th:each="category : ${categories}" class="category__buttons">
         <a th:href="@{/posts/catalog/{categoryId}(categoryId=${category.getId()})}" class="category__item">
-            <img th:src="@{${category.getImagePath()}}" alt="art"
+            <img th:src="${category.getImagePath()}" alt="art"
             class="category__item-image">
             <p th:text="${category.getName()}" class="category__item-title"></p>
         </a>

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -15,6 +16,9 @@ public class OrderPreviewDto {
     private int id;
     private int price;
     private OrderStatus orderStatus;
+    private LocalDate orderDate;
+    private LocalDate deliveryDate;
     private String deliveryAddress;
     private DeliveryMethod deliveryMethod;
+    private List<String> postImages;
 }

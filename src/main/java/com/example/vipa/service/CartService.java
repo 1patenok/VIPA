@@ -4,8 +4,6 @@ import com.example.vipa.dto.PostPreviewDto;
 import com.example.vipa.mapping.PostMapper;
 import com.example.vipa.model.Client;
 import com.example.vipa.model.Post;
-import com.example.vipa.repository.ClientRepository;
-import com.example.vipa.validators.OrderValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,8 +19,7 @@ public class CartService {
     private final PostMapper postMapper;
     private final ClientService clientService;
     private final PostService postService;
-    private final OrderValidator orderValidator;
-    private final ClientRepository clientRepository;
+    //private final OrderValidator orderValidator;
 
     @Transactional(readOnly = true)
     public List<PostPreviewDto> getProductsInCart(int clientId) {
@@ -35,7 +32,7 @@ public class CartService {
     @Transactional
     public void addPostToCart(int clientId, int postId) {
         // Вызов валидатора перед добавлением
-        orderValidator.validateAddToCart(clientId, postId);
+        //orderValidator.validateAddToCart(clientId, postId);
 
         Client client = clientService.getClientEntity(clientId);
         Post post = postService.getPostEntity(postId);
@@ -56,5 +53,15 @@ public class CartService {
 
         client.getPostsInCart().remove(post);
         clientService.updateClient(client);
+    }
+
+    @Transactional
+    public void deletePostFromCart(Client cartOwner, Post postToDelete) {
+        // Проверка на наличие товара в корзине
+        if (!cartOwner.getPostsInCart().contains(postToDelete)) {
+            throw new IllegalArgumentException("Товар отсутствует в корзине.");
+        }
+        cartOwner.removeFromCart(postToDelete);
+        clientService.updateClient(cartOwner);
     }
 }

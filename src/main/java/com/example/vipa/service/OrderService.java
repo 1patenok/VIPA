@@ -1,9 +1,8 @@
 package com.example.vipa.service;
 
-import com.example.vipa.dto.OrderDetailsDto;
+import com.example.vipa.dto.OrderDetailsInputDto;
 import com.example.vipa.dto.OrderDetailsOutputDto;
 import com.example.vipa.dto.OrderPreviewDto;
-import com.example.vipa.exception.NotEnoughMoneyException;
 import com.example.vipa.exception.NotFoundException;
 import com.example.vipa.mapping.OrderMapper;
 import com.example.vipa.model.*;
@@ -15,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @Service
@@ -26,14 +26,14 @@ public class OrderService {
     private final OrderMapper orderMapper;
     private final ClientService clientService;
     private final PostService postService;
+    private final CartService cartService;
     private final PaymentAccountService paymentAccountService;
     private final OrderRepository orderRepository;
-    private final CartService cartService;
     private final EmailSenderService emailSenderService;
 
     @Transactional
     public OrderDetailsOutputDto getOrder(int orderId) {
-        return orderRepository.findById(orderId).map(orderMapper::convertToOrderDetailsDto)
+        return orderRepository.findById(orderId).map(orderMapper::convertToOrderDetailsOutputDto)
                 .orElseThrow(() -> new NotFoundException(ORDER_NOT_FOUND_MESSAGE));
     }
 
@@ -45,72 +45,46 @@ public class OrderService {
     }
 
     @Transactional
-    public void createOrder(int clientId, OrderDetailsDto orderDetailsDto) {
-        log.info("inside createOrder(), orderDetailsDto: {}", orderDetailsDto);
-        orderDetailsDto= new OrderDetailsDto().setPostsInOrder(List.of(1, 2, 3))
-                .setDeliveryAddress("sdffd").setCardNumber("1234567812345678")
-                .setDeliveryMethod(DeliveryMethod.DELIVERY_POINT)
-                .setPaymentMethod(PaymentMethod.BY_CARD);
+    public OrderDetailsOutputDto createOrder(int clientId, OrderDetailsInputDto orderDetailsInputDto) {
+        log.info("inside createOrder(), orderDetailsDto: {}", orderDetailsInputDto);
 
-        Order orderToSave = orderMapper.convertToOrder(orderDetailsDto);
-        switch (orderDetailsDto.getDeliveryMethod()) {
-            case COURIER -> orderToSave.setTimeOfDelivery(1);
-            case DELIVERY_POINT -> orderToSave.setTimeOfDelivery(3);
+        Order orderToSave = orderMapper.convertToOrder(orderDetailsInputDto);
+        switch (orderDetailsInputDto.getDeliveryMethod()) {
+            case COURIER -> orderToSave.setDeliveryDate(LocalDate.now().plusDays(1));
+            case DELIVERY_POINT -> orderToSave.setDeliveryDate(LocalDate.now().plusDays(3));
         }
-        orderToSave.setPostsInOrder(postService.getPostsByIds(orderDetailsDto.getPostsInOrder()));
+        orderToSave.setPostsInOrder(postService.getPostsByIds(orderDetailsInputDto.getPostsInOrder()));
         orderToSave.setPrice(
                 orderToSave.getPostsInOrder().stream()
                         .mapToInt(Post::getPrice)
                         .sum());
         orderToSave.setClient(clientService.getClientEntity(clientId));
         orderToSave.setOrderDate(LocalDate.now());
-        PaymentAccount paymentAccount = paymentAccountService.getPaymentAccountByCardNumber(orderDetailsDto.getCardNumber());
-        if (paymentAccount.getCurrentSum() < orderToSave.getPrice()) {
-            throw new NotEnoughMoneyException("Недостаточно средств на счету.");
-        }
-        paymentAccount.setCurrentSum(paymentAccount.getCurrentSum() - orderToSave.getPrice());
-        paymentAccountService.savePaymentAccount(paymentAccount);
-        orderToSave.setOrderStatus(OrderStatus.PROCESSING);
-
-        Order order = orderRepository.save(orderToSave);
-        placeAnOrder(order.getClient(), order.getPostsInOrder());
-    }
-    @Transactional
-    public void placeAnOrder(Client client, List<Post> postsInOrder) {
-//        cartValidator.performOrderValidation(cartElements);
-
-        emailSenderService.sendEmailWithOrderInfo(generateOrderInfo(postsInOrder), client.getEmail());
-
-        postsInOrder
-                .forEach(post -> {
-                    client.removeFromCart(post);
-                    clientService.updateClient(client);
-                });
+        orderToSave.setStatus(OrderStatus.PROCESSING);
+        // совершение платежа
+        paymentAccountService.makeAPayment(orderToSave.getPrice(), orderDetailsInputDto.getCardNumber());
+        // удаление заказанных товаров из корзины
+        orderToSave.getPostsInOrder().forEach(post -> cartService.deletePostFromCart(orderToSave.getClient(), post));
+        OrderDetailsOutputDto savedOrder = orderMapper.convertToOrderDetailsOutputDto(orderRepository.save(orderToSave));
+        // отправка email с информацией о заказе
+        emailSenderService.sendEmailWithOrderInfo(generateOrderInfo(savedOrder), orderToSave.getClient().getEmail());
+        return savedOrder;
     }
 
     @Transactional
-    public String generateOrderInfo(List<Post> postsInOrder) {
-        StringBuilder orderInfo = new StringBuilder();
-        orderInfo
+    public String generateOrderInfo(OrderDetailsOutputDto order) {
+        StringBuilder orderInfoBuilder = new StringBuilder();
+        orderInfoBuilder
                 .append("Ваш заказ успешно оформлен!\n")
                 .append("Состав заказа:\n");
         // Формирование информации о заказе
-        postsInOrder.stream()
-                .filter(post -> post != null)
-                .forEach(post -> orderInfo
-                        .append(" - Название: " + post.getTitle() + "\n")
-                        .append("Cтоимость: " + post.getPrice() + "\n")
-                        .append("Имя продавца: " + post.getAuthor() + "\n")
-                );
-
-// Расчет итоговой стоимости
-        double orderPrice = postsInOrder.stream()
-                .filter(post -> post != null)
-                .mapToDouble(Post::getPrice)
-                .sum();
-
-        orderInfo.append("\nИтоговая стоимость заказа: ").append(orderPrice);
-
-        return orderInfo.toString();
+        order.getPostsInOrder().stream()
+                .filter(Objects::nonNull)
+                .forEach(post -> orderInfoBuilder
+                        .append(" - Название: ").append(post.getTitle())
+                        .append("\nCтоимость: ").append(post.getPrice())
+                        .append("\nИмя продавца: ").append(post.getAuthorName()));
+        orderInfoBuilder.append("\n\nИтоговая стоимость заказа: ").append(order.getPrice());
+        return orderInfoBuilder.toString();
     }
 }

@@ -23,30 +23,31 @@ public class MessageController {
 
     private final MessageService messageService;
 
-    @ResponseBody
-    @PostMapping(produces = {"application/json; charset=UTF-8"})
-    public ResponseEntity<?> sendMessage(@ModelAttribute("message") MessageDto messageDto,
-                                         @PathVariable("dialogId") int dialogId,
-                                         @AuthenticationPrincipal Client currentClient) {
+    @PostMapping(/*produces = {"application/json; charset=UTF-8"}*/)
+    public String sendMessage(@ModelAttribute("message") MessageDto messageDto,
+                              @PathVariable("dialogId") int dialogId,
+                              @AuthenticationPrincipal Client currentClient) {
         log.info("Принят запрос на отправку сообщения. dialogId: {}, currentClient: {}", dialogId, currentClient);
         messageService.createMessage(dialogId, currentClient.getId(), messageDto);
-        return ResponseEntity.ok("Сообщение успешно отправлено.");
+        return "redirect:/dialogs/" + dialogId;
+        //return ResponseEntity.ok("Сообщение успешно отправлено.");
     }
 
-    @ResponseBody
-    @PutMapping(value = "/update/{messageId}", produces = {"application/json; charset=UTF-8"})
-    public ResponseEntity<?> updateMessage(@ModelAttribute("message") MessageDto messageDto,
-                                           @PathVariable("messageId") int messageId) {
+    @PutMapping(value = "/update/{messageId}"/*, produces = {"application/json; charset=UTF-8"}*/)
+    public String updateMessage(@ModelAttribute("message") MessageDto messageDto,
+                                @PathVariable("dialogId") int dialogId, @PathVariable("messageId") int messageId) {
         log.info("Принят запрос на изменение сообщения. messageId: {}", messageId);
         messageService.updateMessage(messageId, messageDto);
-        return ResponseEntity.ok("Сообщение успешно изменено.");
+        return "redirect:/dialogs/" + dialogId;
+
+        //return ResponseEntity.ok("Сообщение успешно изменено.");
     }
 
-    @ResponseBody
-    @DeleteMapping(value = "/{messageId}", produces = {"application/json; charset=UTF-8"})
-    public ResponseEntity<?> deleteMessage(@PathVariable("messageId") int messageId) {
+    @DeleteMapping(value = "/{messageId}"/*, produces = {"application/json; charset=UTF-8"}*/)
+    public String deleteMessage(@PathVariable("dialogId") int dialogId, @PathVariable("messageId") int messageId) {
         log.info("Принят запрос на удаление сообщения. messageId: {}", messageId);
         messageService.deleteMessage(messageId);
-        return ResponseEntity.ok("Сообщение успешно удалено.");
+        return "redirect:/dialogs/" + dialogId;
+        //return ResponseEntity.ok("Сообщение успешно удалено.");
     }
 }

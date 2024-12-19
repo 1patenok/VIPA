@@ -84,16 +84,22 @@
                 <p>Номер карты</p>
                 <input th:field="*{cardNumber}"type="number" pattern="[0-9]{16}" required>
             </div>
-            <div class="posts__card-number">
-                <p>Адрес доставки</p>
-                <input th:field="*{deliveryAddress}" type="text" required>
-            </div>
             <select th:field="*{deliveryMethod}" class="posts__delivery-method">
                 <option th:each="method : ${T(com.example.vipa.model.DeliveryMethod).values()}"
                 th:value="${method}" th:text="${method.displayValue}"></option>
-<!--                <option th:value="COURIER">Курьером</option>
-                <option th:value="DELIVERY_POINT">Забрать самому</option>-->
+                <option th:value="COURIER">Курьером</option>
+                <option th:value="DELIVERY_POINT">Забрать самому</option>
             </select>
+            <div class="posts__card-number">
+                <p>Адрес доставки</p>
+                <input th:if="${true}"
+                       th:field="*{deliveryAddress}" type="text" required>
+                <!--<select th:if="${order.getDeliveryMethod().equals(DeliveryMethod.DELIVERY_POINT)}"
+                        th:field="*{deliveryAddress}">
+                    <option th:each="address : ${deliveryAddresses}"
+                            th:value="${address.getId()}" th:text="${address}"></option>
+                </select>-->
+            </div>
             <select th:field="*{paymentMethod}" class="posts__pay-method">
                 <option th:each="method : ${T(com.example.vipa.model.PaymentMethod).values()}"
                         th:value="${method}" th:text="${method.displayValue}"></option>

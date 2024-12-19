@@ -18,11 +18,12 @@ import java.util.List;
 public class OrderDetailsOutputDto {
     private int id;
     private String deliveryAddress;
+    private int price;
     private DeliveryMethod deliveryMethod;
     private String timeOfDelivery;
     private PaymentMethod paymentMethod;
     private OrderStatus status;
-    private LocalDate date;
+    private LocalDate orderDate;
     private LocalDate deliveryDate;
     private String cardNumber;
     private List<PostPreviewDto> postsInOrder;

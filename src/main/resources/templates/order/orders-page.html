@@ -1,42 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../static/order/orders-page/style/reset.css">
-    <link rel="stylesheet" href="../../static/order/orders-page/style/style.css">
+    <link rel="stylesheet" th:href="@{/order/orders-page/style/reset.css}">
+    <link rel="stylesheet" th:href="@{/order/orders-page/style/style.css}">
     <title>Orders</title>
-    <script src="../../static/order/orders-page/script/script.js"></script>
+    <script th:src="@{/order/orders-page/script/script.js}"></script>
 </head>
 
 <body class="body">
     <header class="header">
-        <a class="header__logo logo" href="homepage.html">
-            <img src="../../static/order/orders-page/img/icon/nav_icon/Storefront.svg" alt="logo">
+        <a class="header__logo logo" th:href="@{/homepage-client}">
+            <img th:src="@{/order/orders-page/img/icon/nav_icon/Storefront.svg}" alt="logo">
             <nav>VIPA</nav>
         </a>
         <div class="header__navigation">
-            <a href="#" class="header__navigation-item">Чаты</a>
-            <a href="#" class="header__navigation-item">Избранные</a>
-            <a href="#" class="header__navigation-item">Уведомления</a>
-            <a href="#" class="header__navigation-item">Корзина</a>
-            <a href="#" class="header__navigation-item">Заказы</a>
-            <a href="#" class="header__navigation-item header__navigation-item-last">
+            <a th:href="@{/dialogs/list}" class="header__navigation-item">Чаты</a>
+            <a th:href="@{/favorites}" class="header__navigation-item">Избранное</a>
+            <a th:href="@{null}" class="header__navigation-item">Уведомления</a>
+            <a th:href="@{/cart}" class="header__navigation-item">Корзина</a>
+            <a th:href="@{/orders/list}" class="header__navigation-item">Заказы</a>
+            <a th:href="@{/posts/new}" class="header__navigation-item header__navigation-item-last">
                 <p>Подать объявление</p>
             </a>
             <div class="header__profile">
                 <div class="registration__button registration">
-                    <img src="../../static/order/orders-page/img/icon/nav_icon/User.svg" alt="User">
+                    <img th:src="@{/order/orders-page/img/icon/nav_icon/User.svg}" alt="User">
                     <p class="header__profile-title">Меню</p>
                     <div class="header__links">
-                        <a href="#" class="link">Профиль</a>
-                        <a href="#" class="link">Чаты</a>
-                        <a href="#" class="link">Избранные</a>
-                        <a href="#" class="link">Уведомления</a>
-                        <a href="#" class="link">Корзина</a>
-                        <a href="#" class="link">Заказы</a>
-                        <a href="#" class="link">Выйти</a>
+                        <a th:href="@{/clients/{clientId}(clientId=${#authentication.principal.id})}"
+                           class="link">Профиль</a>
+                        <a th:href="@{/dialogs/list}" class="link">Чаты</a>
+                        <a th:href="@{/favorites}" class="link">Избранное</a>
+                        <a th:href="@{null}" class="link">Уведомления</a>
+                        <a th:href="@{/cart}" class="link">Корзина</a>
+                        <a th:href="@{/orders/list}" class="link">Заказы</a>
+                        <form th:action="@{/auth/sign-out}" method="post" class="link">
+                            <button type="submit">Выйти из аккаунта</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -55,16 +58,16 @@
                 <button>Завершенные</button>
             </div>
         </div>
-        <div class="order__item">
-            <a href="#" class="order__item-link">
+        <div th:each="order : ${orders}" class="order__item">
+            <a th:href="@{/orders/info/{orderId}(orderId=${order.getId()})}" class="order__item-link">
                 <div class="order__item-title">
                     <div class="order__item-title-name">
                         <p>Заказ от</p>
-                        <p>10.06.2022</p>
+                        <p th:text="${order.getOrderDate()}"></p>
                     </div>
                     <div class="order__item-title-price">
-                        <p>оплачено</p>
-                        <p>1000</p>
+                        <p>Оплачено</p>
+                        <p th:text="${order.getPrice()}"></p>
                         <p>₽</p>
                     </div>
                 </div>
@@ -72,45 +75,15 @@
                     <div class="order__info-part-1">
                         <div class="order__info-delivery">
                             <p>Доставка</p>
-                            <p>курьером</p>
+                            <p th:text="${order.getDeliveryMethod()}"></p>
                         </div>
                         <div class="order__info-date">
                             <p>Дата доставки:</p>
-                            <p>20.10.2022</p>
+                            <p th:text="${order.getDeliveryDate()}">20.10.2022</p>
                         </div>
                     </div>
-                    <div class="order__info-part-2">
-                        <img src="../../static/order/orders-page/img/image_/Photo.png" alt="">
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="order__item">
-            <a href="#" class="order__item-link">
-                <div class="order__item-title">
-                    <div class="order__item-title-name">
-                        <p>Заказ от</p>
-                        <p>10.06.2022</p>
-                    </div>
-                    <div class="order__item-title-price">
-                        <p>оплачено</p>
-                        <p>1000</p>
-                        <p>₽</p>
-                    </div>
-                </div>
-                <div class="order__info">
-                    <div class="order__info-part-1">
-                        <div class="order__info-delivery">
-                            <p>Доставка</p>
-                            <p>курьером</p>
-                        </div>
-                        <div class="order__info-date">
-                            <p>Дата доставки:</p>
-                            <p>20.10.2022</p>
-                        </div>
-                    </div>
-                    <div class="order__info-part-2">
-                        <img src="../../static/order/orders-page/img/image_/Photo.png" alt="">
+                    <div th:each="postImagePath : ${order.getPostImages()}" class="order__info-part-2">
+                        <img th:src="${postImagePath}" alt="">
                     </div>
                 </div>
             </a>
@@ -120,17 +93,17 @@
     <footer class="footer">
         <div class="footer__parts wrapper">
             <div class="footer__part part1">
-                <a href="homepage.html" class="footer__title logo">
-                    <img src="../../static/order/orders-page/img/icon/nav_icon/Storefront.svg" alt="logo">
+                <a th:href="@{/homepage-client}" class="footer__title logo">
+                    <img th:src="@{/order/orders-page/img/icon/nav_icon/Storefront.svg}" alt="logo">
                     <nav>VIPA</nav>
                 </a>
                 <p class="footer__text">
                 <nav>Присоединяйтесь к нашему сообществу</nav>
                 <div class="social">
-                    <a href="#"><img src="../../static/order/orders-page/img/icon/nav_icon/DiscordLogo.svg" alt="discord"></a>
-                    <a href="#"><img src="../../static/order/orders-page/img/icon/nav_icon/YoutubeLogo.svg" alt="youtube"></a>
-                    <a href="#"><img src="../../static/order/orders-page/img/icon/nav_icon/TwitterLogo.svg" alt="twitter"></a>
-                    <a href="#"><img src="../../static/order/orders-page/img/icon/nav_icon/InstagramLogo.svg" alt="instagram"></a>
+                    <a th:href="@{null}"><img th:src="@{/order/orders-page/img/icon/nav_icon/DiscordLogo.svg}" alt="discord"></a>
+                    <a th:href="@{null}"><img th:src="@{/order/orders-page/img/icon/nav_icon/YoutubeLogo.svg}" alt="youtube"></a>
+                    <a th:href="@{null}"><img th:src="@{/order/orders-page/img/icon/nav_icon/TwitterLogo.svg}" alt="twitter"></a>
+                    <a th:href="@{null}"><img th:src="@{/order/orders-page/img/icon/nav_icon/InstagramLogo.svg}" alt="instagram"></a>
                 </div>
                 </p>
             </div>
@@ -139,11 +112,11 @@
                     <nav>Навигация</nav>
                 </div>
                 <p class="footer__text">
-                <p><a href="#">Чаты</a></p>
-                <p><a href="#">Избранные</a></p>
-                <p><a href="#">Уведомления</a></p>
-                <p><a href="#">Корзина</a></p>
-                <p><a href="#">Заказы</a></p>
+                <p><a th:href="@{/dialogs/list}">Чаты</a></p>
+                <p><a th:href="@{/favorites}">Избранное</a></p>
+                <p><a th:href="@{null}">Уведомления</a></p>
+                <p><a th:href="@{/cart}">Корзина</a></p>
+                <p><a th:href="@{/orders/list}">Заказы</a></p>
                 </p>
             </div>
             <div class="footer__part part3">
