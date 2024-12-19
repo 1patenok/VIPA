@@ -52,7 +52,7 @@
         <div class="posts__pay-info">
             <div class="posts__pay-part">
                 <p>Дата заказа:</p>
-                <p>Статус:</p>
+                <p>Статус заказа:</p>
                 <p>Дата доставки:</p>
                 <p>Адрес доставки:</p>
                 <p>Способ доставки:</p>
@@ -60,11 +60,11 @@
             </div>
             <div class="posts__pay-part">
                 <p th:text="${order.getOrderDate()}"></p>
-                <p th:text="${order.getStatus()}"></p>
+                <p th:text="${order.getStatus().displayValue}"></p>
                 <p th:text="${order.getDeliveryDate()}"></p>
                 <p th:text="${order.getDeliveryAddress()}"></p>
-                <p th:text="${order.getDeliveryMethod()}"></p>
-                <p th:text="${order.getPaymentMethod()}"></p>
+                <p th:text="${order.getDeliveryMethod().displayValue}"></p>
+                <p th:text="${order.getPaymentMethod().displayValue}"></p>
             </div>
         </div>
         <div class="posts__title title">
@@ -80,7 +80,7 @@
                         <p th:text="${post.getTitle()}">Название объявления</p>
                     </div>
                     <div class="posts__item-author">
-                        <p th:text="${post.getAuthorName()}">Имя автора</p>
+                        <p th:text="${post.getAuthor().getName() + ' ' + post.getAuthor().getSurname()}">Имя автора</p>
                     </div>
                     <div class="posts__item-price">
                         <p th:text="${post.getPrice() + ' руб'}"></p>

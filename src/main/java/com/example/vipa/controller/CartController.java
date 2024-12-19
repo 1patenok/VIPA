@@ -33,22 +33,22 @@ public class CartController {
         return "/cart/cart-page";
     }
 
-    @ResponseBody
-    @PostMapping(value = "/{postId}", produces = {"application/json; charset=UTF-8"})
-    public ResponseEntity<?> addPostToCart(@AuthenticationPrincipal Client currentClient,
+    @PostMapping(value = "/{postId}"/*, produces = {"application/json; charset=UTF-8"}*/)
+    public String addPostToCart(@AuthenticationPrincipal Client currentClient,
                                            @PathVariable("postId") int postId) {
         log.info("Принят запрос на добавление объявления в корзину. currentClient: {}, postId: {}", currentClient, postId);
         cartService.addPostToCart(currentClient.getId(), postId);
-        return ResponseEntity.ok("Объявление успешно добавлено в корзину.");
+        return "redirect:/post/" + postId;
+        //return ResponseEntity.ok("Объявление успешно добавлено в корзину.");
     }
 
-    @ResponseBody
-    @DeleteMapping(value = "/{postId}", produces = {"application/json; charset=UTF-8"})
-    public ResponseEntity<?> deletePostFromCart(@AuthenticationPrincipal Client currentClient,
+    @DeleteMapping(value = "/{postId}"/*, produces = {"application/json; charset=UTF-8"}*/)
+    public String deletePostFromCart(@AuthenticationPrincipal Client currentClient,
                                                 @PathVariable("postId") int postId) {
         log.info("Принят запрос на удаление объявления из корзины. currentClient: {}, postId: {}", currentClient, postId);
         cartService.deletePostFromCart(currentClient.getId(), postId);
-        return ResponseEntity.ok("Объявление успешно удалено из корзины.");
+        return "redirect:/cart";
+        //return ResponseEntity.ok("Объявление успешно удалено из корзины.");
     }
 
 

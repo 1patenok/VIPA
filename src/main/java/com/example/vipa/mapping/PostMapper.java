@@ -7,11 +7,9 @@ import com.example.vipa.model.Client;
 import com.example.vipa.model.Post;
 import com.example.vipa.model.PostImage;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.Condition;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -25,8 +23,9 @@ public class PostMapper {
         this.modelMapper = modelMapper;
         Converter<List<PostImage>, String> imageListToFirstImageURIConverter =
                 src -> src.getSource().isEmpty() ? null : src.getSource().get(0).getUrl();
-        Converter<Client, String> clientToClientNameConverter =
-                src -> modelMapper.map(src.getSource().getName(), String.class);
+        Converter<Client, String> clientToClientFullNameConverter =
+                //src -> modelMapper.map(src.getSource().getName(), String.class);
+                src -> src.getSource().getName() + " " + src.getSource().getSurname();
         Converter<List<PostImage>, List<String>> imageListToPathList =
                 src -> src.getSource().stream()
                         .map(PostImage::getUrl)
@@ -39,8 +38,8 @@ public class PostMapper {
                 .addMappings(mapper -> {
                     mapper.using(imageListToFirstImageURIConverter)
                             .map(Post::getImages, PostPreviewDto::setCoverImagePath);
-                    mapper.using(clientToClientNameConverter)
-                            .map(Post::getAuthor, PostPreviewDto::setAuthorName);
+                    /*mapper.using(clientToClientFullNameConverter)
+                            .map(Post::getAuthor, PostPreviewDto::setAuthorFullName);*/
                 });
         modelMapper.createTypeMap(Post.class, PostDetailsOutputDto.class)
                 .addMappings(mapper -> mapper.using(imageListToPathList)

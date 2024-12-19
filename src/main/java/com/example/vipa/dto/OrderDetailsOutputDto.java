@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -23,7 +24,9 @@ public class OrderDetailsOutputDto {
     private String timeOfDelivery;
     private PaymentMethod paymentMethod;
     private OrderStatus status;
+    @DateTimeFormat(pattern = "dd.MM.yyyy")
     private LocalDate orderDate;
+    @DateTimeFormat(pattern = "dd.MM.yyyy")
     private LocalDate deliveryDate;
     private String cardNumber;
     private List<PostPreviewDto> postsInOrder;

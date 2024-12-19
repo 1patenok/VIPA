@@ -50,26 +50,29 @@
 <div class="chat-message wrapper">
     <div class="chat-message__title">
         <p class="title">Сообщения</p>
-        <p th:text="${dialog.getPostTitle()}" class="chat-message__text">Название объявления</p>
+        <a th:href="@{/posts/{postId}(postId=${dialog.getPost().getId()})}">
+            <p th:text="${dialog.getPost().getTitle()}" class="chat-message__text">Название объявления</p>
+        </a>
     </div>
     <div class="chat-message__window">
         <div class="window__author-name">
             <img th:src="@{/dialog/dialog-page/img/icon/nav_icon/User.svg}" alt="">
-            <p th:if="${dialog.getSeller().getId() == #authentication.principal.id}"
-               th:text="${dialog.getCustomer().getName() + ' ' + dialog.getCustomer().getSurname()}">Имя врага с которым
-                переписываемся</p>
-            <p th:unless="${dialog.getSeller().getId() == #authentication.principal.id}"
-               th:text="${dialog.getSeller().getName() + ' ' + dialog.getSeller().getSurname()}">Имя врага с которым
-                переписываемся</p>
+            <a th:if="${dialog.getSeller().getId() == #authentication.principal.id}"
+               th:href="@{/clients/{clientId}(clientId=${dialog.getCustomer().getId()})}"
+               th:text="${dialog.getCustomer().getName() + ' ' + dialog.getCustomer().getSurname()}">Имя собеседника</a>
+            <a th:unless="${dialog.getSeller().getId() == #authentication.principal.id}"
+               th:href="@{/clients/{clientId}(clientId=${dialog.getPost().getAuthor().getId()})}"
+               th:text="${dialog.getPost().getAuthor().getName() + ' ' + dialog.getPost().getAuthor().getSurname()}">Имя собеседника</a>
         </div>
         <div class="window__messages">
             <p th:each="msg : ${dialog.getMessages()}"
-                 th:text="${msg.getText()}"
-                 th:class="${msg.getSenderName().equals(#authentication.principal.name) ? 'window\_\_message-companion' : 'window\_\_message-my'}">
+               th:text="${msg.getText()}"
+               th:class="${msg.getSenderName().equals(#authentication.principal.name) ? 'window\_\_message-companion' : 'window\_\_message-my'}">
             </p>
         </div>
     </div>
-    <form th:action="@{/messages/{dialogId}(dialogId=${dialog.getId()})}" th:object="${message}" th:method="post" class="send wrapper">
+    <form th:action="@{/messages/{dialogId}(dialogId=${dialog.getId()})}" th:object="${message}" th:method="post"
+          class="send wrapper">
         <div class="send__input">
             <input th:field="*{text}" placeholder="Введите сообщение" required>
             <div class="send__button">

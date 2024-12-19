@@ -1,6 +1,10 @@
 spring:
   application:
     name: vipa
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
   web:
     resources:
       cache:

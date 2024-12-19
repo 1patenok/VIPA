@@ -13,7 +13,7 @@ import java.util.List;
 @ToString
 public class DialogDetailsDto {
     private int id;
-    private String postTitle;
+    private PostPreviewDto post;
     private ClientPreviewDto seller;
     private ClientPreviewDto customer;
     private List<MessageDto> messages;

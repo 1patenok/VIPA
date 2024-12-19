@@ -51,25 +51,28 @@
         <p>Изранное</p>
     </div>
     <div th:each="post : ${favorites}" class="posts__items">
-        <div class="posts__item">
-            <div class="posts__item-img">
-                <img th:src="@{${post.getCoverImagePath()}}" alt="" id="image">
+        <a th:href="@{/posts/{postId}(postId=${post.getId()})}">
+            <div class="posts__item">
+                <div class="posts__item-img">
+                    <img th:src="@{${post.getCoverImagePath()}}" alt="" id="image">
+                </div>
+                <div class="posts__item-info">
+                    <div class="posts__item-title">
+                        <p th:text="${post.getTitle()}"></p>
+                    </div>
+                    <div class="posts__item-author">
+                        <p th:text="${post.getAuthor().getName() + ' ' + post.getAuthor().getSurname()}"></p>
+                    </div>
+                    <div class="posts__item-price">
+                        <p th:text="${post.getPrice() + ' руб'}"></p>
+                    </div>
+                </div>
+                <form th:action="@{/favorites/{postId}(postId=${post.getId()})}" th:method="delete"
+                      class="post__pay-button">
+                    <button type="submit">Удалить из избранного</button>
+                </form>
             </div>
-            <div class="posts__item-info">
-                <div class="posts__item-title">
-                    <p th:text="${post.getTitle()}"></p>
-                </div>
-                <div class="posts__item-author">
-                    <p th:text="${post.getAuthorName()}"></p>
-                </div>
-                <div class="posts__item-price">
-                    <p th:text="${post.getPrice() + ' руб'}"></p>
-                </div>
-            </div>
-            <form th:action="@{/favorites/{postId}(postId=${post.getId()})}" th:method="delete" class="post__pay-button">
-                <button type="submit">Удалить из избранного</button>
-            </form>
-        </div>
+        </a>
     </div>
 
 </div>

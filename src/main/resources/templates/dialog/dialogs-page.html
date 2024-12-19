@@ -73,15 +73,17 @@
         <div th:each="dialog : ${dialogs}" class="chat__list">
             <a th:href="@{/dialogs/{dialogId}(dialogId=${dialog.getId()})}" class="chat__item">
                 <div class="item__companion">
-                    <p th:text="${dialog.getReceiverName()}">Имя</p>
-<!--                    <p th:text="${null}">Фамилия</p>-->
+                    <p th:if="${#authentication.principal.id == dialog.getCustomer().getId()}"
+                       th:text="${dialog.getPost().getAuthor().getName() + ' ' + dialog.getPost().getAuthor().getSurname()}"></p>
+                    <p th:unless="${#authentication.principal.id == dialog.getCustomer().getId()}"
+                       th:text="${dialog.getCustomer().getName() + ' ' + dialog.getCustomer().getSurname()}"></p>
                 </div>
                 <div class="item__post">
-                    <p th:text="${dialog.getPostTitle()}">Название</p>
+                    <p th:text="${dialog.getPost().getTitle()}"></p>
                 </div>
-                <!--<div class="item__price">
-                    <p th:text="${null}">1000 руб.</p>
-                </div>-->
+                <div class="item__price">
+                    <p th:text="${dialog.getPost().getPrice()}"></p>
+                </div>
             </a>
         </div>
     </div>

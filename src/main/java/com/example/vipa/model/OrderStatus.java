@@ -2,7 +2,7 @@ package com.example.vipa.model;
 
 public enum OrderStatus {
     COMPLITED("Завершен"),
-    PROCESSING("В обработке"),
+    PROCESSING("Обрабатывается"),
     IN_DELIVERY("Доставляется"),
     READY_FOR_PICKUP("Готов к выдаче");
 

@@ -83,7 +83,7 @@ public class OrderService {
                 .forEach(post -> orderInfoBuilder
                         .append(" - Название: ").append(post.getTitle())
                         .append("\nCтоимость: ").append(post.getPrice())
-                        .append("\nИмя продавца: ").append(post.getAuthorName()));
+                        .append("\nИмя продавца: ").append(post.getAuthor().getName() + post.getAuthor().getSurname()));
         orderInfoBuilder.append("\n\nИтоговая стоимость заказа: ").append(order.getPrice());
         return orderInfoBuilder.toString();
     }

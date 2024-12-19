@@ -70,7 +70,7 @@
                     <p th:text="${post.getTitle()}"/>
                 </div>
                 <div class="posts__item-author">
-                    <p th:text="${post.getAuthorName()}"/>
+                    <p th:text="${post.getAuthor().getName() + ' ' + post.getAuthor().getSurname()}"/>
                 </div>
                 <div class="posts__item-price">
                     <p th:text="${post.getPrice()}"/>

@@ -74,8 +74,8 @@
                 <div class="order__info">
                     <div class="order__info-part-1">
                         <div class="order__info-delivery">
-                            <p>Доставка</p>
-                            <p th:text="${order.getDeliveryMethod()}"></p>
+                            <p>Доставка:</p>
+                            <p th:text="${order.getDeliveryMethod().displayValue}"></p>
                         </div>
                         <div class="order__info-date">
                             <p>Дата доставки:</p>

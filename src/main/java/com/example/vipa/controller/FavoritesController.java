@@ -32,20 +32,21 @@ public class FavoritesController {
     }
 
     @ResponseBody
-    @PostMapping(value = "/{postId}", produces = {"application/json; charset=UTF-8"})
-    public ResponseEntity<?> addPostToFavorites(@AuthenticationPrincipal Client currentClient,
+    @PostMapping(value = "/{postId}"/*, produces = {"application/json; charset=UTF-8"}*/)
+    public String addPostToFavorites(@AuthenticationPrincipal Client currentClient,
                                                 @PathVariable("postId") int postId) {
         log.info("Принят запрос на добавление объявления в избранное. currentClient: {}, postId: {}", currentClient, postId);
         favoritesService.addPostToFavorites(currentClient.getId(), postId);
-        return ResponseEntity.ok("Объявление успешно добавлено в избранное.");
+        return "redirect:/post/" + postId;
+        //return ResponseEntity.ok("Объявление успешно добавлено в избранное.");
     }
 
-    @ResponseBody
-    @DeleteMapping(value = "/{postId}", produces = {"application/json; charset=UTF-8"})
-    public ResponseEntity<?> deletePostFromFavorites(@AuthenticationPrincipal Client currentClient,
+    @DeleteMapping(value = "/{postId}"/*, produces = {"application/json; charset=UTF-8"}*/)
+    public String deletePostFromFavorites(@AuthenticationPrincipal Client currentClient,
                                                      @PathVariable("postId") int postId) {
         log.info("Принят запрос на удаление объявления из избранного. currentClient: {}, postId: {}", currentClient, postId);
         favoritesService.deletePostFromFavorites(currentClient.getId(), postId);
-        return ResponseEntity.ok("Объявление успешно удалено из избранного.");
+        return "redirect:/favorites";
+        //return ResponseEntity.ok("Объявление успешно удалено из избранного.");
     }
 }

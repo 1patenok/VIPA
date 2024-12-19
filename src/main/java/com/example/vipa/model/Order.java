@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -33,9 +34,11 @@ public class Order {
     private OrderStatus status;
 
     @Column(name = "order_date")
+    @DateTimeFormat(pattern = "dd.MM.yyyy")
     private LocalDate orderDate;
 
     @Column(name = "delivery_date")
+    @DateTimeFormat(pattern = "dd.MM.yyyy")
     private LocalDate deliveryDate;
 
     @Column(name = "payment_method")
