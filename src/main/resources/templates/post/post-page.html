@@ -67,6 +67,14 @@
         <div class="profile__setting">
             <div class="setting__buttons">
                 <div th:if="${post.getAuthor().getId() != #authentication.principal.id}"> <!--если объявление не мое-->
+                    <form th:action="@{/cart/{postId}(postId=${post.getId()})}" method="post"
+                          class="setting__delete">
+                        <button type="submit">В корзину</button>
+                    </form>
+                    <form th:action="@{/favorites/{postId}(postId=${post.getId()})}"
+                          method="post" class="setting__data">
+                        <button type="submit">В избранное</button>
+                    </form>
                     <form th:if="${dialogId == 0}" th:action="@{/dialogs/new/{postId}(postId=${post.getId()})}" method="post" class="setting__data">
                         <!--если еще не писали-->
                         <button type="submit">Написать продавцу</button>
@@ -74,14 +82,6 @@
                     <form th:if="${dialogId != 0}" th:action="@{/dialogs/{dialogId}(dialogId=${dialogId})}" method="get" class="setting__data">
                         <!--если уже писали-->
                         <button type="submit">К диалогу</button>
-                    </form>
-                    <form th:action="@{/favorites/{postId}(postId=${post.getId()})}"
-                          method="post" class="setting__data">
-                        <button type="submit">В избранное</button>
-                    </form>
-                    <form th:action="@{/cart/{postId}(postId=${post.getId()})}" method="post"
-                          class="setting__delete">
-                        <button type="submit">В корзину</button>
                     </form>
                 </div>
             </div>
@@ -96,9 +96,12 @@
     <div class="posts__items">
         <div class="posts__item">
             <div th:each="imagePath : ${post.getImagePaths()}" class="posts__item-img">
-                <!--<img th:src="@{${'/uploads/post-images/' + imagePath}}" alt="" id="image"> -->
-                <img th:src="@{${imagePath}}" alt="" id="image"> <!--нужно подтянуть с сервера-->
+                <img th:src="@{${imagePath}}" alt="" th:id="${imagePath}" class="posts__item-img-id-main">
             </div>
+        </div>
+        <div id="myModal" class="modal">
+            <span class="close">&times;</span>
+            <img class="modal-content" id="img01">
         </div>
     </div>
 </div>
@@ -146,6 +149,32 @@
         </div>
     </div>
 </footer>
+
+
+<script>
+    var modal = document.getElementById("myModal");
+    var elem = document.getElementsByClassName("posts__item-img-id-main");
+    var modalImg = document.getElementById("img01");
+    var captionText = document.getElementById("caption");  // Добавьте этот элемент в HTML
+
+    // Цикл по всем элементам
+    Array.from(elem).forEach(function (img) {
+        img.onclick = function () {
+            console.log(img);
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;  // Убедитесь, что alt задан
+        };
+    });
+
+    var span = document.getElementsByClassName("close")[0];
+
+    span.onclick = function () {
+        modal.style.display = "none";
+    };
+</script>
+
+
 </body>
 
 </html>

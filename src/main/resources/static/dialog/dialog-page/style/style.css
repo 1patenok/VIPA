@@ -192,6 +192,9 @@
   background-color: #2b2b2b;
   height: 58vh;
   overflow: auto;
+  text-wrap: nowrap;
+  text-overflow: clip;
+  word-wrap: break-word;
 }
 
 .window__message-my-p {

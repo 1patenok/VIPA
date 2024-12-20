@@ -15,6 +15,7 @@
 .wrapper {
   max-width: 1050px;
   margin: 0 auto;
+  height: 100%;
 }
 
 .title {
@@ -162,11 +163,11 @@
 }
 
 .posts__items {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 30px 5px;
-  justify-content: space-around;
-  margin: 0 0 20px 0;
+  display: inline-block;
+  margin: 3px;
+  text-wrap: nowrap;
+  text-overflow: clip;
+  word-wrap: break-word;
 }
 
 .posts__item {
@@ -175,7 +176,7 @@
   max-width: 330px;
   background-color: #3b3b3b;
   border-radius: 23px;
-  padding: 0 0 10px 0;
+  padding: 0 0 0px 0;
   border: 4px solid #2b2b2b;
   transition: 0.3s;
 }
@@ -185,23 +186,23 @@
   color: #9c9c9c;
 }
 
-.post__item-checked {
-  position: absolute;
-  bottom: 15px;
-  right: 15px;
+.posts__item-img {
+  display: inline-block;
+  box-sizing: content-box;
+  max-width: 330px;
+  background-color: #3b3b3b;
+  border-radius: 23px;
+  margin: 0 auto;
 }
-.post__item-checked input {
-  width: 30px;
-  height: 30px;
-}
-
 .posts__item-img img {
   border-radius: 20px;
-  max-width: 330px;
+  width: 330px;
+  height: 330px;
+  object-fit: cover;
 }
 
 .posts__item-info {
-  padding: 15px 20px;
+  padding: 15px 20px 0 20px;
 }
 
 .posts__item-title {
@@ -216,78 +217,14 @@
 
 .posts__item-price {
   display: flex;
+  margin: 0 0 20px 0;
 }
 .posts__item-price p {
   margin: 0 1% 0 0;
 }
 
-.posts__pay {
-  display: flex;
-  justify-content: space-between;
-  align-items: start;
-}
-
-.posts__delivery-method {
-  width: 300px;
-  height: 50px;
-  text-align: center;
-  border-radius: 20px;
-  color: #fff;
-  background-color: #a259ff;
-  font-size: 20px;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-}
-
-.posts__delivery-method:hover {
-  color: #9c9c9c;
-  background-color: #832ff1;
-}
-
-.posts__pay-method {
-  width: 300px;
-  height: 50px;
-  text-align: center;
-  border-radius: 20px;
-  color: #fff;
-  background-color: #a259ff;
-  font-size: 20px;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-}
-
-.posts__pay-method:hover {
-  color: #9c9c9c;
-  background-color: #832ff1;
-}
-
-.posts__card-number {
-  display: flex;
-  align-items: center;
-  margin: 0 0 20px 0;
-  text-align: center;
-}
-.posts__card-number input {
-  text-align: center;
-  padding: 10px 20px 10px 20px;
-  font-size: 20px;
-  border-radius: 20px;
-  border: 3px solid #832ff1;
-}
-.posts__card-number p {
-  font-size: 20px;
-  margin: 0 10px 0 0;
-}
-
-.posts__card-number input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-}
-
 .post__pay-button {
-  margin: 0 auto 80px auto;
+  margin: 0 auto 0px auto;
 }
 .post__pay-button button {
   width: 100%;

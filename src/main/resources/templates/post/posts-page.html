@@ -50,19 +50,18 @@
     <div th:each="post : ${posts}" class="posts__items">
         <a th:href="@{/posts/{postId}(postId=${post.getId()})}" class="posts__item">
             <div class="posts__item-img">
-                <img <!--th:src="@{/cart/cart-page/img/image_/Primary%20Photo%20Placeholder-1.png}"--> alt=""
-                id="image">
+                <img th:src="${post.getCoverImagePath()}" alt="" id="image">
             </div>
             <div class="posts__item-info">
                 <div class="posts__item-title">
                     <p th:text="${post.getTitle()}"></p>
                 </div>
                 <div class="posts__item-author">
-                    <p th:text="${post.getAuthorName()}"></p>
+                    <p th:text="${post.getAuthor().getName() + ' ' + post.getAuthor().getSurname()}"></p>
                 </div>
                 <div class="posts__item-price">
-                    <p th:text="${post.getPrice()}"></p>
-                    <p>рублей</p>
+                    <p th:text="${post.getPrice() + ' '}"></p>
+                    <p>₽</p>
                 </div>
             </div>
         </a>

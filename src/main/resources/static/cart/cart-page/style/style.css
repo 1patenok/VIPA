@@ -164,6 +164,9 @@
 .posts__items {
   display: inline-block;
   margin: 20px;
+  text-wrap: nowrap;
+  text-overflow: clip;
+  word-wrap: break-word;
 }
 
 .posts__item {
@@ -213,9 +216,19 @@
   height: 30px;
 }
 
+.posts__item-img {
+  display: inline-block;
+  box-sizing: content-box;
+  max-width: 330px;
+  background-color: #3b3b3b;
+  border-radius: 23px;
+  margin: 0 auto;
+}
 .posts__item-img img {
   border-radius: 20px;
-  max-width: 330px;
+  width: 330px;
+  height: 330px;
+  object-fit: cover;
 }
 
 .posts__item-info {
