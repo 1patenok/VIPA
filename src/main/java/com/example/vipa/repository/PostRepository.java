@@ -14,4 +14,5 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     //List<Post> findAllByAuthor(Client author);
     List<Post> findAllByTitleLikeIgnoreCaseAndStatus(String title, PostStatus postStatus, Pageable pageable);
     List<Post> findAllByCategoryAndStatus(Category category, PostStatus postStatus, Pageable pageable);
+    List<Post> findAllByStatus(PostStatus postStatus, Pageable pageable);
 }

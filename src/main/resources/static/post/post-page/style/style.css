@@ -193,6 +193,23 @@
   font-weight: 600;
   margin: 0 0 50px 0;
 }
+.bio__name{
+  font-size: 32px;
+  font-weight: 600;
+}
+.bio__name p{
+  font-size: 20px;
+  color: #9c9c9c;
+}
+.bio__name nav{
+  margin: 0 0 20px 0;
+}
+.bio__name a{
+  transition: 0.3s;
+}
+.bio__name a:hover{
+  color: #a259ff;
+}
 
 .bio__date {
   font-size: 24px;
@@ -226,8 +243,8 @@
 
 .bio__discription {
   width: 500px;
-    text-overflow: clip;
-    word-wrap: break-word;
+  text-overflow: clip;
+  word-wrap: break-word;
   font-size: 24px;
   margin: 0 0 20px 0;
 }

@@ -20,7 +20,7 @@
         <a th:href="@{/dialogs/list?dialogType=AS_CUSTOMER}" class="header__navigation-item"
            sec:authorize="hasRole('CLIENT')">Чаты</a>
         <a th:href="@{/favorites}" class="header__navigation-item" sec:authorize="hasRole('CLIENT')">Избранное</a>
-        <a th:href="@{null}" class="header__navigation-item" sec:authorize="hasRole('CLIENT')">Уведомления</a>
+<!--        <a th:href="@{null}" class="header__navigation-item" sec:authorize="hasRole('CLIENT')">Уведомления</a>-->
         <a th:href="@{/cart}" class="header__navigation-item" sec:authorize="hasRole('CLIENT')">Корзина</a>
         <a th:href="@{/orders/list}" class="header__navigation-item" sec:authorize="hasRole('CLIENT')">Заказы</a>
         <a th:href="@{/posts/new}" class="header__navigation-item header__navigation-item-last"
@@ -36,7 +36,7 @@
                        class="link">Профиль</a>
                     <a th:href="@{/dialogs/list?dialogType=AS_CUSTOMER}" class="link" sec:authorize="hasRole('CLIENT')">Чаты</a>
                     <a th:href="@{/favorites}" class="link" sec:authorize="hasRole('CLIENT')">Избранное</a>
-                    <a th:href="@{null}" class="link" sec:authorize="hasRole('CLIENT')">Уведомления</a>
+<!--                    <a th:href="@{null}" class="link" sec:authorize="hasRole('CLIENT')">Уведомления</a>-->
                     <a th:href="@{/cart}" class="link" sec:authorize="hasRole('CLIENT')">Корзина</a>
                     <a th:href="@{/orders/list}" class="link" sec:authorize="hasRole('CLIENT')">Заказы</a>
                     <form th:action="@{/auth/sign-out}" method="post" class="button_sign-out">
@@ -57,10 +57,10 @@
             <div class="bio__price">
                 <p th:text="${post.getPrice() + ' руб'}">Цена</p>
             </div>
-            <div class="bio__date">
+            <div class="bio__name">
                 <p>Автор объявления</p>
                 <a th:href="@{/clients/{clientId}(clientId=${post.getAuthor().getId()})}">
-                    <p th:text="${post.getAuthor().getName() + ' ' + post.getAuthor().getSurname()}"></p>
+                    <nav th:text="${post.getAuthor().getName() + ' ' + post.getAuthor().getSurname()}"></nav>
                 </a>
             </div>
             <div class="bio__date">
@@ -148,7 +148,7 @@
             <p class="footer__text">
             <p><a th:href="@{/dialogs/list}" sec:authorize="hasRole('CLIENT')">Чаты</a></p>
             <p><a th:href="@{/favorites}" sec:authorize="hasRole('CLIENT')">Избранное</a></p>
-            <p><a th:href="@{null}" sec:authorize="hasRole('CLIENT')">Уведомления</a></p>
+<!--            <p><a th:href="@{null}" sec:authorize="hasRole('CLIENT')">Уведомления</a></p>-->
             <p><a th:href="@{/cart}" sec:authorize="hasRole('CLIENT')">Корзина</a></p>
             <p><a th:href="@{/orders/list}" sec:authorize="hasRole('CLIENT')">Заказы</a></p>
             </p>

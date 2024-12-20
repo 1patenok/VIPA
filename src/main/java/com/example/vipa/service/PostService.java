@@ -87,7 +87,7 @@ public class PostService {
     @Transactional
     public List<PostPreviewDto> getMostPopularPosts(int pageNumber) {
         Pageable pageable = PageRequest.of(pageNumber, 6, Sort.by(Sort.Direction.DESC, "numberOfViews"));
-        return postRepository.findAll(pageable).stream()
+        return postRepository.findAllByStatus(PostStatus.ACTIVE,pageable).stream()
                 .map(postMapper::convertToPostPreviewDto)
                 .toList();
     }

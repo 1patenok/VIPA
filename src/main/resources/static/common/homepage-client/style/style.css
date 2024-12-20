@@ -405,14 +405,19 @@
 
 .category__item {
   display: inline-block;
+  max-width: 316px;
   border-radius: 20px;
   background-color: #a259ff;
 }
+.category__item img{
+  display: inline-block;
+  width: 316px;
+  height: 316px;
+  object-fit: cover;
+}
 
 .category__item-image {
-  display: block;
-  weight: 316px;
-  height: 316px;
+  display: inline-block;
   margin: 0 auto;
   border-radius: 20px 20px 0 0;
 }
