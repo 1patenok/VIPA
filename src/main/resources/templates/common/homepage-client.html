@@ -39,8 +39,8 @@
                     <a th:href="@{null}" class="link" sec:authorize="hasRole('CLIENT')">Уведомления</a>
                     <a th:href="@{/cart}" class="link" sec:authorize="hasRole('CLIENT')">Корзина</a>
                     <a th:href="@{/orders/list}" class="link" sec:authorize="hasRole('CLIENT')">Заказы</a>
-                    <form th:action="@{/auth/sign-out}" method="post" class="link">
-                        <button type="submit">Выйти из аккаунта</button>
+                    <form th:action="@{/auth/sign-out}" method="post" class="button_sign-out">
+                        <button type="submit" class="link">Выйти</button>
                     </form>
                 </div>
             </div>
@@ -91,9 +91,9 @@
 <div class="category wrapper">
     <div class="category__title title">
         <p>Категории</p>
-    </div>
-    <div>
-        <a th:href="@{/categories/new}" sec:authorize="hasRole('ADMIN')">Добавить категорию</a>
+        <a th:href="@{/categories/new}" sec:authorize="hasRole('ADMIN')" class="category__button-btn">
+            <img th:src="@{/common/homepage-client/img/icon/icons8-плюс.svg}" alt="">
+        </a>
     </div>
     <div th:each="category : ${categories}" class="category__buttons">
         <a th:href="@{/posts/catalog/{categoryId}(categoryId=${category.getId()})}" class="category__item">
@@ -156,11 +156,11 @@
                 <nav>Навигация</nav>
             </div>
             <p class="footer__text">
-            <p><a th:href="@{/dialogs/list}">Чаты</a></p>
-            <p><a th:href="@{/favorites}">Избранное</a></p>
-            <p><a th:href="@{null}">Уведомления</a></p>
-            <p><a th:href="@{/cart}">Корзина</a></p>
-            <p><a th:href="@{/orders/list}">Заказы</a></p>
+            <p><a th:href="@{/dialogs/list}" sec:authorize="hasRole('CLIENT')">Чаты</a></p>
+            <p><a th:href="@{/favorites}" sec:authorize="hasRole('CLIENT')">Избранное</a></p>
+            <p><a th:href="@{null}" sec:authorize="hasRole('CLIENT')">Уведомления</a></p>
+            <p><a th:href="@{/cart}" sec:authorize="hasRole('CLIENT')">Корзина</a></p>
+            <p><a th:href="@{/orders/list}" sec:authorize="hasRole('CLIENT')">Заказы</a></p>
             </p>
         </div>
         <div class="footer__part part3">

@@ -31,12 +31,13 @@ public class SecurityConfig {
                         // Можно указать конкретный путь, * - 1 уровень вложенности, ** - любое количество уровней вложенности
                         .requestMatchers("/").hasRole("ADMIN")
                         .requestMatchers("/auth/**", "/homepage-guest", "/common/**", "/images/**").permitAll()
-                        .requestMatchers("/categories").hasRole("ADMIN")
+                        .requestMatchers("/categories/**", "/category/**").hasRole("ADMIN")
                         .requestMatchers("/homepage-client", "/clients/**", "/posts/**", "/common/**", "/client/**", "/post/**")
                         .hasAnyRole("ADMIN", "CLIENT")
                         .anyRequest().hasRole("CLIENT"))
                 .formLogin(formLogin -> formLogin
                         .loginPage("/auth/sign-in")
+//                        .loginPage("/homepage-guest")
                         .defaultSuccessUrl("/homepage-client", true)
                         .permitAll())
                 .logout(logout -> {

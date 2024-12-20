@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
@@ -18,12 +18,12 @@
             <nav>VIPA</nav>
         </a>
         <div class="header__navigation">
-            <a th:href="@{/dialogs/list}" class="header__navigation-item">Чаты</a>
-            <a th:href="@{/favorites}" class="header__navigation-item">Избранное</a>
-            <a th:href="@{null}" class="header__navigation-item">Уведомления</a>
-            <a th:href="@{/cart}" class="header__navigation-item">Корзина</a>
-            <a th:href="@{/orders/list}" class="header__navigation-item">Заказы</a>
-            <a th:href="@{/posts/new}" class="header__navigation-item header__navigation-item-last">
+            <a th:href="@{/dialogs/list}" sec:authorize="hasRole('CLIENT')" class="header__navigation-item">Чаты</a>
+            <a th:href="@{/favorites}" sec:authorize="hasRole('CLIENT')" class="header__navigation-item">Избранное</a>
+            <a th:href="@{null}" sec:authorize="hasRole('CLIENT')" class="header__navigation-item">Уведомления</a>
+            <a th:href="@{/cart}" sec:authorize="hasRole('CLIENT')" class="header__navigation-item">Корзина</a>
+            <a th:href="@{/orders/list}" sec:authorize="hasRole('CLIENT')" class="header__navigation-item">Заказы</a>
+            <a th:href="@{/posts/new}" sec:authorize="hasRole('CLIENT')" class="header__navigation-item header__navigation-item-last">
                 <p>Подать объявление</p>
             </a>
             <div class="header__profile">
@@ -31,14 +31,14 @@
                     <img th:src="@{/client/edit-client-page/img/icon/nav_icon/User.svg}" alt="User">
                     <p class="header__profile-title">Меню</p>
                     <div class="header__links">
-                        <a th:href="@{/clients/{clientId}(clientId=${#authentication.principal.id})}" class="link">Профиль</a>
-                        <a th:href="@{/dialogs/list}" class="link">Чаты</a>
-                        <a th:href="@{/favorites}" class="link">Избранное</a>
-                        <a th:href="@{null}" class="link">Уведомления</a>
-                        <a th:href="@{/cart}" class="link">Корзина</a>
-                        <a th:href="@{/orders/list}" class="link">Заказы</a>
-                        <form th:action="@{/auth/sign-out}" method="post">
-                            <button type="submit" class="link">Выйти из аккаунта</button>
+                        <a th:href="@{/clients/{clientId}(clientId=${#authentication.principal.id})}" sec:authorize="hasRole('CLIENT')" class="link">Профиль</a>
+                        <a th:href="@{/dialogs/list}" sec:authorize="hasRole('CLIENT')" class="link">Чаты</a>
+                        <a th:href="@{/favorites}" sec:authorize="hasRole('CLIENT')" class="link">Избранное</a>
+                        <a th:href="@{null}" sec:authorize="hasRole('CLIENT')" class="link">Уведомления</a>
+                        <a th:href="@{/cart}" sec:authorize="hasRole('CLIENT')" class="link">Корзина</a>
+                        <a th:href="@{/orders/list}" sec:authorize="hasRole('CLIENT')" class="link">Заказы</a>
+                        <form th:action="@{/auth/sign-out}" sec:authorize="hasRole('CLIENT')" method="post" class="button_sign-out">
+                            <button type="submit" class="link">Выйти</button>
                         </form>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
         </div>
     </header>
 
-    <div class="create wrapper">
+    <div class="create wrapper container">
         <div class="create__title title">
             <p>Изменить данные</p>
         </div>
@@ -120,11 +120,11 @@
                     <nav>Навигация</nav>
                 </div>
                 <p class="footer__text">
-                <p><a th:href="@{/dialogs/list}">Чаты</a></p>
-                <p><a th:href="@{/favorites}">Избранное</a></p>
-                <p><a th:href="@{null}">Уведомления</a></p>
-                <p><a th:href="@{/cart}">Корзина</a></p>
-                <p><a th:href="@{/orders/list}">Заказы</a></p>
+                <p><a th:href="@{/dialogs/list}" sec:authorize="hasRole('CLIENT')">Чаты</a></p>
+                <p><a th:href="@{/favorites}" sec:authorize="hasRole('CLIENT')">Избранное</a></p>
+                <p><a th:href="@{null}" sec:authorize="hasRole('CLIENT')">Уведомления</a></p>
+                <p><a th:href="@{/cart}" sec:authorize="hasRole('CLIENT')">Корзина</a></p>
+                <p><a th:href="@{/orders/list}" sec:authorize="hasRole('CLIENT')">Заказы</a></p>
                 </p>
             </div>
             <div class="footer__part part3">

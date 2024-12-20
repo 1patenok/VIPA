@@ -135,6 +135,24 @@
 .link:hover {
   color: #9c9c9c;
 }
+.button_sign-out{
+  color: #fff;
+  border-radius: 0 0 20px 20px;
+  background-color: #f71c1c;
+}
+.button_sign-out button{
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  background-color: #f71c1c;
+  border-radius: 0 0 20px 20px;
+  padding: 12px 92px 12px 16px;
+  transition: 0.3s;
+}
+.button_sign-out button:hover{
+  text-decoration: line-through;
+  background-color: #cf0505;
+}
 
 .registration {
   display: flex;
