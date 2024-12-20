@@ -16,6 +16,9 @@
   max-width: 1050px;
   margin: 0 auto;
 }
+.container{
+  min-height: 100%;
+}
 
 .title {
   padding: 5px;

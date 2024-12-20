@@ -42,7 +42,7 @@ public class CartController {
         //return ResponseEntity.ok("Объявление успешно добавлено в корзину.");
     }
 
-    @DeleteMapping(value = "/{postId}"/*, produces = {"application/json; charset=UTF-8"}*/)
+    @GetMapping(value = "/delete/{postId}"/*, produces = {"application/json; charset=UTF-8"}*/)
     public String deletePostFromCart(@AuthenticationPrincipal Client currentClient,
                                                 @PathVariable("postId") int postId) {
         log.info("Принят запрос на удаление объявления из корзины. currentClient: {}, postId: {}", currentClient, postId);

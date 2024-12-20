@@ -15,7 +15,9 @@
 .wrapper {
   max-width: 1050px;
   margin: 0 auto;
-  height: 100%;
+}
+.container{
+  min-height: 100%;
 }
 
 .title {
@@ -183,7 +185,7 @@
 
 .posts__items {
   display: inline-block;
-  margin: 20px;
+  margin: 2px;
   text-wrap: nowrap;
   text-overflow: clip;
   word-wrap: break-word;
@@ -221,17 +223,18 @@
 }
 .post__item-urn {
   position: absolute;
-  top: 15px;
-  right: 15px;
+  bottom: 17px;
+  right: 63px;
 }
-.post__item-urn button {
-  width: 40px;
-  height: 40px;
+.post__item-urn a {
+  display: inline-block;
+  width: 30px;
+  height: 31px;
   background-color: #a259ff;
   border-radius: 10px;
   transition: 0.3s;
 }
-.post__item-urn button img {
+.post__item-urn a img {
   width: 30px;
   height: 30px;
 }

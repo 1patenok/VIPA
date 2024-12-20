@@ -46,7 +46,7 @@
     </div>
 </header>
 
-<form th:action="@{/orders/new}" th:object="${order}" method="post" class="posts wrapper container">
+<form th:action="@{/orders/new}" th:object="${order}" method="post" class="posts wrapper">
     <div class="posts__title title">
         <p>Корзина</p>
     </div>
@@ -63,17 +63,16 @@
                     <p th:text="${post.getAuthor().getName() + ' ' + post.getAuthor().getSurname()}"></p>
                 </div>
                 <div class="posts__item-price">
-                    <p th:text="${post.getPrice() + ' руб'}"></p>
-                    <!--<p>рублей</p>-->
+                    <p th:text="${post.getPrice() + ' ₽'}"></p>
                 </div>
             </div>
             <div class="post__item-checked">
                 <input th:field="*{postsInOrder}" th:value="${post.getId()}" type="checkbox">
             </div>
             <div class="post__item-urn">
-                <button type="submit">
+                <a th:href="@{/cart/delete/{postId}(postId=${post.getId()})}">
                     <img th:src="@{/cart/cart-page/img/icon/icons8-мусор.svg}" alt="">
-                </button>
+                </a>
             </div>
         </div>
     </div>
@@ -85,19 +84,10 @@
             <p>Номер карты</p>
             <input th:field="*{cardNumber}" type="number" pattern="[0-9]{16}" required>
         </div>
-<!--        <select th:field="*{deliveryMethod}" class="posts__delivery-method">
-            <option th:each="method : ${T(com.example.vipa.model.DeliveryMethod).values()}"
-                    th:value="${method}" th:text="${method.displayValue}"></option>
-        </select>-->
         <div class="posts__card-number">
             <p>Адрес доставки</p>
             <input th:if="${true}"
                    th:field="*{deliveryAddress}" type="text" required>
-            <!--<select th:if="${order.getDeliveryMethod().equals(DeliveryMethod.DELIVERY_POINT)}"
-                    th:field="*{deliveryAddress}">
-                <option th:each="address : ${deliveryAddresses}"
-                        th:value="${address.getId()}" th:text="${address}"></option>
-            </select>-->
         </div>
         <div class="post__pay-button">
             <button type="submit">Оплатить</button>
