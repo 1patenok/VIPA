@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
@@ -42,10 +43,13 @@ public class Client implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    @OneToMany(mappedBy = "author")
+    @Column(name = "role")
+    private String role;
+
+    @OneToMany(mappedBy = "author", cascade = CascadeType.REMOVE)
     private List<Post> posts;
 
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "client", cascade = CascadeType.REMOVE)
     private List<Order> orders;
 
     @ManyToMany
@@ -60,12 +64,8 @@ public class Client implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "post_id"))
     private List<Post> postsInCart;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.REMOVE)
     private List<Dialog> customerDialogs;
-
-    public String getFullName() {
-        return name + " " + surname;
-    }
 
     public void addFavorite(Post post) {
         favoritePosts.add(post);
@@ -83,7 +83,6 @@ public class Client implements UserDetails {
         postsInCart.remove(post);
     }
 
-
     @Override
     public String getUsername() {
         return this.email;
@@ -91,7 +90,7 @@ public class Client implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return List.of(new SimpleGrantedAuthority(role));
     }
 
     @Override

@@ -52,10 +52,10 @@
             <p>Ваши переписки</p>
         </div>
         <div class="chat__parts">
-            <div class="chat__part">
+            <div th:class="${#strings.toString(param.dialogType) == 'AS_CUSTOMER' ? 'chat\_\_part-checked chat\_\_part' : 'chat\_\_part'}">
                 <a th:href="@{/dialogs/list?dialogType=AS_CUSTOMER}" id="chat__part1">Покупаю</a>
             </div>
-            <div class="chat__part">
+            <div th:class="${#strings.toString(param.dialogType) == 'AS_SELLER' ? 'chat\_\_part-checked chat\_\_part' : 'chat\_\_part'}">
                 <a th:href="@{/dialogs/list?dialogType=AS_SELLER}" id="chat__part2">Продаю</a>
             </div>
         </div>

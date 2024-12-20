@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
@@ -17,26 +17,28 @@
         <nav>VIPA</nav>
     </a>
     <div class="header__navigation">
-        <a th:href="@{/dialogs/list}" class="header__navigation-item">Чаты</a>
-        <a th:href="@{/favorites}" class="header__navigation-item">Избранное</a>
-        <a th:href="@{null}" class="header__navigation-item">Уведомления</a>
-        <a th:href="@{/cart}" class="header__navigation-item">Корзина</a>
-        <a th:href="@{/orders/list}" class="header__navigation-item">Заказы</a>
-        <a th:href="@{/posts/new}" class="header__navigation-item header__navigation-item-last">
+        <a th:href="@{/dialogs/list?dialogType=AS_CUSTOMER}" class="header__navigation-item"
+           sec:authorize="hasRole('CLIENT')">Чаты</a>
+        <a th:href="@{/favorites}" class="header__navigation-item" sec:authorize="hasRole('CLIENT')">Избранное</a>
+        <a th:href="@{null}" class="header__navigation-item" sec:authorize="hasRole('CLIENT')">Уведомления</a>
+        <a th:href="@{/cart}" class="header__navigation-item" sec:authorize="hasRole('CLIENT')">Корзина</a>
+        <a th:href="@{/orders/list}" class="header__navigation-item" sec:authorize="hasRole('CLIENT')">Заказы</a>
+        <a th:href="@{/posts/new}" class="header__navigation-item header__navigation-item-last"
+           sec:authorize="hasRole('CLIENT')">
             <p>Подать объявление</p>
         </a>
         <div class="header__profile">
             <div class="registration__button registration">
-                <img th:src="@{/client/edit-client-page/img/icon/nav_icon/User.svg}" alt="User">
+                <img th:src="@{/common/homepage-client/img/icon/nav_icon/User.svg}" alt="User">
                 <p class="header__profile-title">Меню</p>
                 <div class="header__links">
                     <a th:href="@{/clients/{clientId}(clientId=${#authentication.principal.id})}"
                        class="link">Профиль</a>
-                    <a th:href="@{/dialogs/list}" class="link">Чаты</a>
-                    <a th:href="@{/favorites}" class="link">Избранное</a>
-                    <a th:href="@{null}" class="link">Уведомления</a>
-                    <a th:href="@{/cart}" class="link">Корзина</a>
-                    <a th:href="@{/orders/list}" class="link">Заказы</a>
+                    <a th:href="@{/dialogs/list?dialogType=AS_CUSTOMER}" class="link" sec:authorize="hasRole('CLIENT')">Чаты</a>
+                    <a th:href="@{/favorites}" class="link" sec:authorize="hasRole('CLIENT')">Избранное</a>
+                    <a th:href="@{null}" class="link" sec:authorize="hasRole('CLIENT')">Уведомления</a>
+                    <a th:href="@{/cart}" class="link" sec:authorize="hasRole('CLIENT')">Корзина</a>
+                    <a th:href="@{/orders/list}" class="link" sec:authorize="hasRole('CLIENT')">Заказы</a>
                     <form th:action="@{/auth/sign-out}" method="post" class="link">
                         <button type="submit">Выйти из аккаунта</button>
                     </form>
@@ -90,10 +92,13 @@
     <div class="category__title title">
         <p>Категории</p>
     </div>
+    <div>
+        <a th:href="@{/categories/new}" sec:authorize="hasRole('ADMIN')">Добавить категорию</a>
+    </div>
     <div th:each="category : ${categories}" class="category__buttons">
         <a th:href="@{/posts/catalog/{categoryId}(categoryId=${category.getId()})}" class="category__item">
             <img th:src="${category.getImagePath()}" alt="art"
-            class="category__item-image">
+                 class="category__item-image">
             <p th:text="${category.getName()}" class="category__item-title"></p>
         </a>
     </div>

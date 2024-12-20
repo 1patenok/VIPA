@@ -1,12 +1,14 @@
 package com.example.vipa.service;
 
-import com.example.vipa.dto.CategoryPreviewDto;
+import com.example.vipa.dto.CategoryInputDto;
+import com.example.vipa.dto.CategoryOutputDto;
 import com.example.vipa.exception.NotFoundException;
 import com.example.vipa.mapping.CategoryMapper;
 import com.example.vipa.model.Category;
 import com.example.vipa.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -24,9 +26,17 @@ public class CategoryService {
                 .orElseThrow(() -> new NotFoundException(CATEGORY_NOT_FOUND_MESSAGE));
     }
 
-    public List<CategoryPreviewDto> getCategories() {
+    public List<CategoryOutputDto> getCategories() {
         return categoryRepository.findAll().stream()
-                .map(categoryMapper::convertToCategoryPreviewDto)
+                .map(categoryMapper::convertToCategoryOutputDto)
                 .toList();
+    }
+
+    public void createCategory(CategoryInputDto categoryInputDto) {
+        categoryRepository.save(categoryMapper.convertToCategory(categoryInputDto));
+    }
+
+    public void deleteCategory(int categoryId) {
+        categoryRepository.deleteById(categoryId);
     }
 }

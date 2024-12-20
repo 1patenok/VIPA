@@ -169,13 +169,13 @@
   color: #9c9c9c;
 }
 
-.chat__part button {
+.chat__part {
   background-color: #2b2b2b;
   font-size: 20px;
   padding: 5px 200px;
 }
 
-.chat__part-checked button {
+.chat__part-checked {
   font-size: 28px;
   color: #fff;
   background-color: #a259ff;

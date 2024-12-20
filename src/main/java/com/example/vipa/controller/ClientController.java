@@ -57,10 +57,15 @@ public class ClientController {
      * @return - возвращаем название представления для homepage
      */
     @DeleteMapping("/delete/{clientId}")
-    public String deleteClient(@PathVariable("clientId") int clientId){
+    public String deleteClient(@PathVariable("clientId") int clientId,
+                               @AuthenticationPrincipal Client currentClient){
         log.info("Получен запрос на удаление пользователя. clientId: {}", clientId);
         clientService.deleteClient(clientId);
-        return "/common/homepage";
+        if (currentClient.getId() == clientId) {
+            return "redirect:/homepage-guest";
+        } else {
+            return "redirect:/homepage-client";
+        }
     }
 
 }

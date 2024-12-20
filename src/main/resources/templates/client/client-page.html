@@ -11,100 +11,106 @@
 </head>
 
 <body class="body">
-    <header class="header">
-        <a class="header__logo logo" th:href="@{/homepage-client}">
-            <img th:src="@{/client/client-page/img/icon/nav_icon/Storefront.svg}" alt="logo">
-            <nav>VIPA</nav>
+<header class="header">
+    <a class="header__logo logo" th:href="@{/homepage-client}">
+        <img th:src="@{/client/client-page/img/icon/nav_icon/Storefront.svg}" alt="logo">
+        <nav>VIPA</nav>
+    </a>
+    <div class="header__navigation">
+        <a th:href="@{/dialogs/list?dialogType=AS_CUSTOMER}" class="header__navigation-item"
+           sec:authorize="hasRole('CLIENT')">Чаты</a>
+        <a th:href="@{/favorites}" class="header__navigation-item" sec:authorize="hasRole('CLIENT')">Избранное</a>
+        <a th:href="@{null}" class="header__navigation-item" sec:authorize="hasRole('CLIENT')">Уведомления</a>
+        <a th:href="@{/cart}" class="header__navigation-item" sec:authorize="hasRole('CLIENT')">Корзина</a>
+        <a th:href="@{/orders/list}" class="header__navigation-item" sec:authorize="hasRole('CLIENT')">Заказы</a>
+        <a th:href="@{/posts/new}" class="header__navigation-item header__navigation-item-last"
+           sec:authorize="hasRole('CLIENT')">
+            <p>Подать объявление</p>
         </a>
-        <div class="header__navigation">
-            <a th:href="@{/dialogs/list}" class="header__navigation-item">Чаты</a>
-            <a th:href="@{/favorites}" class="header__navigation-item">Избранное</a>
-            <a th:href="@{null}" class="header__navigation-item">Уведомления</a>
-            <a th:href="@{/cart}" class="header__navigation-item">Корзина</a>
-            <a th:href="@{/orders/list}" class="header__navigation-item">Заказы</a>
-            <a th:href="@{/posts/new}" class="header__navigation-item header__navigation-item-last">
-                <p>Подать объявление</p>
-            </a>
-            <div class="header__profile">
-                <div class="registration__button registration">
-                    <img th:src="@{/cart/cart-page/img/icon/nav_icon/User.svg}" alt="User">
-                    <p class="header__profile-title">Меню</p>
-                    <div class="header__links">
-                        <a th:href="@{/clients/{clientId}(clientId=${#authentication.principal.id})}" class="link">Профиль</a>
-                        <a th:href="@{/dialogs/list}" class="link">Чаты</a>
-                        <a th:href="@{/favorites}" class="link">Избранное</a>
-                        <a th:href="@{null}" class="link">Уведомления</a>
-                        <a th:href="@{/cart}" class="link">Корзина</a>
-                        <a th:href="@{/orders/list}" class="link">Заказы</a>
-                        <form th:action="@{/auth/sign-out}" method="post">
-                            <button type="submit" class="link">Выйти из аккаунта</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <div class="profile wrapper">
-        <div class="profile__title title">
-            <p>Профиль</p>
-        </div>
-        <div class="profile__info">
-            <div class="bio__info">
-                <div class="bio__data">
-                    <p>Личные данные</p>
-                </div>
-                <div class="bio__name">
-                    <p th:text="${client.getName()}">Имя</p>
-                </div>
-                <div class="bio__surname">
-                    <p th:text="${client.getSurname()}">Фамилия</p>
-                </div>
-                <div class="bio__birthdate">
-                    <p th:text="${client.getBirthDate()}">Дата рождения</p>
-                </div>
-                <div class="bio__email">
-                    <p th:text="${client.getEmail()}">Электронная почта</p>
-                </div>
-                <div class="bio__phone">
-                    <p th:text="${client.getPhoneNumber()}">Номер телефона</p>
-                </div>
-            </div>
-            <div class="profile__setting">
-                <div class="setting__title">
-                    <p>Настройки</p>
-                </div>
-                <div class="setting__data">
-                    <a th:href="@{/clients/edit}">Изменить данные</a>
-                </div>
-                <div class="setting__delete">
-                    <a th:href="@{/clients/delete/{clientId}(clientId=${#authentication.principal.id})}">Удалить профиль</a>
+        <div class="header__profile">
+            <div class="registration__button registration">
+                <img th:src="@{/client/client-page/img/icon/nav_icon/User.svg}" alt="User">
+                <p class="header__profile-title">Меню</p>
+                <div class="header__links">
+                    <a th:href="@{/clients/{clientId}(clientId=${#authentication.principal.id})}"
+                       class="link">Профиль</a>
+                    <a th:href="@{/dialogs/list?dialogType=AS_CUSTOMER}" class="link" sec:authorize="hasRole('CLIENT')">Чаты</a>
+                    <a th:href="@{/favorites}" class="link" sec:authorize="hasRole('CLIENT')">Избранное</a>
+                    <a th:href="@{null}" class="link" sec:authorize="hasRole('CLIENT')">Уведомления</a>
+                    <a th:href="@{/cart}" class="link" sec:authorize="hasRole('CLIENT')">Корзина</a>
+                    <a th:href="@{/orders/list}" class="link" sec:authorize="hasRole('CLIENT')">Заказы</a>
+                    <form th:action="@{/auth/sign-out}" method="post" class="link">
+                        <button type="submit">Выйти из аккаунта</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+</header>
 
-    <div class="posts wrapper">
-        <div class="posts__title title">
-            <p>Мои объявления</p>
+<div class="profile wrapper">
+    <div class="profile__title title">
+        <p>Профиль</p>
+    </div>
+    <div class="profile__info">
+        <div class="bio__info">
+            <div class="bio__data">
+                <p>Личные данные</p>
+            </div>
+            <div class="bio__name">
+                <p th:text="${client.getName()}">Имя</p>
+            </div>
+            <div class="bio__surname">
+                <p th:text="${client.getSurname()}">Фамилия</p>
+            </div>
+            <div class="bio__birthdate">
+                <p th:text="${client.getBirthDate()}">Дата рождения</p>
+            </div>
+            <div class="bio__email">
+                <p th:text="${client.getEmail()}">Электронная почта</p>
+            </div>
+            <div class="bio__phone">
+                <p th:text="${client.getPhoneNumber()}">Номер телефона</p>
+            </div>
         </div>
-        <div th:each="post : ${posts}" class="posts__items">
-            <a th:href="@{/posts/{postId}(postId=${post.getId()})}" class="posts__item">
-                <div class="posts__item-img">
-                    <img th:src="@{${post.getCoverImagePath()}}" alt="">
-                </div>
-                <div class="posts__item-info">
-                    <div class="posts__item-title">
-                        <p th:text="${post.getTitle()}">Название объявления</p>
-                    </div>
-                    <div class="posts__item-price">
-                        <p th:text="${post.getPrice()}">100</p>
-                        <p>рублей</p>
-                    </div>
-                </div>
-            </a>
+        <div class="profile__setting">
+            <div class="setting__title">
+                <p>Настройки</p>
+            </div>
+            <div th:if="${#authentication.principal.id == client.getId()}" class="setting__data">
+                <a th:href="@{/clients/edit}">Изменить данные</a>
+            </div>
+            <div th:if="${#authentication.principal.id == client.getId() || #authorization.expression('hasRole(''ADMIN'')')}"
+                 class="setting__delete">
+                <form th:action="@{/clients/delete/{clientId}(clientId=${client.getId()})}" th:method="delete">
+                    <button type="submit">Удалить профиль</button>
+                </form>
+            </div>
         </div>
     </div>
+</div>
+
+<div class="posts wrapper">
+    <div class="posts__title title">
+        <p>Мои объявления</p>
+    </div>
+    <div th:each="post : ${posts}" class="posts__items">
+        <a th:href="@{/posts/{postId}(postId=${post.getId()})}" class="posts__item">
+            <div class="posts__item-img">
+                <img th:src="@{${post.getCoverImagePath()}}" alt="">
+            </div>
+            <div class="posts__item-info">
+                <div class="posts__item-title">
+                    <p th:text="${post.getTitle()}">Название объявления</p>
+                </div>
+                <div class="posts__item-price">
+                    <p th:text="${post.getPrice()}">100</p>
+                    <p>рублей</p>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
 
     <footer class="footer">
         <div class="footer__parts wrapper">

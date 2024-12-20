@@ -29,8 +29,12 @@ public class SecurityConfig {
                 // Настройка доступа к конечным точкам
                 .authorizeHttpRequests(request -> request
                         // Можно указать конкретный путь, * - 1 уровень вложенности, ** - любое количество уровней вложенности
-                        .requestMatchers("/auth/**", "/homepage-guest", "/common/homepage-guest/**").permitAll()
-                        .anyRequest().authenticated())
+                        .requestMatchers("/").hasRole("ADMIN")
+                        .requestMatchers("/auth/**", "/homepage-guest", "/common/**", "/images/**").permitAll()
+                        .requestMatchers("/categories").hasRole("ADMIN")
+                        .requestMatchers("/homepage-client", "/clients/**", "/posts/**", "/common/**", "/client/**", "/post/**")
+                        .hasAnyRole("ADMIN", "CLIENT")
+                        .anyRequest().hasRole("CLIENT"))
                 .formLogin(formLogin -> formLogin
                         .loginPage("/auth/sign-in")
                         .defaultSuccessUrl("/homepage-client", true)

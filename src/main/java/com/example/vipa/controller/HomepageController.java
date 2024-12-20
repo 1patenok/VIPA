@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-public class ViewController {
+public class HomepageController {
 
     private final PostService postService;
     private final CategoryService categoryService;

@@ -46,48 +46,58 @@
     </div>
 </header>
 
-    <form th:action="@{/orders/new}" th:object="${order}" method="post" class="posts wrapper">
-        <div class="posts__title title">
-            <p>Корзина</p>
-        </div>
-        <div th:each="post : ${posts}" class="posts__items">
-            <div class="posts__item">
-                <div class="posts__item-img">
-                    <img th:src="@{${post.getCoverImagePath()}}" alt="" id="image">
+<form th:action="@{/orders/new}" th:object="${order}" method="post" class="posts wrapper">
+    <div class="posts__title title">
+        <p>Корзина</p>
+    </div>
+    <div th:each="post : ${posts}" class="posts__items">
+        <div class="posts__item">
+            <div class="posts__item-img">
+                <img th:src="@{${post.getCoverImagePath()}}" alt="" id="image">
+            </div>
+            <div class="posts__item-info">
+                <div class="posts__item-title">
+                    <p th:text="${post.getTitle()}"></p>
                 </div>
-                <div class="posts__item-info">
-                    <div class="posts__item-title">
-                        <p th:text="${post.getTitle()}"></p>
-                    </div>
-                    <div class="posts__item-author">
-                        <p th:text="${post.getAuthor().getName() + ' ' + post.getAuthor().getSurname()}"></p>
-                    </div>
-                    <div class="posts__item-price">
-                        <p th:text="${post.getPrice() + ' ₽'}"></p>
-                    </div>
+                <div class="posts__item-author">
+                    <p th:text="${post.getAuthor().getName() + ' ' + post.getAuthor().getSurname()}"></p>
                 </div>
-                <div class="post__item-checked">
-                    <input th:field="*{postsInOrder}" th:value="${post.getId()}"type="checkbox">
-                </div>
-                <div class="post__item-urn">
-                    <button type="button">
-                        <img th:src="@{/cart/cart-page/img/icon/icons8-мусор.svg}" alt="">
-                    </button>
+                <div class="posts__item-price">
+                    <p th:text="${post.getPrice() + ' руб'}"></p>
+                    <!--<p>рублей</p>-->
                 </div>
             </div>
-        </div>
-        <div class="posts__title title">
-            <p>Детали заказа</p>
-        </div>
-        <div class="posts__pay">
-            <div class="posts__card-address">
-                <p>Адрес доставки</p>
-                <input th:field="*{deliveryAddress}" type="text" required>
+            <div class="post__item-checked">
+                <input th:field="*{postsInOrder}" th:value="${post.getId()}" type="checkbox">
             </div>
-            <div class="posts__card-number">
-                <p>Номер карты</p>
-                <input th:field="*{cardNumber}"type="number" pattern="[0-9]{16}" required>
+            <div class="post__item-urn">
+                <button type="submit">
+                    <img th:src="@{/cart/cart-page/img/icon/icons8-мусор.svg}" alt="">
+                </button>
             </div>
+        </div>
+    </div>
+    <div class="posts__title title">
+        <p>Детали заказа</p>
+    </div>
+    <div class="posts__pay">
+        <div class="posts__card-number">
+            <p>Номер карты</p>
+            <input th:field="*{cardNumber}" type="number" pattern="[0-9]{16}" required>
+        </div>
+<!--        <select th:field="*{deliveryMethod}" class="posts__delivery-method">
+            <option th:each="method : ${T(com.example.vipa.model.DeliveryMethod).values()}"
+                    th:value="${method}" th:text="${method.displayValue}"></option>
+        </select>-->
+        <div class="posts__card-number">
+            <p>Адрес доставки</p>
+            <input th:if="${true}"
+                   th:field="*{deliveryAddress}" type="text" required>
+            <!--<select th:if="${order.getDeliveryMethod().equals(DeliveryMethod.DELIVERY_POINT)}"
+                    th:field="*{deliveryAddress}">
+                <option th:each="address : ${deliveryAddresses}"
+                        th:value="${address.getId()}" th:text="${address}"></option>
+            </select>-->
         </div>
         <div class="post__pay-button">
             <button type="submit">Оплатить</button>

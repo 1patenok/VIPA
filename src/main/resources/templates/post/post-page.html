@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
@@ -17,12 +17,14 @@
         <nav>VIPA</nav>
     </a>
     <div class="header__navigation">
-        <a th:href="@{/dialogs/list}" class="header__navigation-item">Чаты</a>
-        <a th:href="@{/favorites}" class="header__navigation-item">Избранное</a>
-        <a th:href="@{null}" class="header__navigation-item">Уведомления</a>
-        <a th:href="@{/cart}" class="header__navigation-item">Корзина</a>
-        <a th:href="@{/orders/list}" class="header__navigation-item">Заказы</a>
-        <a th:href="@{/posts/new}" class="header__navigation-item header__navigation-item-last">
+        <a th:href="@{/dialogs/list?dialogType=AS_CUSTOMER}" class="header__navigation-item"
+           sec:authorize="hasRole('CLIENT')">Чаты</a>
+        <a th:href="@{/favorites}" class="header__navigation-item" sec:authorize="hasRole('CLIENT')">Избранное</a>
+        <a th:href="@{null}" class="header__navigation-item" sec:authorize="hasRole('CLIENT')">Уведомления</a>
+        <a th:href="@{/cart}" class="header__navigation-item" sec:authorize="hasRole('CLIENT')">Корзина</a>
+        <a th:href="@{/orders/list}" class="header__navigation-item" sec:authorize="hasRole('CLIENT')">Заказы</a>
+        <a th:href="@{/posts/new}" class="header__navigation-item header__navigation-item-last"
+           sec:authorize="hasRole('CLIENT')">
             <p>Подать объявление</p>
         </a>
         <div class="header__profile">
@@ -30,12 +32,16 @@
                 <img th:src="@{/post/post-page/img/icon/nav_icon/User.svg}" alt="User">
                 <p class="header__profile-title">Меню</p>
                 <div class="header__links">
-                    <a th:href="@{/clients/{clientId}(clientId=${#authentication.principal.id})}" class="link">Профиль</a>
-                    <a th:href="@{/dialogs/list}" class="link">Чаты</a>
-                    <a th:href="@{/favorites}" class="link">Избранное</a>
-                    <a th:href="@{null}" class="link">Уведомления</a>
-                    <a th:href="@{/cart}" class="link">Корзина</a>
-                    <a th:href="@{/orders/list}" class="link">Заказы</a>
+                    <a th:href="@{/clients/{clientId}(clientId=${#authentication.principal.id})}"
+                       class="link">Профиль</a>
+                    <a th:href="@{/dialogs/list?dialogType=AS_CUSTOMER}" class="link" sec:authorize="hasRole('CLIENT')">Чаты</a>
+                    <a th:href="@{/favorites}" class="link" sec:authorize="hasRole('CLIENT')">Избранное</a>
+                    <a th:href="@{null}" class="link" sec:authorize="hasRole('CLIENT')">Уведомления</a>
+                    <a th:href="@{/cart}" class="link" sec:authorize="hasRole('CLIENT')">Корзина</a>
+                    <a th:href="@{/orders/list}" class="link" sec:authorize="hasRole('CLIENT')">Заказы</a>
+                    <form th:action="@{/auth/sign-out}" method="post" class="link">
+                        <button type="submit">Выйти из аккаунта</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -52,6 +58,12 @@
                 <p th:text="${post.getPrice() + ' руб'}">Цена</p>
             </div>
             <div class="bio__date">
+                <p>Автор объявления</p>
+                <a th:href="@{/clients/{clientId}(clientId=${post.getAuthor().getId()})}">
+                    <p th:text="${post.getAuthor().getName() + ' ' + post.getAuthor().getSurname()}"></p>
+                </a>
+            </div>
+            <div class="bio__date">
                 <p>Дата публикации</p>
                 <p th:text="${post.getCreatedAt()}">Дата публикации</p>
             </div>
@@ -64,7 +76,7 @@
                 <p th:text="${post.getDescription()}">Описание</p>
             </div>
         </div>
-        <div class="profile__setting">
+        <div class="profile__setting" sec:authorize="hasRole('CLIENT')">
             <div class="setting__buttons">
                 <div th:if="${post.getAuthor().getId() != #authentication.principal.id}"> <!--если объявление не мое-->
                     <form th:action="@{/cart/{postId}(postId=${post.getId()})}" method="post"
@@ -75,11 +87,13 @@
                           method="post" class="setting__data">
                         <button type="submit">В избранное</button>
                     </form>
-                    <form th:if="${dialogId == 0}" th:action="@{/dialogs/new/{postId}(postId=${post.getId()})}" method="post" class="setting__data">
+                    <form th:if="${dialogId == 0}" th:action="@{/dialogs/new/{postId}(postId=${post.getId()})}"
+                          method="post" class="setting__data">
                         <!--если еще не писали-->
                         <button type="submit">Написать продавцу</button>
                     </form>
-                    <form th:if="${dialogId != 0}" th:action="@{/dialogs/{dialogId}(dialogId=${dialogId})}" method="get" class="setting__data">
+                    <form th:if="${dialogId != 0}" th:action="@{/dialogs/{dialogId}(dialogId=${dialogId})}" method="get"
+                          class="setting__data">
                         <!--если уже писали-->
                         <button type="submit">К диалогу</button>
                     </form>

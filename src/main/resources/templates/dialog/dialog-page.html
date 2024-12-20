@@ -70,7 +70,7 @@
                    th:text="${msg.getText()}"
                    th:class="${msg.getSenderName().equals(#authentication.principal.name) ? 'window\_\_message-companion-p' : 'window\_\_message-my-p'}">
                 </p>
-                <p th:text="${msg.getTimestamp().toLocalTime().withSecond(0).withNano(0)}"
+                <p th:text="${msg.getTimestamp().toLocalTime().withSecond(0)}"
                    th:class="${msg.getSenderName().equals(#authentication.principal.name) ? 'window\_\_message-companion-time' : 'window\_\_message-my-time'}">
                 </p>
             </div>
