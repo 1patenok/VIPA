@@ -271,16 +271,19 @@
 .order__info-date p {
   margin: 0 6px 0 0;
 }
+.order__info-part-1{
+  width: 300px;
+}
 
 .order__info-part-2 {
-  width: 500px;
   display: flex;
   justify-content: end;
   flex-wrap: wrap;
-  margin: 0 0 auto 0;
+  margin: 0 5px auto 5px;
 }
 .order__info-part-2 img {
-  margin: 0 0 5px 5px;
+  display: inline-block;
+  margin: 0 5px auto 5px;
   width: 100px;
   height: 100px;
   -o-object-fit: cover;

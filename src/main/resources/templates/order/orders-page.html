@@ -79,11 +79,13 @@
                         </div>
                         <div class="order__info-date">
                             <p>Дата доставки:</p>
-                            <p th:text="${order.getDeliveryDate()}">20.10.2022</p>
+                            <p th:text="${order.getDeliveryDate()}"></p>
                         </div>
                     </div>
-                    <div th:each="postImagePath : ${order.getPostImages()}" class="order__info-part-2">
+                    <div class="order__info-part-2">
+                    <div th:each="postImagePath : ${order.getPostImages()}" class="order__info-part-2-for">
                         <img th:src="${postImagePath}" alt="">
+                    </div>
                     </div>
                 </div>
             </a>
