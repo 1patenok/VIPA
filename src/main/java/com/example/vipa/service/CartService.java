@@ -30,6 +30,14 @@ public class CartService {
     }
 
     @Transactional
+    public boolean isPostInCart(int clientId, int postId) {
+        Post result = clientService.getClientEntity(clientId).getPostsInCart().stream()
+                .filter(post -> post.getId() == postId)
+                .findAny().orElse(new Post().setId(0));
+        return result.getId() != 0;
+    }
+
+    @Transactional
     public void addPostToCart(int clientId, int postId) {
         // Вызов валидатора перед добавлением
         //orderValidator.validateAddToCart(clientId, postId);

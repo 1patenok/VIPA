@@ -4,9 +4,7 @@ import com.example.vipa.dto.PostDetailsInputDto;
 import com.example.vipa.dto.PostDetailsOutputDto;
 import com.example.vipa.dto.PostPreviewDto;
 import com.example.vipa.model.Client;
-import com.example.vipa.service.CategoryService;
-import com.example.vipa.service.DialogService;
-import com.example.vipa.service.PostService;
+import com.example.vipa.service.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,16 +26,18 @@ public class PostController {
 
     private final PostService postService;
     private final DialogService dialogService;
+    private final CartService cartService;
+    private final FavoritesService favoritesService;
     private final CategoryService categoryService;
 
     @GetMapping("/{postId}")
     public String getPostPage(Model model, @PathVariable("postId") int postId,
                               @AuthenticationPrincipal Client currentClient) {
         log.info("Получен запрос на просотр объявления. postId: {}", postId);
-        PostDetailsOutputDto post = postService.getPost(postId);
-        int dialogId = dialogService.getDialogIdByPostAndCustomer(postId, currentClient.getId());
-        model.addAttribute("post", post);
-        model.addAttribute("dialogId", dialogId);
+        model.addAttribute("post", postService.getPost(postId));
+        model.addAttribute("dialogId", dialogService.getDialogIdByPostAndCustomer(postId, currentClient.getId()));
+        model.addAttribute("alreadyInCart", favoritesService.isPostInFavorites(currentClient.getId(), postId));
+        model.addAttribute("alreadyInFavorites", cartService.isPostInCart(currentClient.getId(), postId));
         return "/post/post-page";
     }
 

@@ -17,7 +17,7 @@
         <nav>VIPA</nav>
     </a>
     <div class="header__navigation">
-        <a th:href="@{/dialogs/list}" class="header__navigation-item">Чаты</a>
+        <a th:href="@{/dialogs/list?dialogType=AS_CUSTOMER}" class="header__navigation-item">Чаты</a>
         <a th:href="@{/favorites}" class="header__navigation-item">Избранное</a>
         <a th:href="@{null}" class="header__navigation-item">Уведомления</a>
         <a th:href="@{/cart}" class="header__navigation-item">Корзина</a>
@@ -32,7 +32,7 @@
                 <div class="header__links">
                     <a th:href="@{/clients/{clientId}(clientId=${#authentication.principal.id})}"
                        class="link">Профиль</a>
-                    <a th:href="@{/dialogs/list}" class="link" sec:authorize="hasRole('CLIENT')">Чаты</a>
+                    <a th:href="@{/dialogs/list?dialogType=AS_CUSTOMER}" class="link" sec:authorize="hasRole('CLIENT')">Чаты</a>
                     <a th:href="@{/favorites}" class="link" sec:authorize="hasRole('CLIENT')">Избранное</a>
                     <a th:href="@{null}" class="link" sec:authorize="hasRole('CLIENT')">Уведомления</a>
                     <a th:href="@{/cart}" class="link" sec:authorize="hasRole('CLIENT')">Корзина</a>

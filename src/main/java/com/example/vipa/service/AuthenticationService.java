@@ -9,7 +9,6 @@ import com.example.vipa.exception.PasswordMismatchException;
 import com.example.vipa.mapping.ClientMapper;
 import com.example.vipa.model.Client;
 import com.example.vipa.repository.ClientRepository;
-import com.example.vipa.validators.PasswordValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,7 +27,6 @@ public class AuthenticationService {
     private final ClientMapper clientMapper;
     private final PasswordEncoder passwordEncoder;
     private final ClientRepository clientRepository;
-    private final PasswordValidator passwordValidator; // Сервис для проверки пароля
 
     /**
      * Метод, выполняющий вход в аккаунт зарегистрированного пользователя.
@@ -70,13 +68,10 @@ public class AuthenticationService {
             throw new AlreadyExistException(EMAIL_ALREADY_EXIST_MESSAGE);
         }
 
-        // Валидация пароля
-        //passwordValidator.validatePassword(clientDetailsDto.getPassword());
-
         // Преобразуем DTO в модель клиента и кодируем пароль
         Client clientToSave = clientMapper.convertToClient(clientDetailsDto);
         clientToSave.setPassword(passwordEncoder.encode(clientDetailsDto.getPassword()));
-
+        clientToSave.setRole("ROLE_CLIENT");
         // Сохраняем клиента в базе данных
         Client savedClient = clientRepository.save(clientToSave);
 

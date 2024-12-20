@@ -18,7 +18,7 @@
             <nav>VIPA</nav>
         </a>
         <div class="header__navigation">
-            <a th:href="@{/dialogs/list}" sec:authorize="hasRole('CLIENT')" class="header__navigation-item">Чаты</a>
+            <a th:href="@{/dialogs/list?dialogType=AS_CUSTOMER}" sec:authorize="hasRole('CLIENT')" class="header__navigation-item">Чаты</a>
             <a th:href="@{/favorites}" sec:authorize="hasRole('CLIENT')" class="header__navigation-item">Избранное</a>
             <a th:href="@{null}" sec:authorize="hasRole('CLIENT')" class="header__navigation-item">Уведомления</a>
             <a th:href="@{/cart}" sec:authorize="hasRole('CLIENT')" class="header__navigation-item">Корзина</a>
@@ -32,7 +32,7 @@
                     <p class="header__profile-title">Меню</p>
                     <div class="header__links">
                         <a th:href="@{/clients/{clientId}(clientId=${#authentication.principal.id})}" sec:authorize="hasRole('CLIENT')" class="link">Профиль</a>
-                        <a th:href="@{/dialogs/list}" sec:authorize="hasRole('CLIENT')" class="link">Чаты</a>
+                        <a th:href="@{/dialogs/list?dialogType=AS_CUSTOMER}" sec:authorize="hasRole('CLIENT')" class="link">Чаты</a>
                         <a th:href="@{/favorites}" sec:authorize="hasRole('CLIENT')" class="link">Избранное</a>
                         <a th:href="@{null}" sec:authorize="hasRole('CLIENT')" class="link">Уведомления</a>
                         <a th:href="@{/cart}" sec:authorize="hasRole('CLIENT')" class="link">Корзина</a>

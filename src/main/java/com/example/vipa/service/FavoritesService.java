@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -26,6 +27,14 @@ public class FavoritesService {
                 .getFavoritePosts().stream()
                 .map(postMapper::convertToPostPreviewDto)
                 .toList();
+    }
+
+    @Transactional
+    public boolean isPostInFavorites(int clientId, int postId) {
+        Post result = clientService.getClientEntity(clientId).getFavoritePosts().stream()
+                .filter(post -> post.getId() == postId)
+                .findAny().orElse(new Post().setId(0));
+        return result.getId() != 0;
     }
 
     @Transactional

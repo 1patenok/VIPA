@@ -31,13 +31,12 @@ public class FavoritesController {
         return "/favorites/favorites-page";
     }
 
-    @ResponseBody
     @PostMapping(value = "/{postId}"/*, produces = {"application/json; charset=UTF-8"}*/)
     public String addPostToFavorites(@AuthenticationPrincipal Client currentClient,
                                                 @PathVariable("postId") int postId) {
         log.info("Принят запрос на добавление объявления в избранное. currentClient: {}, postId: {}", currentClient, postId);
         favoritesService.addPostToFavorites(currentClient.getId(), postId);
-        return "redirect:/post/" + postId;
+        return "redirect:/posts/" + postId;
         //return ResponseEntity.ok("Объявление успешно добавлено в избранное.");
     }
 
