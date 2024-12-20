@@ -60,4 +60,25 @@ public class ImageService {
         // Возвращаем путь к файлу для использования в URL
         return POST_IMAGE_SUBDIR  + fileName;
     }
+
+    public String saveCategoryImage(MultipartFile postImageFile) {
+        if (postImageFile == null || postImageFile.isEmpty()) {
+            throw new IllegalArgumentException("Файл изображения отсутствует.");
+        }
+        String fileName = postImageFile.getOriginalFilename();
+        assert fileName != null;
+        Path targetLocation = categoryImageUploadPath.resolve(fileName);
+        if (Files.exists(targetLocation)) {
+            fileName = System.currentTimeMillis() + "-" + fileName;
+            targetLocation = categoryImageUploadPath.resolve(fileName);
+        }
+        try {
+            Files.copy(postImageFile.getInputStream(), targetLocation);
+        } catch (IOException e) {
+            log.error("Ошибка при загрузке файла: {}", e.getMessage());
+            throw new RuntimeException("Не удалось сохранить файл.");
+        }
+        // Возвращаем путь к файлу для использования в URL
+        return CATEGORY_IMAGE_SUBDIR  + fileName;
+    }
 }

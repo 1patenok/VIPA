@@ -27,7 +27,8 @@ public class Post {
     private int price;
 
     @Column(name = "status")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private PostStatus status;
 
     @Column(name = "description")
     private String description;

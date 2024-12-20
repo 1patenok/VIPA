@@ -404,7 +404,7 @@
 }
 
 .category__item {
-  display: block;
+  display: inline-block;
   border-radius: 20px;
   background-color: #a259ff;
 }

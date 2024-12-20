@@ -47,12 +47,12 @@
         </div>
     </div>
 </header>
-<form class="search wrapper">
+<form th:action="@{/posts/catalog/search}" class="search wrapper">
     <div class="search__input">
         <input th:name="postTitlePattern" type="text" placeholder="Поиск">
     </div>
     <div class="search__button">
-        <button th:href="@{/posts/catalog/search}" type="submit">
+        <button type="submit">
             <p>Найти</p>
             <img th:src="@{/common/homepage-client/img/icon/icons8-поиск.svg}" alt="search">
         </button>
@@ -82,11 +82,11 @@
         </a>
     </div>
 </div>
-<div class="posts__button wrapper">
-    <a th:href="@{null}">
+<!--<div class="posts__button wrapper">
+    <a th:href="@{/homepage-client?size={size}(size=${param.size} + 1)}">
         <p>Посмотреть ещё</p>
     </a>
-</div>
+</div>-->
 </div>
 <div class="category wrapper">
     <div class="category__title title">

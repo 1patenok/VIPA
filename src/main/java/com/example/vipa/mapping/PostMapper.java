@@ -23,23 +23,14 @@ public class PostMapper {
         this.modelMapper = modelMapper;
         Converter<List<PostImage>, String> imageListToFirstImageURIConverter =
                 src -> src.getSource().isEmpty() ? null : src.getSource().get(0).getUrl();
-        Converter<Client, String> clientToClientFullNameConverter =
-                //src -> modelMapper.map(src.getSource().getName(), String.class);
-                src -> src.getSource().getName() + " " + src.getSource().getSurname();
         Converter<List<PostImage>, List<String>> imageListToPathList =
                 src -> src.getSource().stream()
                         .map(PostImage::getUrl)
                         .toList();
-/*        Converter<List<MultipartFile>, List<PostImage>> multipartFileListToPostImageListConverter =
-                src -> src.getSource().stream()
-                        .map(multipart -> new PostImage().setUrl(multipart.getOriginalFilename()))
-                        .toList();*/
         modelMapper.createTypeMap(Post.class, PostPreviewDto.class)
                 .addMappings(mapper -> {
                     mapper.using(imageListToFirstImageURIConverter)
                             .map(Post::getImages, PostPreviewDto::setCoverImagePath);
-                    /*mapper.using(clientToClientFullNameConverter)
-                            .map(Post::getAuthor, PostPreviewDto::setAuthorFullName);*/
                 });
         modelMapper.createTypeMap(Post.class, PostDetailsOutputDto.class)
                 .addMappings(mapper -> mapper.using(imageListToPathList)
@@ -59,12 +50,12 @@ public class PostMapper {
     }
 
     public PostDetailsInputDto convertToPostDetailsInputDto(Post post) {
-        log.info("inside convertToPostDetailsDto()");
+        log.info("inside convertToPostDetailsInputDto()");
         return modelMapper.map(post, PostDetailsInputDto.class);
     }
 
     public PostDetailsOutputDto convertToPostDetailsOutputDto(Post post) {
-        log.info("inside convertToPostDetailsDto()");
+        log.info("inside convertToPostDetailsOutputDto()");
         return modelMapper.map(post, PostDetailsOutputDto.class);
     }
 }

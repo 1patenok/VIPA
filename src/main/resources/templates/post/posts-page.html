@@ -13,7 +13,7 @@
 <body class="body">
 <header class="header">
     <a class="header__logo logo" th:href="@{/homepage-client}">
-        <img th:src="@{/cart/cart-page/img/icon/nav_icon/Storefront.svg}" alt="logo">
+        <img th:src="@{/post/posts-page/img/icon/nav_icon/Storefront.svg}" alt="logo">
         <nav>VIPA</nav>
     </a>
     <div class="header__navigation">
@@ -27,7 +27,7 @@
         </a>
         <div class="header__profile">
             <div class="registration__button registration">
-                <img th:src="@{/cart/cart-page/img/icon/nav_icon/User.svg}" alt="User">
+                <img th:src="@{/post/posts-page/img/icon/nav_icon/User.svg}" alt="User">
                 <p class="header__profile-title">Меню</p>
                 <div class="header__links">
                     <a th:href="@{/clients/{clientId}(clientId=${#authentication.principal.id})}"
@@ -45,7 +45,17 @@
         </div>
     </div>
 </header>
-
+<form th:action="@{/posts/catalog/search}" class="search wrapper">
+    <div class="search__input">
+        <input th:name="postTitlePattern" type="text" placeholder="Поиск">
+    </div>
+    <div class="search__button">
+        <button type="submit">
+            <p>Найти</p>
+            <img th:src="@{/common/homepage-client/img/icon/icons8-поиск.svg}" alt="search">
+        </button>
+    </div>
+</form>
 <div class="posts wrapper container">
     <div class="posts__title title">
         <p>Каталог</p>

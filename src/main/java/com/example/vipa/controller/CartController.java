@@ -38,7 +38,7 @@ public class CartController {
                                            @PathVariable("postId") int postId) {
         log.info("Принят запрос на добавление объявления в корзину. currentClient: {}, postId: {}", currentClient, postId);
         cartService.addPostToCart(currentClient.getId(), postId);
-        return "redirect:/post/" + postId;
+        return "redirect:/posts/" + postId;
         //return ResponseEntity.ok("Объявление успешно добавлено в корзину.");
     }
 

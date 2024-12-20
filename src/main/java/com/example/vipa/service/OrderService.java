@@ -49,10 +49,9 @@ public class OrderService {
         log.info("inside createOrder(), orderDetailsDto: {}", orderDetailsInputDto);
 
         Order orderToSave = orderMapper.convertToOrder(orderDetailsInputDto);
-        switch (orderDetailsInputDto.getDeliveryMethod()) {
-            case COURIER -> orderToSave.setDeliveryDate(LocalDate.now().plusDays(1));
-            case DELIVERY_POINT -> orderToSave.setDeliveryDate(LocalDate.now().plusDays(3));
-        }
+        orderToSave.setDeliveryMethod(DeliveryMethod.COURIER);
+        orderToSave.setPaymentMethod(PaymentMethod.BY_CARD);
+        orderToSave.setDeliveryDate(LocalDate.now().plusDays(3));
         orderToSave.setPostsInOrder(postService.getPostsByIds(orderDetailsInputDto.getPostsInOrder()));
         orderToSave.setPrice(
                 orderToSave.getPostsInOrder().stream()
@@ -64,7 +63,11 @@ public class OrderService {
         // совершение платежа
         paymentAccountService.makeAPayment(orderToSave.getPrice(), orderDetailsInputDto.getCardNumber());
         // удаление заказанных товаров из корзины
-        orderToSave.getPostsInOrder().forEach(post -> cartService.deletePostFromCart(orderToSave.getClient(), post));
+        orderToSave.getPostsInOrder().forEach(post -> {
+            cartService.deletePostFromCart(orderToSave.getClient(), post);
+            post.setStatus(PostStatus.INACTIVE);
+            postService.updatePost(post);
+        });
         OrderDetailsOutputDto savedOrder = orderMapper.convertToOrderDetailsOutputDto(orderRepository.save(orderToSave));
         // отправка email с информацией о заказе
         emailSenderService.sendEmailWithOrderInfo(generateOrderInfo(savedOrder), orderToSave.getClient().getEmail());

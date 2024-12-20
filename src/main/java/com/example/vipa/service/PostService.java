@@ -7,6 +7,7 @@ import com.example.vipa.mapping.PostMapper;
 import com.example.vipa.model.Category;
 import com.example.vipa.model.Post;
 import com.example.vipa.model.PostImage;
+import com.example.vipa.model.PostStatus;
 import com.example.vipa.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -59,7 +60,10 @@ public class PostService {
 
     @Transactional
     public List<PostPreviewDto> getPosts(Pageable pageable, String postTitlePattern) {
-        return postRepository.findAllByTitleLike("%" + postTitlePattern + "%", pageable).stream()
+        log.info("inside getPosts(), pageagle: {}, postTitlePattern: {}", pageable, postTitlePattern);
+        List<Post> result = postRepository.findAllByTitleLikeIgnoreCaseAndStatus("%" + postTitlePattern + "%", PostStatus.ACTIVE, pageable);
+        log.info("before stream");
+        return result.stream()
                 .map(postMapper::convertToPostPreviewDto)
                 .toList();
     }
@@ -72,8 +76,17 @@ public class PostService {
     }
 
     @Transactional
+    public List<PostPreviewDto> getPostsByCategory(Pageable pageable, int categoryId) {
+        Category category = categoryService.getCategoryEntity(categoryId);
+        List<Post> listPosts = postRepository.findAllByCategoryAndStatus(category, PostStatus.ACTIVE, pageable);
+        return listPosts.stream()
+                .map(postMapper::convertToPostPreviewDto)
+                .toList();
+    }
+
+    @Transactional
     public List<PostPreviewDto> getMostPopularPosts(int pageNumber) {
-        Pageable pageable = PageRequest.of(pageNumber, 5, Sort.by(Sort.Direction.DESC, "numberOfViews"));
+        Pageable pageable = PageRequest.of(pageNumber, 6, Sort.by(Sort.Direction.DESC, "numberOfViews"));
         return postRepository.findAll(pageable).stream()
                 .map(postMapper::convertToPostPreviewDto)
                 .toList();
@@ -84,7 +97,7 @@ public class PostService {
         Post postToSave = postMapper.convertToPost(postDetailsInputDto);
         postToSave.setAuthor(clientService.getClientEntity(authorId));
         postToSave.setCategory(categoryService.getCategoryEntity(postDetailsInputDto.getCategoryId()));
-        postToSave.setStatus("status");
+        postToSave.setStatus(PostStatus.ACTIVE);
         postToSave.setCreatedAt(LocalDate.now());
         postToSave.setImages(
                 postDetailsInputDto.getImages().stream()
@@ -101,17 +114,12 @@ public class PostService {
         return postMapper.convertToPostDetailsInputDto(postRepository.save(updatedPost));
     }
 
+    public void updatePost(Post post) {
+        postRepository.save(post);
+    }
+
     public void deletePost(int postId) {
         postRepository.deleteById(postId);
     }
 
-
-    @Transactional
-    public List<PostPreviewDto> getPostsByCategory(Pageable pageable, int categoryId) {
-        Category category = categoryService.getCategoryEntity(categoryId);
-        List<Post> listPosts = postRepository.findAllByCategory(category, pageable);
-        return listPosts.stream()
-                .map(postMapper::convertToPostPreviewDto)
-                .toList();
-    }
 }

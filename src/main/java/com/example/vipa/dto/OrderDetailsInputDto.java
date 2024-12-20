@@ -14,8 +14,8 @@ import java.util.List;
 public class OrderDetailsInputDto {
     private int id;
     private String deliveryAddress;
-    private DeliveryMethod deliveryMethod;
-    private PaymentMethod paymentMethod;
+    //private DeliveryMethod deliveryMethod;
+    //private PaymentMethod paymentMethod;
     private String cardNumber;
     private List<Integer> postsInOrder;
 }

@@ -18,6 +18,7 @@ public class CategoryService {
 
     private static final String CATEGORY_NOT_FOUND_MESSAGE = "Категория не найднеа.";
 
+    private final ImageService imageService;
     private final CategoryMapper categoryMapper;
     private final CategoryRepository categoryRepository;
 
@@ -33,7 +34,9 @@ public class CategoryService {
     }
 
     public void createCategory(CategoryInputDto categoryInputDto) {
-        categoryRepository.save(categoryMapper.convertToCategory(categoryInputDto));
+        Category categoryToSave = categoryMapper.convertToCategory(categoryInputDto);
+        categoryToSave.setImagePath(imageService.saveCategoryImage(categoryInputDto.getImageFile()));
+        categoryRepository.save(categoryToSave);
     }
 
     public void deleteCategory(int categoryId) {

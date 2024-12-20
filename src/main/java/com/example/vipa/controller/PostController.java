@@ -51,8 +51,8 @@ public class PostController {
     }
 
     @GetMapping("/catalog/search")
-    public String getPostsByTitle(Model model, @PageableDefault(size = 30, sort = "post_id") Pageable pageable,
-                                  @RequestParam("postTitlePattern") String postTitlePattern) {
+    public String getPostsByTitle(Model model, @PageableDefault(size = 30, sort = "id") Pageable pageable,
+                                  @RequestParam(value = "postTitlePattern") String postTitlePattern) {
         log.info("Получен запрос на просмотр каталога объявлений. Параметры пэйджинга: {}, postTitlePattern: {}",
                 pageable, postTitlePattern);
         List<PostPreviewDto> posts = postService.getPosts(pageable, postTitlePattern);

@@ -27,13 +27,13 @@ public class CategoryController {
     public String createCategory(@ModelAttribute("category") CategoryInputDto categoryInputDto) {
         log.info("Получен запрос на создание новой категории. categoryInputDto: {}", categoryInputDto);
         categoryService.createCategory(categoryInputDto);
-        return "/homepage-client";
+        return "redirect:/homepage-client";
     }
 
     @DeleteMapping("/{categoryId}")
     public String deleteCategory(@PathVariable("categoryId") int categoryId) {
         log.info("Получен запрос на удаление категории. categoryId: {}", categoryId);
         categoryService.deleteCategory(categoryId);
-        return "/homepage-client";
+        return "redirect:/homepage-client";
     }
 }
