@@ -36,7 +36,7 @@ public class ClientDetailsDto {
     @Size(min = 2, max = 20, message = INVALID_SURNAME_SIZE_MESSAGE)
     private String surname;
 
-    @NotBlank(message = FIELD_IS_MANDATORY_MESSAGE)
+//    @NotBlank(message = FIELD_IS_MANDATORY_MESSAGE)
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate birthDate;
 

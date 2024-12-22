@@ -5,6 +5,7 @@ import com.example.vipa.exception.NotFoundException;
 import com.example.vipa.service.ClientDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -30,9 +31,12 @@ public class ClientValidator implements Validator {
             errors.rejectValue("password", HttpStatus.BAD_REQUEST.name(), PASSWORDS_DO_NOT_MATCH_MESSAGE);
         }
         try {
-            clientDetailsService.loadUserByUsername(client.getEmail());
+            UserDetails userDetails = clientDetailsService.loadUserByUsername(client.getEmail());
+            if(userDetails != null){
+                errors.rejectValue("email", HttpStatus.ALREADY_REPORTED.name(), CLIENT_ALREADY_EXIST_MESSAGE);
+            }
         } catch (NotFoundException e) {
-            errors.rejectValue("email", HttpStatus.ALREADY_REPORTED.name(), CLIENT_ALREADY_EXIST_MESSAGE);
+//            errors.rejectValue("email", HttpStatus.ALREADY_REPORTED.name(), CLIENT_ALREADY_EXIST_MESSAGE);
         }
     }
 

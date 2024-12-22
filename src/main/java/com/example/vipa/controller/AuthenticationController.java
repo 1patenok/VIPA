@@ -62,9 +62,9 @@ public class AuthenticationController {
         clientValidator.validate(clientDetailsDto, bindingResult);
         if (bindingResult.hasErrors()) {
             log.error("Ошибка валидации: {}", bindingResult.getAllErrors());
-            model.addAttribute("errors", bindingResult.getAllErrors());
+//            model.addAttribute("errors", bindingResult.getAllErrors());
             model.addAttribute("client", clientDetailsDto);
-            return "/auth/sign-up";
+            return "/auth/sign-up-page";
         }
         authService.signUp(clientDetailsDto);
         return "/common/homepage-client";
