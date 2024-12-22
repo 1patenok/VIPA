@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static org.springframework.data.domain.Sort.Direction.DESC;
 
 @Slf4j
 @Controller
@@ -36,38 +39,28 @@ public class PostController {
         log.info("Получен запрос на просотр объявления. postId: {}", postId);
         model.addAttribute("post", postService.getPost(postId));
         model.addAttribute("dialogId", dialogService.getDialogIdByPostAndCustomer(postId, currentClient.getId()));
-        model.addAttribute("alreadyInCart", favoritesService.isPostInFavorites(currentClient.getId(), postId));
-        model.addAttribute("alreadyInFavorites", cartService.isPostInCart(currentClient.getId(), postId));
+        //model.addAttribute("alreadyInCart", favoritesService.isPostInFavorites(currentClient.getId(), postId));
+        //model.addAttribute("alreadyInFavorites", cartService.isPostInCart(currentClient.getId(), postId));
         return "/post/post-page";
     }
 
-    @GetMapping("/catalog")
-    public String getPosts(Model model, @PageableDefault(size = 30, sort = "id") Pageable pageable) {
-        log.info("Получен запрос на просмотр каталога объявлений. postTitlePattern: {}", pageable);
-        List<PostPreviewDto> posts = postService.getPosts(pageable);
-        log.info("posts: {}", posts);
-        model.addAttribute("posts", posts);
-        return "/post/posts-page.html";
-    }
-
-    @GetMapping("/catalog/search")
-    public String getPostsByTitle(Model model, @PageableDefault(size = 30, sort = "id") Pageable pageable,
-                                  @RequestParam(value = "postTitlePattern") String postTitlePattern) {
-        log.info("Получен запрос на просмотр каталога объявлений. Параметры пэйджинга: {}, postTitlePattern: {}",
-                pageable, postTitlePattern);
-        List<PostPreviewDto> posts = postService.getPosts(pageable, postTitlePattern);
-        log.info("posts: {}", posts);
-        model.addAttribute("posts", posts);
-        return "/post/posts-page.html";
+    @ResponseBody
+    @GetMapping(value = "/search", produces = {"application/json; charset=UTF-8"})
+    public String getPostsByFilters(Model model, @PageableDefault(sort = "numberOfViews", direction = DESC) Pageable pageable,
+                                    @RequestParam(value = "search", required = false) String search) {
+        log.info("Получен запрос на просмотр объявлений по фильтрам. pageable: {}, search: {}", pageable, search);
+        model.addAttribute("posts", postService.getPostsBySearchFiltersAndPageable(search, pageable));
+        return "/post/posts-page";
     }
 
     @GetMapping("/catalog/{categoryId}")
-    public String getPostsByCategory(Model model, Pageable pageable, @PathVariable("categoryId") int categoryId){
+    public String getPostsByCategory(Model model, @PageableDefault(sort = "numberOfViews", direction = DESC) Pageable pageable,
+                                     @PathVariable("categoryId") int categoryId) {
         log.info("Получен запрос на просмотр каталога объявлений по категории. categoryId: {}", categoryId);
         List<PostPreviewDto> posts = postService.getPostsByCategory(pageable, categoryId);
         log.info("posts: {}", posts);
         model.addAttribute("posts", posts);
-        return "/post/posts-page.html";
+        return "/post/posts-page";
     }
 
 /*    @GetMapping("/{authorId}/publications")
@@ -96,7 +89,7 @@ public class PostController {
 
     @PostMapping("/new")
     public String createPost(Model model, @AuthenticationPrincipal Client currentClient,
-                             @ModelAttribute("post") @Valid PostDetailsInputDto postDetailsInputDto,
+                             @Valid @ModelAttribute("post") PostDetailsInputDto postDetailsInputDto,
                              BindingResult bindingResult) {
         log.info("Получен запрос на публикацию нового объявления. currentClient: {}, postDetailsDto: {}",
                 currentClient, postDetailsInputDto);
@@ -108,9 +101,7 @@ public class PostController {
             model.addAttribute("categories", categoryService.getCategories());
             return "/post/post-form-page";
         }
-
-        PostDetailsOutputDto createdPost = postService.createPost(currentClient.getId(), postDetailsInputDto);
-        model.addAttribute("post", createdPost);
+        model.addAttribute("post", postService.createPost(currentClient.getId(), postDetailsInputDto));
         return "/post/post-page";
     }
 

@@ -64,7 +64,7 @@ public class ClientService {
     public ClientDetailsDto updateClient(int clientId, ClientDetailsDto clientDetailsDto) {
         log.info("inside updateClient(), clientId: {}, clientDetailsDto: {}", clientId, clientDetailsDto);
         Client client = clientRepository.findById(clientId)
-                .orElseThrow(()->new NotFoundException(CLIENT_NOT_FOUND_MESSAGE));
+                .orElseThrow(() -> new NotFoundException(CLIENT_NOT_FOUND_MESSAGE));
         Client updatedClient = clientMapper.convertToClient(clientDetailsDto);
         if(clientDetailsDto.getPassword().isEmpty()){
             updatedClient.setPassword(client.getPassword());
