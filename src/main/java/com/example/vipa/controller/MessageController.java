@@ -1,18 +1,13 @@
 package com.example.vipa.controller;
 
 
-import com.example.vipa.dto.MessageDto;
+import com.example.vipa.dto.dialog.MessageDto;
 import com.example.vipa.model.Client;
-import com.example.vipa.model.DialogType;
-import com.example.vipa.model.Message;
-import com.example.vipa.service.DialogService;
 import com.example.vipa.service.MessageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j

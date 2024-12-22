@@ -1,6 +1,6 @@
 package com.example.vipa.controller;
 
-import com.example.vipa.dto.CategoryInputDto;
+import com.example.vipa.dto.category.CategoryInputDto;
 import com.example.vipa.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

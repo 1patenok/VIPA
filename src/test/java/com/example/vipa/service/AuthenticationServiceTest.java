@@ -1,7 +1,7 @@
 package com.example.vipa.service;
 
-import com.example.vipa.dto.ClientDetailsDto;
-import com.example.vipa.dto.SignInDto;
+import com.example.vipa.dto.client.ClientDetailsDto;
+import com.example.vipa.dto.auth.SignInDto;
 import com.example.vipa.mapping.ClientMapper;
 import com.example.vipa.model.Client;
 import com.example.vipa.repository.ClientRepository;

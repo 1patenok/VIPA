@@ -1,6 +1,6 @@
 package com.example.vipa.controller;
 
-import com.example.vipa.dto.ClientDetailsDto;
+import com.example.vipa.dto.client.ClientDetailsDto;
 import com.example.vipa.model.Client;
 import com.example.vipa.service.ClientService;
 import com.example.vipa.service.PostService;

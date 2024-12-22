@@ -1,13 +1,10 @@
-package com.example.vipa.dto;
+package com.example.vipa.dto.post;
 
-import com.example.vipa.model.Client;
+import com.example.vipa.dto.client.ClientPreviewDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter

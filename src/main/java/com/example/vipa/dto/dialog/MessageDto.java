@@ -1,10 +1,9 @@
-package com.example.vipa.dto;
+package com.example.vipa.dto.dialog;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
-import org.springframework.cglib.core.Local;
 
 import java.time.LocalDateTime;
 

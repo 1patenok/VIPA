@@ -1,7 +1,7 @@
 package com.example.vipa.mapping;
 
-import com.example.vipa.dto.CategoryInputDto;
-import com.example.vipa.dto.CategoryOutputDto;
+import com.example.vipa.dto.category.CategoryInputDto;
+import com.example.vipa.dto.category.CategoryOutputDto;
 import com.example.vipa.model.Category;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

@@ -1,4 +1,4 @@
-package com.example.vipa.dto;
+package com.example.vipa.dto.client;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -22,17 +22,21 @@ public class ClientDetailsDto {
     private static final String FIELD_IS_MANDATORY_MESSAGE = "Это поле является обязательным для заполнения.";
     private static final String EMAIL_IS_NOT_VALID_MESSAGE = "Вы ввели невалидный email.";
     private static final String PHONE_NUMBER_IS_NOT_VALID_MESSAGE = "Вы ввели невалидный номер телефона.";
-    private static final String PASSWORDS_DO_NOT_MATCH_MESSAGE = "Пароль и его подтверждение не совпадают.";
+    private static final String INVALID_NAME_SIZE_MESSAGE = "Длина имени должна быть от 2 до 20 букв.";
+    private static final String INVALID_SURNAME_SIZE_MESSAGE = "Длина фамилии должна быть от 2 до 20 букв.";
+    private static final String INVALID_PASSWORD_SIZE_MESSAGE = "Длина пароля должна быть не менее 8 символов.";
 
     private int id;
 
     @NotBlank(message = FIELD_IS_MANDATORY_MESSAGE)
+    @Size(min = 2, max = 20, message = INVALID_NAME_SIZE_MESSAGE)
     private String name;
 
     @NotBlank(message = FIELD_IS_MANDATORY_MESSAGE)
+    @Size(min = 2, max = 20, message = INVALID_SURNAME_SIZE_MESSAGE)
     private String surname;
 
-    @NotNull(message = FIELD_IS_MANDATORY_MESSAGE)
+    @NotBlank(message = FIELD_IS_MANDATORY_MESSAGE)
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate birthDate;
 
@@ -46,14 +50,10 @@ public class ClientDetailsDto {
     private String email;
 
     @NotBlank(message = FIELD_IS_MANDATORY_MESSAGE)
-    @Size(min = 6, message = "Пароль должен содержать минимум 6 символов.")
+    @Size(min = 8, message = INVALID_PASSWORD_SIZE_MESSAGE)
     private String password;
 
     @NotBlank(message = FIELD_IS_MANDATORY_MESSAGE)
+    @Size(min = 8, message = INVALID_PASSWORD_SIZE_MESSAGE)
     private String passwordConfirmation;
-
-    // Метод для проверки, совпадают ли пароли
-    public boolean isPasswordValid() {
-        return password != null && password.equals(passwordConfirmation);
-    }
 }

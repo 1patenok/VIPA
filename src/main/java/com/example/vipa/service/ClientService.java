@@ -1,17 +1,12 @@
 package com.example.vipa.service;
 
-import com.example.vipa.dto.ClientDetailsDto;
+import com.example.vipa.dto.client.ClientDetailsDto;
 import com.example.vipa.exception.NotFoundException;
 import com.example.vipa.mapping.ClientMapper;
 import com.example.vipa.model.Client;
 import com.example.vipa.repository.ClientRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

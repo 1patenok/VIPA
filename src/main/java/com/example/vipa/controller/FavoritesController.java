@@ -1,12 +1,10 @@
 package com.example.vipa.controller;
 
-import com.example.vipa.dto.PostPreviewDto;
+import com.example.vipa.dto.post.PostPreviewDto;
 import com.example.vipa.model.Client;
 import com.example.vipa.service.FavoritesService;
-import com.example.vipa.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

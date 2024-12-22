@@ -1,6 +1,9 @@
 package com.example.vipa.mapping;
 
-import com.example.vipa.dto.*;
+import com.example.vipa.dto.client.ClientPreviewDto;
+import com.example.vipa.dto.dialog.DialogDetailsDto;
+import com.example.vipa.dto.dialog.DialogPreviewDto;
+import com.example.vipa.dto.dialog.MessageDto;
 import com.example.vipa.model.Client;
 import com.example.vipa.model.Dialog;
 import com.example.vipa.model.Message;

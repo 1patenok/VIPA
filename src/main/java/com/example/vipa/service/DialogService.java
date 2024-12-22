@@ -1,14 +1,11 @@
 package com.example.vipa.service;
 
-import com.example.vipa.dto.DialogDetailsDto;
-import com.example.vipa.dto.DialogPreviewDto;
-import com.example.vipa.dto.MessageDto;
+import com.example.vipa.dto.dialog.DialogDetailsDto;
+import com.example.vipa.dto.dialog.DialogPreviewDto;
 import com.example.vipa.exception.NotFoundException;
 import com.example.vipa.mapping.DialogMapper;
-import com.example.vipa.mapping.MessageMapper;
 import com.example.vipa.model.Client;
 import com.example.vipa.model.Dialog;
-import com.example.vipa.model.Message;
 import com.example.vipa.model.Post;
 import com.example.vipa.repository.DialogRepository;
 import lombok.RequiredArgsConstructor;

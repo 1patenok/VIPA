@@ -1,4 +1,4 @@
-package com.example.vipa.dto;
+package com.example.vipa.dto.order;
 
 import com.example.vipa.model.DeliveryMethod;
 import com.example.vipa.model.OrderStatus;

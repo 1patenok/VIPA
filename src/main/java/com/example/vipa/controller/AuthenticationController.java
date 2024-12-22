@@ -1,13 +1,15 @@
 package com.example.vipa.controller;
 
-import com.example.vipa.dto.ClientDetailsDto;
-import com.example.vipa.dto.SignInDto;
-import com.example.vipa.model.Client;
+import com.example.vipa.dto.client.ClientDetailsDto;
+import com.example.vipa.dto.auth.SignInDto;
 import com.example.vipa.service.AuthenticationService;
+import com.example.vipa.validation.ClientValidator;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j // для логирования
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor // для автоматической генерации конструктора со всеми финальными полями
 public class AuthenticationController {
 
+    private final ClientValidator clientValidator;
     private final AuthenticationService authService;
 
     /**
@@ -52,8 +55,17 @@ public class AuthenticationController {
      * @return - редирект на homepage
      */
     @PostMapping("/sign-up")// регистрация
-    public String signUp(@ModelAttribute("clientDetailsDto") ClientDetailsDto clientDetailsDto){
+    public String signUp(Model model,
+                         @Valid @ModelAttribute("clientDetailsDto") ClientDetailsDto clientDetailsDto,
+                         BindingResult bindingResult) {
         log.info("clientDetailsDto: {}", clientDetailsDto);
+        clientValidator.validate(clientDetailsDto, bindingResult);
+        if (bindingResult.hasErrors()) {
+            log.error("Ошибка валидации: {}", bindingResult.getAllErrors());
+            model.addAttribute("errors", bindingResult.getAllErrors());
+            model.addAttribute("client", clientDetailsDto);
+            return "/auth/sign-up";
+        }
         authService.signUp(clientDetailsDto);
         return "/common/homepage-client";
     }

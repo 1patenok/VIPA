@@ -1,5 +1,6 @@
-package com.example.vipa.dto;
+package com.example.vipa.dto.post;
 
+import com.example.vipa.dto.client.ClientPreviewDto;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -7,7 +8,6 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 
-import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.List;
 

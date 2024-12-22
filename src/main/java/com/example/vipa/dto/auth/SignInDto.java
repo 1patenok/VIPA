@@ -1,4 +1,4 @@
-package com.example.vipa.dto;
+package com.example.vipa.dto.auth;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

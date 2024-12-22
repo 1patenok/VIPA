@@ -1,8 +1,8 @@
 package com.example.vipa.mapping;
 
-import com.example.vipa.dto.PostDetailsInputDto;
-import com.example.vipa.dto.PostImageDto;
-import com.example.vipa.dto.PostPreviewDto;
+import com.example.vipa.dto.post.PostDetailsInputDto;
+import com.example.vipa.dto.post.PostImageDto;
+import com.example.vipa.dto.post.PostPreviewDto;
 import com.example.vipa.model.Client;
 import com.example.vipa.model.Post;
 import com.example.vipa.model.PostImage;

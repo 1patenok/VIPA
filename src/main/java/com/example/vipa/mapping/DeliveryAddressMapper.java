@@ -1,6 +1,6 @@
 package com.example.vipa.mapping;
 
-import com.example.vipa.dto.DeliveryAddressDto;
+import com.example.vipa.dto.order.DeliveryAddressDto;
 import com.example.vipa.model.DeliveryAddress;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

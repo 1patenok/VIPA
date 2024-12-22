@@ -1,4 +1,4 @@
-package com.example.vipa.dto;
+package com.example.vipa.dto.order;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,8 +7,7 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class CategoryOutputDto {
+public class DeliveryAddressDto {
     private int id;
-    private String name;
-    private String imagePath;
+    private String postAddresses;
 }

@@ -1,6 +1,9 @@
 package com.example.vipa.mapping;
 
-import com.example.vipa.dto.*;
+import com.example.vipa.dto.order.OrderDetailsInputDto;
+import com.example.vipa.dto.order.OrderDetailsOutputDto;
+import com.example.vipa.dto.order.OrderPreviewDto;
+import com.example.vipa.dto.post.PostPreviewDto;
 import com.example.vipa.model.Order;
 import com.example.vipa.model.Post;
 import lombok.extern.slf4j.Slf4j;

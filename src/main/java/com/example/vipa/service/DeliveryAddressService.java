@@ -1,6 +1,6 @@
 package com.example.vipa.service;
 
-import com.example.vipa.dto.DeliveryAddressDto;
+import com.example.vipa.dto.order.DeliveryAddressDto;
 import com.example.vipa.mapping.DeliveryAddressMapper;
 import com.example.vipa.repository.DeliveryAddressRepository;
 import lombok.RequiredArgsConstructor;

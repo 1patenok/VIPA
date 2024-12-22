@@ -1,6 +1,6 @@
 package com.example.vipa.service;
 
-import com.example.vipa.dto.MessageDto;
+import com.example.vipa.dto.dialog.MessageDto;
 import com.example.vipa.exception.NotFoundException;
 import com.example.vipa.mapping.MessageMapper;
 import com.example.vipa.model.Client;

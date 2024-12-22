@@ -1,9 +1,8 @@
 package com.example.vipa.mapping;
 
-import com.example.vipa.dto.PostDetailsInputDto;
-import com.example.vipa.dto.PostDetailsOutputDto;
-import com.example.vipa.dto.PostPreviewDto;
-import com.example.vipa.model.Client;
+import com.example.vipa.dto.post.PostDetailsInputDto;
+import com.example.vipa.dto.post.PostDetailsOutputDto;
+import com.example.vipa.dto.post.PostPreviewDto;
 import com.example.vipa.model.Post;
 import com.example.vipa.model.PostImage;
 import lombok.extern.slf4j.Slf4j;

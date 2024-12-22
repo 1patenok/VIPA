@@ -1,23 +1,18 @@
 package com.example.vipa.controller;
 
-import com.example.vipa.dto.PostDetailsInputDto;
-import com.example.vipa.dto.PostDetailsOutputDto;
-import com.example.vipa.dto.PostPreviewDto;
+import com.example.vipa.dto.post.PostDetailsInputDto;
 import com.example.vipa.model.Client;
 import com.example.vipa.service.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 import static org.springframework.data.domain.Sort.Direction.DESC;
 
@@ -29,8 +24,6 @@ public class PostController {
 
     private final PostService postService;
     private final DialogService dialogService;
-    private final CartService cartService;
-    private final FavoritesService favoritesService;
     private final CategoryService categoryService;
 
     @GetMapping("/{postId}")
@@ -44,16 +37,16 @@ public class PostController {
         return "/post/post-page";
     }
 
-    @ResponseBody
-    @GetMapping(value = "/search", produces = {"application/json; charset=UTF-8"})
-    public String getPostsByFilters(Model model, @PageableDefault(sort = "numberOfViews", direction = DESC) Pageable pageable,
-                                    @RequestParam(value = "search", required = false) String search) {
+    @GetMapping("/search")
+    public String getPostsPage(Model model,
+                               @PageableDefault(sort = "numberOfViews", direction = DESC) Pageable pageable,
+                               @RequestParam(value = "search", required = false) String search) {
         log.info("Получен запрос на просмотр объявлений по фильтрам. pageable: {}, search: {}", pageable, search);
         model.addAttribute("posts", postService.getPostsBySearchFiltersAndPageable(search, pageable));
         return "/post/posts-page";
     }
 
-    @GetMapping("/catalog/{categoryId}")
+/*    @GetMapping("/catalog/{categoryId}")
     public String getPostsByCategory(Model model, @PageableDefault(sort = "numberOfViews", direction = DESC) Pageable pageable,
                                      @PathVariable("categoryId") int categoryId) {
         log.info("Получен запрос на просмотр каталога объявлений по категории. categoryId: {}", categoryId);
@@ -61,7 +54,7 @@ public class PostController {
         log.info("posts: {}", posts);
         model.addAttribute("posts", posts);
         return "/post/posts-page";
-    }
+    }*/
 
 /*    @GetMapping("/{authorId}/publications")
     public String getPublications(Model model, @PathVariable("authorId") int authorId) {
@@ -80,11 +73,12 @@ public class PostController {
         return "/post/post-form-page";
     }
 
-    @GetMapping("/edit")
-    public String getEditPostPage(Model model) {
-        log.info("Получен запрос на получение формы для редактирования объявления.");
-        model.addAttribute("post", new PostDetailsInputDto());
-        return "/post/edit-post-page";
+    @GetMapping("/{postId}/edit")
+    public String getEditPostPage(Model model, @PathVariable("postId") int postId) {
+        log.info("Получен запрос на получение формы для редактирования объявления. postId: {}", postId);
+        model.addAttribute("post", postService.getPost(postId));
+        model.addAttribute("categories", categoryService.getCategories());
+        return "/post/post-form-page";
     }
 
     @PostMapping("/new")
@@ -93,9 +87,7 @@ public class PostController {
                              BindingResult bindingResult) {
         log.info("Получен запрос на публикацию нового объявления. currentClient: {}, postDetailsDto: {}",
                 currentClient, postDetailsInputDto);
-
         if (bindingResult.hasErrors()) {
-            // Если есть ошибки валидации, возвращаем пользователя обратно на форму с ошибками
             log.error("Ошибка валидации: {}", bindingResult.getAllErrors());
             model.addAttribute("errors", bindingResult.getAllErrors());
             model.addAttribute("categories", categoryService.getCategories());
@@ -105,16 +97,22 @@ public class PostController {
         return "/post/post-page";
     }
 
-    @PutMapping("/edit/{postId}")
+    @PutMapping("/{postId}/update")
     public String updatePost(Model model, @PathVariable("postId") int postId,
-                             @ModelAttribute("post") PostDetailsInputDto postDetailsInputDto) {
+                             @Valid @ModelAttribute("post") PostDetailsInputDto postDetailsInputDto,
+                             BindingResult bindingResult) {
         log.info("Получен запрос на обновление информации об объявлении. postId: {}, postDetailsDto: {}", postId, postDetailsInputDto);
-        PostDetailsInputDto updatedPost = postService.updatePost(postId, postDetailsInputDto);
-        model.addAttribute("post", updatedPost);
+        if (bindingResult.hasErrors()) {
+            log.error("Ошибка валидации: {}", bindingResult.getAllErrors());
+            model.addAttribute("errors", bindingResult.getAllErrors());
+            model.addAttribute("categories", categoryService.getCategories());
+            return "/post/post-form-page";
+        }
+        model.addAttribute("post", postService.updatePost(postId, postDetailsInputDto));
         return "/post/post-page";
     }
 
-    @DeleteMapping("/{postId}")
+    @DeleteMapping("/{postId}/delete")
     public String deletePost(@PathVariable("postId") int postId) {
         log.info("Получен запрос на удаление объявления. postId: {}", postId);
         postService.deletePost(postId);

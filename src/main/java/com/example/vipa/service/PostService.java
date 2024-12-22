@@ -1,8 +1,8 @@
 package com.example.vipa.service;
 
-import com.example.vipa.dto.PostDetailsInputDto;
-import com.example.vipa.dto.PostDetailsOutputDto;
-import com.example.vipa.dto.PostPreviewDto;
+import com.example.vipa.dto.post.PostDetailsInputDto;
+import com.example.vipa.dto.post.PostDetailsOutputDto;
+import com.example.vipa.dto.post.PostPreviewDto;
 import com.example.vipa.mapping.PostMapper;
 import com.example.vipa.model.Category;
 import com.example.vipa.model.Post;

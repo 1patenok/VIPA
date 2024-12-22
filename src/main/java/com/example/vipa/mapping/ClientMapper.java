@@ -1,7 +1,7 @@
 package com.example.vipa.mapping;
 
-import com.example.vipa.dto.ClientDetailsDto;
-import com.example.vipa.dto.ClientPreviewDto;
+import com.example.vipa.dto.client.ClientDetailsDto;
+import com.example.vipa.dto.client.ClientPreviewDto;
 import com.example.vipa.model.Client;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

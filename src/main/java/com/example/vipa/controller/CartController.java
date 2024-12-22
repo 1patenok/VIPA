@@ -1,19 +1,15 @@
 package com.example.vipa.controller;
 
-import com.example.vipa.dto.OrderDetailsOutputDto;
-import com.example.vipa.dto.PostPreviewDto;
+import com.example.vipa.dto.order.OrderDetailsOutputDto;
 import com.example.vipa.model.Client;
 import com.example.vipa.service.CartService;
 import com.example.vipa.service.DeliveryAddressService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Slf4j
 @Controller

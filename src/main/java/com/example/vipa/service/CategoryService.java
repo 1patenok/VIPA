@@ -1,14 +1,13 @@
 package com.example.vipa.service;
 
-import com.example.vipa.dto.CategoryInputDto;
-import com.example.vipa.dto.CategoryOutputDto;
+import com.example.vipa.dto.category.CategoryInputDto;
+import com.example.vipa.dto.category.CategoryOutputDto;
 import com.example.vipa.exception.NotFoundException;
 import com.example.vipa.mapping.CategoryMapper;
 import com.example.vipa.model.Category;
 import com.example.vipa.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

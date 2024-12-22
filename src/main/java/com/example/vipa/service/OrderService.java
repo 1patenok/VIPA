@@ -1,8 +1,8 @@
 package com.example.vipa.service;
 
-import com.example.vipa.dto.OrderDetailsInputDto;
-import com.example.vipa.dto.OrderDetailsOutputDto;
-import com.example.vipa.dto.OrderPreviewDto;
+import com.example.vipa.dto.order.OrderDetailsInputDto;
+import com.example.vipa.dto.order.OrderDetailsOutputDto;
+import com.example.vipa.dto.order.OrderPreviewDto;
 import com.example.vipa.exception.NotFoundException;
 import com.example.vipa.mapping.OrderMapper;
 import com.example.vipa.model.*;

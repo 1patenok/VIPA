@@ -1,5 +1,6 @@
-package com.example.vipa.dto;
+package com.example.vipa.dto.post;
 
+import com.example.vipa.dto.client.ClientPreviewDto;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -22,32 +23,29 @@ public class PostDetailsInputDto {
     private static final String FIELD_IS_MANDATORY_MESSAGE = "Это поле является обязательным для заполнения.";
     private static final String PRICE_CANNOT_BE_NEGATIVE_MESSAGE = "Цена не может быть отрицательной.";
     private static final String IMAGE_IS_MANDATORY_MESSAGE = "Необходимо прикрепить хотя бы одно изображение.";
+    private static final String DESCRIPTION_IS_TOO_LONG_MESSAGE = "Длина описания не должна превышать 500 символов.";
+    private static final String ADDRESS_IS_TOO_LONG_MESSAGE = "Длина адреса не должна превышать 100 символов.";
 
-    private int id;
-
+    @Size(min = 2, max = 50)
     @NotBlank(message = FIELD_IS_MANDATORY_MESSAGE)
     private String title;
 
-    @NotNull(message = FIELD_IS_MANDATORY_MESSAGE)
+    @NotBlank(message = FIELD_IS_MANDATORY_MESSAGE)
     private int categoryId;
 
-    private ClientPreviewDto author;
-
-    //@NotBlank(message = FIELD_IS_MANDATORY_MESSAGE)
+    @NotBlank(message = FIELD_IS_MANDATORY_MESSAGE)
     @Min(value = 0, message = PRICE_CANNOT_BE_NEGATIVE_MESSAGE)
     private int price;
 
-    private String status;
-
     @NotBlank(message = FIELD_IS_MANDATORY_MESSAGE)
-    @Size(max = 500, message = "Описание не может быть длиннее 500 символов.")
+    @Size(min = 10, max = 500, message = DESCRIPTION_IS_TOO_LONG_MESSAGE)
     private String description;
 
+    @NotBlank(message = FIELD_IS_MANDATORY_MESSAGE)
+    @Size(min = 10, max = 100, message = ADDRESS_IS_TOO_LONG_MESSAGE)
     private String address;
 
-    private LocalDate createdAt;
-
-    @NotNull(message = FIELD_IS_MANDATORY_MESSAGE)
-    @Size(min = 1, message = IMAGE_IS_MANDATORY_MESSAGE) // Проверяем, что хотя бы одно изображение прикреплено
+    @NotBlank(message = FIELD_IS_MANDATORY_MESSAGE)
+    @Size(min = 1, message = IMAGE_IS_MANDATORY_MESSAGE)
     private List<MultipartFile> images;
 }
