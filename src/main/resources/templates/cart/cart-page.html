@@ -89,6 +89,9 @@
             <input th:if="${true}"
                    th:field="*{deliveryAddress}" type="text" required>
         </div>
+        <div th:if="${#fields.hasErrors()}" class="error">
+            <p th:each="error : ${#fields.allErrors()}" th:text="${error}">Name Error</p>
+        </div>
         <div class="post__pay-button">
             <button type="submit">Оплатить</button>
         </div>

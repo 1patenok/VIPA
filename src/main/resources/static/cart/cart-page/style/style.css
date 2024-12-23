@@ -388,6 +388,13 @@ input::-webkit-inner-spin-button {
   background-color: #832ff1;
 }
 
+.error{
+  text-align: center;
+  font-size: 24px;
+  padding: 20px;
+  font-weight: 600;
+}
+
 .footer {
   background-color: #3b3b3b;
   padding: 0 0 10px 0;

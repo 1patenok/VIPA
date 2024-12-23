@@ -62,7 +62,7 @@ public class OrderController {
         if (bindingResult.hasErrors()) {
             log.error("Ошибка валидации: {}", bindingResult.getAllErrors());
             model.addAttribute("posts", cartService.getProductsInCart(currentClient.getId()));
-            model.addAttribute("order", new OrderDetailsOutputDto());
+            model.addAttribute("order", orderDetailsInputDto);
             model.addAttribute("deliveryAddresses", deliveryAddressService.getAddresses());
             return "/cart/cart-page";
         }

@@ -30,10 +30,10 @@ public class PostDetailsInputDto {
     @NotBlank(message = FIELD_IS_MANDATORY_MESSAGE)
     private String title;
 
-    @NotBlank(message = FIELD_IS_MANDATORY_MESSAGE)
+//    @NotBlank(message = FIELD_IS_MANDATORY_MESSAGE)
     private int categoryId;
 
-    @NotBlank(message = FIELD_IS_MANDATORY_MESSAGE)
+//    @NotBlank(message = FIELD_IS_MANDATORY_MESSAGE)
     @Min(value = 0, message = PRICE_CANNOT_BE_NEGATIVE_MESSAGE)
     private int price;
 
@@ -45,7 +45,7 @@ public class PostDetailsInputDto {
     @Size(min = 10, max = 100, message = ADDRESS_IS_TOO_LONG_MESSAGE)
     private String address;
 
-    @NotBlank(message = FIELD_IS_MANDATORY_MESSAGE)
+//    @NotBlank(message = FIELD_IS_MANDATORY_MESSAGE)
     @Size(min = 1, message = IMAGE_IS_MANDATORY_MESSAGE)
     private List<MultipartFile> images;
 }

@@ -102,7 +102,7 @@ public class PostController {
 
     @PostMapping("/new")
     public String createPost(Model model, @AuthenticationPrincipal Client currentClient,
-                             @Valid @ModelAttribute("post") PostDetailsInputDto postDetailsInputDto,
+                             @ModelAttribute("post") PostDetailsInputDto postDetailsInputDto,
                              BindingResult bindingResult) {
         log.info("Получен запрос на публикацию нового объявления. currentClient: {}, postDetailsDto: {}",
                 currentClient, postDetailsInputDto);

@@ -142,6 +142,7 @@ public class PostService {
     @Transactional
     public PostDetailsOutputDto createPost(int authorId, PostDetailsInputDto postDetailsInputDto) {
         Post postToSave = postMapper.convertToPost(postDetailsInputDto);
+        postToSave.setId(0);
         postToSave.setAuthor(clientService.getClientEntity(authorId));
         postToSave.setCategory(categoryService.getCategoryEntity(postDetailsInputDto.getCategoryId()));
         postToSave.setStatus(PostStatus.ACTIVE);
