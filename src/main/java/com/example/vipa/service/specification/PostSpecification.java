@@ -1,10 +1,8 @@
 package com.example.vipa.service.specification;
 
+import com.example.vipa.model.Category;
 import com.example.vipa.model.Post;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.*;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,17 +20,19 @@ public class PostSpecification implements Specification<Post> {
         log.info("criteria -> key: {}, operation: {}, value: {}", criteria.getKey(), criteria.getOperation(), criteria.getValue());
         if (criteria.getOperation().equalsIgnoreCase(">")) {
             return criteriaBuilder.greaterThanOrEqualTo(
-                    root.get(criteria.getKey()), criteria.getValue());
+                    root.get(criteria.getKey()), criteria.getValue().toString());
         } else if (criteria.getOperation().equalsIgnoreCase("<")) {
             return criteriaBuilder.lessThanOrEqualTo(
-                    root.get(criteria.getKey()), criteria.getValue());
+                    root.get(criteria.getKey()), criteria.getValue().toString());
         } else if (criteria.getOperation().equalsIgnoreCase(":")) {
             if (root.get(criteria.getKey()).getJavaType() == String.class) {
                 return criteriaBuilder.like(criteriaBuilder.lower(
-                        root.get(criteria.getKey())), "%" + criteria.getValue().toLowerCase() + "%");
+                        root.get(criteria.getKey())), "%" + criteria.getValue().toString().toLowerCase() + "%");
             } else {
                 return criteriaBuilder.equal(root.get(criteria.getKey()), criteria.getValue());
             }
+        } else if (criteria.getOperation().equals("=")) {
+            return criteriaBuilder.equal(root.get(criteria.getKey()), criteria.getValue());
         }
         return null;
     }

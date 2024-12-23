@@ -10,6 +10,6 @@ import lombok.experimental.Accessors;
 public class SearchCriteria {
     private String key;
     private String operation;
-    private String value;
+    private Object value;
     private boolean orPredicate;
 }

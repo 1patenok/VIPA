@@ -12,7 +12,7 @@ import java.util.List;
 public class PostSpecificationBuilder {
     private final List<SearchCriteria> params = new ArrayList<>();
 
-    public PostSpecificationBuilder with(String key, String operation, String value/*, boolean orPredicate*/) {
+    public PostSpecificationBuilder with(String key, String operation, Object value/*, boolean orPredicate*/) {
         log.info("inside with(), key: {}, operation: {}, value: {}", key, operation, value);
         params.add(new SearchCriteria()
                 .setKey(key)

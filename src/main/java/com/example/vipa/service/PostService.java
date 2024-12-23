@@ -12,6 +12,7 @@ import com.example.vipa.repository.PostRepository;
 import com.example.vipa.service.specification.PostSpecificationBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -21,8 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -55,14 +55,14 @@ public class PostService {
                 .orElseThrow(() -> new RuntimeException(POST_NOT_FOUND_MESSAGE));
     }
 
-    @Transactional
+/*    @Transactional
     public List<PostPreviewDto> getPosts(Pageable pageable) {
         return postRepository.findAllByStatus(PostStatus.ACTIVE, pageable).stream()
                 .map(postMapper::convertToPostPreviewDto)
                 .toList();
-    }
+    }*/
 
-    @Transactional
+/*    @Transactional
     public List<PostPreviewDto> getPosts(Pageable pageable, String postTitlePattern) {
         log.info("inside getPosts(), pageagle: {}, postTitlePattern: {}", pageable, postTitlePattern);
         List<Post> result = postRepository.findAllByTitleLikeIgnoreCaseAndStatus("%" + postTitlePattern + "%", PostStatus.ACTIVE, pageable);
@@ -70,24 +70,31 @@ public class PostService {
         return result.stream()
                 .map(postMapper::convertToPostPreviewDto)
                 .toList();
-    }
+    }*/
 
-    @Transactional
-    public List<PostPreviewDto> getPostsBySearchFiltersAndPageable(String filters, Pageable pageable) {
+/*    @Transactional
+    public List<PostPreviewDto> getPostsBySearchFiltersAndPageable(Map<String, String> filters, Pageable pageable) {
         log.info("inside getPostsBySearchFiltersAndPageable, filters: {}, pageable: {}", filters, pageable);
-        Pattern pattern = Pattern.compile("(\\w+?)(:|<|>)([а-яА-Яa-zA-Z0-9]+?),");
-        Matcher matcher = pattern.matcher(filters + ",");
+        //Pattern pattern = Pattern.compile("(\\w+?)(:|<|>)([а-яА-Яa-zA-Z0-9]+?),");
+        //Matcher matcher = pattern.matcher(filters + ",");
         PostSpecificationBuilder specificationBuilder = new PostSpecificationBuilder();
-        while (matcher.find()) {
+        *//*while (matcher.find()) {
             log.info("group1: {}, group2: {}, group3: {}", matcher.group(1), matcher.group(2), matcher.group(3));
             specificationBuilder.with(matcher.group(1), matcher.group(2), matcher.group(3));
+        }*//*
+        for (Map.Entry<String, String> filter : filters.entrySet()) {
+            if (filter.getKey().equals("priceFrom")) {
+                specificationBuilder.with("price", ">", filter.getValue());
+            } else if (filter.getKey().equals("priceTo")) {
+                specificationBuilder.with("price", "<", filter.getValue());
+            }
         }
         Specification<Post> specification = specificationBuilder.build();
         log.info("specification: {}", specification);
         return postRepository.findAll(specification, pageable).stream()
                 .map(postMapper::convertToPostPreviewDto)
                 .toList();
-    }
+    }*/
 
     @Transactional
     public List<PostPreviewDto> getPostsByAuthor(int authorId) {
@@ -97,9 +104,26 @@ public class PostService {
     }
 
     @Transactional
-    public List<PostPreviewDto> getPostsByCategory(Pageable pageable, int categoryId) {
-        Category category = categoryService.getCategoryEntity(categoryId);
-        List<Post> listPosts = postRepository.findAllByCategoryAndStatus(category, PostStatus.ACTIVE, pageable);
+    public List<PostPreviewDto> getPostsByCategoryFiltersAndPageable(Map<String, String> filters, Pageable pageable) {
+        PostSpecificationBuilder specificationBuilder = new PostSpecificationBuilder();
+        /*while (matcher.find()) {
+            log.info("group1: {}, group2: {}, group3: {}", matcher.group(1), matcher.group(2), matcher.group(3));
+            specificationBuilder.with(matcher.group(1), matcher.group(2), matcher.group(3));
+        }*/
+        for (Map.Entry<String, String> filter : filters.entrySet()) {
+            if (filter.getKey().equals("priceFrom")) {
+                specificationBuilder.with("price", ">", filter.getValue());
+            } else if (filter.getKey().equals("priceTo")) {
+                specificationBuilder.with("price", "<", filter.getValue());
+            } else if (filter.getKey().equals("categoryId")) {
+                int categoryId = Integer.parseInt(filter.getValue());
+                Category category = categoryService.getCategoryEntity(categoryId);
+                specificationBuilder.with("category", "=", category);
+            }
+        }
+        Specification<Post> specification = specificationBuilder.build();
+        log.info("specification: {}", specification);
+        Page<Post> listPosts = postRepository.findAll(specification, pageable);
         return listPosts.stream()
                 .map(postMapper::convertToPostPreviewDto)
                 .toList();
