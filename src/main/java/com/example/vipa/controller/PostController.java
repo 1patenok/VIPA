@@ -25,6 +25,8 @@ public class PostController {
     private final PostService postService;
     private final DialogService dialogService;
     private final CategoryService categoryService;
+    private final FavoritesService favoritesService;
+    private final CartService cartService;
 
     @GetMapping("/{postId}")
     public String getPostPage(Model model, @PathVariable("postId") int postId,
@@ -32,8 +34,8 @@ public class PostController {
         log.info("Получен запрос на просотр объявления. postId: {}", postId);
         model.addAttribute("post", postService.getPost(postId));
         model.addAttribute("dialogId", dialogService.getDialogIdByPostAndCustomer(postId, currentClient.getId()));
-        //model.addAttribute("alreadyInCart", favoritesService.isPostInFavorites(currentClient.getId(), postId));
-        //model.addAttribute("alreadyInFavorites", cartService.isPostInCart(currentClient.getId(), postId));
+        model.addAttribute("alreadyInFavorites", favoritesService.isPostInFavorites(currentClient.getId(), postId));
+        model.addAttribute("alreadyInCart", cartService.isPostInCart(currentClient.getId(), postId));
         return "/post/post-page";
     }
 

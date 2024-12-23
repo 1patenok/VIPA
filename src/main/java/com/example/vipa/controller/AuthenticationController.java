@@ -66,7 +66,7 @@ public class AuthenticationController {
             return "/auth/sign-up-page";
         }
         authService.signUp(clientDetailsDto);
-        return "/common/homepage-client";
+        return "redirect:/auth/sign-in";
     }
 
 

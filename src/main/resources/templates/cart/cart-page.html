@@ -79,7 +79,7 @@
     <div class="posts__title title">
         <p>Детали заказа</p>
     </div>
-    <div class="posts__pay">
+    <div th:if="${!posts.isEmpty()}" class="posts__pay">
         <div class="posts__card-number">
             <p>Номер карты</p>
             <input th:field="*{cardNumber}" type="number" pattern="[0-9]{16}" required>

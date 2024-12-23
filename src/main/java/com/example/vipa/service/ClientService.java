@@ -31,6 +31,10 @@ public class ClientService {
                 .orElseThrow(() -> new NotFoundException(CLIENT_NOT_FOUND_MESSAGE));
     }
 
+    public Client getClientEntityByPhoneNumber(String phoneNumber) {
+        return clientRepository.findByPhoneNumber(phoneNumber).orElse(null);
+    }
+
     /**
      * Метод для получения пользователя по его id.
      * @param clientId - id пользователя
@@ -69,6 +73,7 @@ public class ClientService {
         /* Чтобы понять, какого именно клиента нужно обновить, нужно присвоить clientId.
            Если не сделать это, то вместо обновления существующего клиента будет создан новый клиент.*/
         updatedClient.setId(clientId);
+        updatedClient.setRole("ROLE_CLIENT");
         return clientMapper.convertToClientDetailsDto(clientRepository.save(updatedClient));
     }
 

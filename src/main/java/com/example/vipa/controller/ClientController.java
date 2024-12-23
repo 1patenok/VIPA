@@ -48,7 +48,7 @@ public class ClientController {
                                @ModelAttribute("client") ClientDetailsDto clientDetailsDto) {
         log.info("Получен запрос на обновление данных клиента. currentClient: {}, clientDetailsDto: {}", currentClient, clientDetailsDto);
         clientService.updateClient(currentClient.getId(), clientDetailsDto);
-        return "/client/client-page";
+        return "redirect:/clients/" + currentClient.getId();
     }
 
     /**
