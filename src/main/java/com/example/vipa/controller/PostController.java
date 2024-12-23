@@ -1,7 +1,6 @@
 package com.example.vipa.controller;
 
 import com.example.vipa.dto.post.PostDetailsInputDto;
-import com.example.vipa.dto.post.PostPreviewDto;
 import com.example.vipa.model.Client;
 import com.example.vipa.service.*;
 import jakarta.validation.Valid;
@@ -15,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 
 import static org.springframework.data.domain.Sort.Direction.DESC;
@@ -43,12 +41,26 @@ public class PostController {
         return "/post/post-page";
     }
 
+/*    @GetMapping("/search")
+    public String getPostsPage(Model model,
+                               @PageableDefault(sort = "numberOfViews", direction = DESC) Pageable pageable,
+                               @RequestParam Map<String, String> filters) {
+        log.info("Получен запрос на просмотр объявлений по фильтрам. pageable: {}, search: {}", pageable, filters);
+        model.addAttribute("posts", postService.getPostsByCategoryFiltersAndPageable(filters, pageable));
+        return "/post/posts-page";
+    }*/
+
     @GetMapping("/search")
     public String getPostsPage(Model model,
                                @PageableDefault(sort = "numberOfViews", direction = DESC) Pageable pageable,
                                @RequestParam Map<String, String> filters) {
         log.info("Получен запрос на просмотр объявлений по фильтрам. pageable: {}, search: {}", pageable, filters);
-        model.addAttribute("categoryId", Integer.parseInt(filters.get("categoryId")));
+        int categoryId = 0;
+        try {
+            categoryId = Integer.parseInt(filters.get("categoryId"));
+        } catch (Exception e) {
+        }
+        model.addAttribute("categoryId", categoryId);
         model.addAttribute("posts", postService.getPostsByCategoryFiltersAndPageable(filters, pageable));
         return "/post/posts-page";
     }

@@ -46,7 +46,7 @@
     </div>
 </header>
 <form th:action="@{/posts/search(categoryId=${categoryId})}" class="search-filter wrapper">
-    <input th:name="categoryId" th:value="${categoryId}" hidden>
+    <input th:if="${categoryId != 0}"th:name="categoryId" th:value="${categoryId}" hidden>
     <div class="search__input">
         <input th:name="title" type="text" th:value="${param.title}" placeholder="Поиск">
     </div>
@@ -60,7 +60,7 @@
         <div class="filter__image" type="button">
             <img th:src="@{/post/posts-page/img/icon/empty-filter-32.ico}" alt="">
             <div class="filter__main">
-                <div th:name="sort" th:value="price" class="filter__input">
+                <div class="filter__input">
                     <div class="filter__input-title">
                         <p>Цена:</p>
                     </div>
@@ -68,9 +68,9 @@
                     <input th:name="priceTo" type="number" value="1000000000" placeholder="До">
                 </div>
                 <div class="filter__select">
-                    <select name="direction" id="">
-                        <option value="DESC">По убыванию</option>
-                        <option value="ASC">По возрастанию</option>
+                    <select name="sort" id="">
+                        <option value="price,DESC">По убыванию</option>
+                        <option value="price,ASC">По возрастанию</option>
                     </select>
                 </div>
                 <div class="filter__button">

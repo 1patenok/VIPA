@@ -115,6 +115,8 @@ public class PostService {
                 specificationBuilder.with("price", ">", filter.getValue());
             } else if (filter.getKey().equals("priceTo")) {
                 specificationBuilder.with("price", "<", filter.getValue());
+            } else if (filter.getKey().equals("title")) {
+                specificationBuilder.with("title", ":", filter.getValue());
             } else if (filter.getKey().equals("categoryId")) {
                 int categoryId = Integer.parseInt(filter.getValue());
                 Category category = categoryService.getCategoryEntity(categoryId);
