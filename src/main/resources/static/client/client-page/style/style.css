@@ -236,6 +236,7 @@
   border-radius: 20px;
   padding: 20px;
   background-color: #a259ff;
+  transition: 0.3s;
 }
 
 .setting__delete button{

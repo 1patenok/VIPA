@@ -87,7 +87,7 @@
                                 <button type="submit">В корзину</button>
                             </form>
                         </div>
-                        <div th:case="true">Товар в корзине</div>
+                        <div th:case="true" class="setting__info">Товар в корзине</div>
                     </div>
                     <div th:switch="${alreadyInFavorites}">
                         <div th:case="false">
@@ -96,7 +96,7 @@
                                 <button type="submit">В избранное</button>
                             </form>
                         </div>
-                        <div th:case="true">Товар в избранном</div>
+                        <div th:case="true" class="setting__info">Товар в избранном</div>
                     </div>
                     <form th:if="${dialogId == 0}" th:action="@{/dialogs/new/{postId}(postId=${post.getId()})}"
                           method="post" class="setting__data">

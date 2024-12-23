@@ -268,11 +268,6 @@
   color: #9c9c9c;
 }
 
-.profile__setting div:not(:last-child):not(:first-child) :hover {
-  background-color: #832ff1;
-  color: #9c9c9c;
-}
-
 .profile__setting div {
   transition: 0.3s;
 }
@@ -307,6 +302,11 @@
 .setting__delete {
   text-align: center;
   transition: 0.3s;
+}
+
+.setting__info{
+  font-size: 20px;
+  margin: 20px;
 }
 
 .posts {
