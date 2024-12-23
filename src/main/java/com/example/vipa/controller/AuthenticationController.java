@@ -56,13 +56,12 @@ public class AuthenticationController {
      */
     @PostMapping("/sign-up")// регистрация
     public String signUp(Model model,
-                         @Valid @ModelAttribute("clientDetailsDto") ClientDetailsDto clientDetailsDto,
+                         @Valid @ModelAttribute("client") ClientDetailsDto clientDetailsDto,
                          BindingResult bindingResult) {
         log.info("clientDetailsDto: {}", clientDetailsDto);
         clientValidator.validate(clientDetailsDto, bindingResult);
         if (bindingResult.hasErrors()) {
             log.error("Ошибка валидации: {}", bindingResult.getAllErrors());
-//            model.addAttribute("errors", bindingResult.getAllErrors());
             model.addAttribute("client", clientDetailsDto);
             return "/auth/sign-up-page";
         }

@@ -32,7 +32,7 @@ public class ClientValidator implements Validator {
         }
         try {
             UserDetails userDetails = clientDetailsService.loadUserByUsername(client.getEmail());
-            if(userDetails != null){
+            if(userDetails != null) {
                 errors.rejectValue("email", HttpStatus.ALREADY_REPORTED.name(), CLIENT_ALREADY_EXIST_MESSAGE);
             }
         } catch (NotFoundException e) {
