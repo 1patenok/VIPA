@@ -38,9 +38,6 @@
             <p>Добро пожаловать! Введите свои данные и начните торговать!</p>
         </div>
         <div class="create__form">
-            <div>
-<!--                <p th:each="${#fields.hasErrors('email')}"></p>-->
-            </div>
             <form th:action="@{/auth/sign-up}" th:object="${client}" method="post" class="create__form-form form__input">
                 <input th:field="*{name}" type="text" placeholder="Имя" class="form__name form__input" required>
                 <input th:field="*{surname}" type="text" placeholder="Фамилия" class="form__surname form__input" required>
