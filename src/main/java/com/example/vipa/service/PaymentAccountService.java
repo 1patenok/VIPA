@@ -18,8 +18,7 @@ public class PaymentAccountService {
 
     public PaymentAccount getPaymentAccountByCardNumber(String cardNumber) {
         log.info("inside getPaymentAccountByCardNumber(), cardNumber: {}", cardNumber);
-        return paymentAccountRepository.findByCardNumber(cardNumber)
-                .orElseThrow(() -> new NotFoundException(CLIENT_NOT_FOUND_MESSAGE));
+        return paymentAccountRepository.findByCardNumber(cardNumber).orElse(null);
     }
 
     @Transactional
