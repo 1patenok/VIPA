@@ -55,6 +55,29 @@
             <img th:src="@{/common/homepage-client/img/icon/icons8-поиск.svg}" alt="search">
         </button>
     </div>
+    <div class="filter">
+        <div class="filter__image" type="button">
+            <img src="img/icon/empty-filter-32.ico" alt="">
+            <div class="filter__main">
+                <div class="filter__input">
+                    <div class="filter__input-title">
+                        <p>Цена:</p>
+                    </div>
+                    <input name="priceFrom" type="number" placeholder="От">
+                    <input name="priceTo" type="number" placeholder="До">
+                </div>
+                <div class="filter__select">
+                    <select name="direction" id="">
+                        <option value="DESC">По убыванию цены</option>
+                        <option value="ASC">По возрастанию цены</option>
+                    </select>
+                </div>
+                <div class="filter__button">
+                    <button type="submit">Применить</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </form>
 <div class="posts wrapper container">
     <div class="posts__title title">
