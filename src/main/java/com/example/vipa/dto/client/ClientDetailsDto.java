@@ -37,7 +37,7 @@ public class ClientDetailsDto {
     private String surname;
 
 //    @NotBlank(message = FIELD_IS_MANDATORY_MESSAGE)
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
 
     @NotBlank(message = FIELD_IS_MANDATORY_MESSAGE)
