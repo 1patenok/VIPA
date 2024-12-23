@@ -45,7 +45,7 @@
         </div>
     </div>
 </header>
-<form th:action="@{/posts/catalog/search}" class="search wrapper">
+<form th:action="@{/posts/catalog/search}" class="search-filter wrapper">
     <div class="search__input">
         <input th:name="postTitlePattern" type="text" placeholder="Поиск">
     </div>
@@ -57,14 +57,14 @@
     </div>
     <div class="filter">
         <div class="filter__image" type="button">
-            <img src="img/icon/empty-filter-32.ico" alt="">
+            <img th:src="@{/post/posts-page/img/icon/empty-filter-32.ico}" alt="">
             <div class="filter__main">
                 <div class="filter__input">
                     <div class="filter__input-title">
                         <p>Цена:</p>
                     </div>
-                    <input name="priceFrom" type="number" placeholder="От">
-                    <input name="priceTo" type="number" placeholder="До">
+                    <input th:name="priceFrom" type="number" placeholder="От">
+                    <input th:name="priceTo" type="number" placeholder="До">
                 </div>
                 <div class="filter__select">
                     <select name="direction" id="">

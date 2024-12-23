@@ -175,10 +175,12 @@
 .search-filter {
   position: relative;
   display: flex;
-  justify-content: space-between;
+  justify-content: space;
   text-align: center;
   align-items: center;
   margin: 100px auto 100px auto;
+  border: 2px solid #fff;
+  border-radius: 30px;
 }
 
 .search {
@@ -187,14 +189,16 @@
   align-items: center;
   border: 2px solid #fff;
   border-radius: 30px;
-  padding: 0 75px 0 10px;
+  padding: 0 10px 0 10px;
   color: #fff;
 }
-
+.search__input{
+  margin: 0 10px 0 0;
+}
 .search__input input {
   padding: 30px;
-  margin: 0 0 0 5px;
-  min-width: 700px;
+  margin: 0 0px 0 5px;
+  min-width: 800px;
   height: 40px;
   font-size: 30px;
   background-color: #2b2b2b;
