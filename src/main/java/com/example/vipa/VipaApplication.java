@@ -8,7 +8,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import java.util.Properties;
 
-
+//
 @SpringBootApplication
 public class  VipaApplication {
 
